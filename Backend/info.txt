@@ -1,0 +1,13 @@
+Database: webservice
+
+Setup query:
+
+CREATE TABLE `webservice`.`data` 
+( `id` INT NOT NULL AUTO_INCREMENT , `country` VARCHAR(128) NOT NULL ,
+`population` INT NOT NULL , `cases` INT NOT NULL , `deaths` INT NOT NULL
+, `recoveries` INT NOT NULL , `recovery-rate` FLOAT NOT NULL , 
+`fatality-rate` FLOAT NOT NULL , 
+`continent` ENUM('EUROPE','ASIA','OCEANIA','AFRICA','AMERICA','ANTARTIC') NOT NULL ,
+`classification` ENUM('VERYLOW','LOW','NORMAL','HIGH','VERYHIGH') NOT NULL ,
+`date` DATE NOT NULL , PRIMARY KEY (`id`)) 
+ENGINE = InnoDB;

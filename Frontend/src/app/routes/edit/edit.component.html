@@ -1,0 +1,97 @@
+<div *ngIf="dataEntry != null" class="container">
+
+    <div class="row p-3 shadow">
+        <button class="btn btn-primary mr-5" [routerLink]="['/dashboard']">Back</button>
+        <h3 class="text-center">New Report</h3>
+    </div>
+
+    <form class="pt-5" (ngSubmit)="onSubmit()" #form="ngForm">
+        <div class="form-group row">
+            <label for="country" class="col-sm-2 col-form-label">Country</label>
+            <div class="col-sm-10">
+                <input type="text" value="ciao" class="form-control" id="country" required
+                    [(ngModel)]="dataEntry.country" name="country">
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="population" class="col-sm-2 col-form-label">Population</label>
+            <div class="col-sm-10">
+                <input type="number" class="form-control" id="population" number required
+                    [(ngModel)]="dataEntry.population" name="population">
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="cases" class="col-sm-2 col-form-label">Cases</label>
+            <div class="col-sm-10">
+                <input type="number" class="form-control" id="cases" number required [(ngModel)]="dataEntry.cases"
+                    name="cases">
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="deaths" class="col-sm-2 col-form-label">Deaths</label>
+            <div class="col-sm-10">
+                <input type="number" class="form-control" id="deaths" number required [(ngModel)]="dataEntry.deaths"
+                    name="deaths">
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="recoveries" class="col-sm-2 col-form-label">Recoveries</label>
+            <div class="col-sm-10">
+                <input type="number" class="form-control" id="recoveries" number required
+                    [(ngModel)]="dataEntry.recoveries" name="recoveries">
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="recoveryRate" class="col-sm-2 col-form-label">Recovery Rate</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="recoveryRate" number required
+                    [(ngModel)]="dataEntry.recoveryRate" name="recoveryRate">
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="fatalityRate" class="col-sm-2 col-form-label">Fatality Rate</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="fatalityRate" number required
+                    [(ngModel)]="dataEntry.fatalityRate" name="fatalityRate">
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="continent" class="col-sm-2 col-form-label">Continent</label>
+            <div class="col-sm-10">
+                <select class="form-control" id="continent" required [(ngModel)]="dataEntry.continent" name="continent">
+                    <option [value]="continent" *ngFor="let continent of continents">
+                        {{continent}}
+                    </option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="classification" class="col-sm-2 col-form-label">Classification</label>
+            <div class="col-sm-10">
+                <select class="form-control" id="classification" required [(ngModel)]="dataEntry.classification"
+                    name="classification">
+                    <option [value]="classification" *ngFor="let classification of classifications">
+                        {{classification}}
+                    </option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="date" class="col-sm-2 col-form-label">Date</label>
+            <div class="col-sm-10">
+                <input type="date" class="form-control" id="date" required [(ngModel)]="dataEntry.date" name="date">
+            </div>
+        </div>
+        <button type="submit" [disabled]="!form.valid" class="btn btn-success">Submit</button>
+
+    </form>
+</div>

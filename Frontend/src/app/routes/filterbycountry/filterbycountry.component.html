@@ -1,0 +1,26 @@
+<button class="btn btn-primary mr-5" [routerLink]="['/dashboard']">Back</button>
+
+<div class="form-group row">
+    <label for="country" class="col-sm-2 col-form-label">Country</label>
+    <div class="col-sm-10">
+        <input type="text" class="form-control" id="country" required
+            name="country" [(ngModel)]="country">
+    </div>
+</div>
+<table class="table">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Country</th>
+        <th scope="col">Cases</th>
+        <th scope="col">Date</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="pointer" *ngFor="let entry of covidData | country : country">
+        <td>{{entry.country}}</td>
+        <td>{{entry.cases}}</td>
+        <td>{{entry.date | date}}</td>
+      </tr>
+    </tbody>
+  </table>

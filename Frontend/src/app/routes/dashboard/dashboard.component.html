@@ -1,0 +1,39 @@
+<div class="container p-5" *ngIf="covidDataLoader">
+  <h1 class="text-center mb-5">
+    Covid-21 Tracker
+  </h1>
+
+  <div class="text-right">
+    
+    <button type="button"  style="font-size: 30px" class="btn btn-default" aria-label="Left Align" [routerLink]='["/add"]'>
+      <span class="fas fa-plus" aria-hidden="true"></span>
+      </button>
+  
+    <button class="btn btn-primary mb-3" [routerLink]='["/filterdouble"]'>Filter Double</button>
+    <button class="btn btn-primary mb-3" [routerLink]='["/sortingbydeath"]'>Sort by death</button>
+    <button class="btn btn-primary mb-3" [routerLink]='["/sortBy"]'>Sort by </button>
+    <button class="btn btn-primary mb-3" [routerLink]='["/filterByCountry"]'>Filter By Country</button>
+    <button class="btn btn-primary mb-3" [routerLink]='["/apicorona"]'>Api</button>
+
+  </div>
+
+  <table class="table">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Country</th>
+        <th scope="col">Cases</th>
+        <th scope="col">Date</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="pointer" *ngFor="let entry of covidData ; let i = index" (click)="goToDetails(entry.id)">
+        <th scope="row"> {{i + 1}}</th>
+        <td>{{entry.country}}</td>
+        <td>{{entry.cases}}</td>
+        <td>{{entry.date | date}}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<app-loadingpage *ngIf="!covidDataLoader" ></app-loadingpage>

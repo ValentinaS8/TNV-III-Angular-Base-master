@@ -1,0 +1,45 @@
+<div class="container p-5">
+    <div class="row">
+        <button class="btn btn-primary mr-5" [routerLink]="['/dashboard']">Back</button>
+    </div>
+
+    <form class="pt-5" #form="ngForm">
+        <div class="form-group row">
+            <label for="sort" class="col-sm-2 col-form-label">Sort by number of death</label>
+            <div class="col-sm-10">
+                <select class="form-control" id="sort" ngModel required name="sort">
+                    <option *ngFor="let sort of sortOptions"> {{sort}} </option> 
+                </select>
+            </div>
+
+        </div>
+
+    </form>
+
+    <button class="btn btn-primary mb-3" (click)="filterByDeath(form)">Order by</button>
+    
+    <table class="table" *ngIf="showResult">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col">Country</th>
+            <th scope="col">Cases</th>
+            <th scope="col">Date</th>
+            <th scope="col">Continent</th>
+            <th scope="col">Classification</th>
+            <th scope="col">Deaths</th>
+
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="pointer" *ngFor="let entry of covidData">
+            <td>{{entry.country}}</td>
+            <td>{{entry.cases}}</td>
+            <td>{{entry.date | date}}</td>
+            <td>{{entry.continent}}</td>
+            <td>{{entry.classification}}</td>
+            <td>{{entry.deaths}}</td>
+
+          </tr>
+        </tbody>
+      </table>
+</div>
