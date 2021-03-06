@@ -23,6 +23,8 @@ import { CountryPipe } from './pipes/country.pipe';
 import { LoadingpageComponent } from './components/loadingpage/loadingpage.component';
 import { ApiserviceService } from './services/apiservice.service';
 import { ApiComponent } from './routes/api/api.component';
+import { ApiCovidService } from './services/api-covid.service';
+import { ProveApiCoronaComponent } from './components/prove-api-corona/prove-api-corona.component';
 
 @NgModule({
   declarations: [
@@ -41,7 +43,8 @@ import { ApiComponent } from './routes/api/api.component';
     WelcomepageComponent,
     FilterbycountryComponent,
     CountryPipe,
-    ApiComponent
+    ApiComponent,
+    ProveApiCoronaComponent
   ],
   imports: [
     BrowserModule,
@@ -50,7 +53,7 @@ import { ApiComponent } from './routes/api/api.component';
     HttpClientModule,
     FormsModule
   ],
-  providers: [DataService, ApiserviceService],
+  providers: [DataService, ApiserviceService, ApiCovidService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

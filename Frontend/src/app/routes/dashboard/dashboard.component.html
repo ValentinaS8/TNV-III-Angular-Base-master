@@ -14,7 +14,6 @@
     <button class="btn btn-primary mb-3" [routerLink]='["/sortBy"]'>Sort by </button>
     <button class="btn btn-primary mb-3" [routerLink]='["/filterByCountry"]'>Filter By Country</button>
     <button class="btn btn-primary mb-3" [routerLink]='["/apicorona"]'>Api</button>
-
   </div>
 
   <table class="table">
@@ -34,6 +33,6 @@
         <td>{{entry.date | date}}</td>
       </tr>
     </tbody>
-  </table>
+  </table> 
 </div>
 <app-loadingpage *ngIf="!covidDataLoader" ></app-loadingpage>
