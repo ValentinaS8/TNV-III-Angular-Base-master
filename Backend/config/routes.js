@@ -4,6 +4,7 @@ const ErrorsEngine  = require('../engine/errors');
 module.exports = (app) => {
 
   const dataPath = '/data';
+  const meteoDataPath = '/meteodata'
 
   /********** DATA REST APIs **********/
   app.get(dataPath, DataEngine.getEntry);
