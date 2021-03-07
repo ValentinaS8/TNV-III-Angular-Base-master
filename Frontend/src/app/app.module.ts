@@ -23,6 +23,8 @@ import { CountryPipe } from './pipes/country.pipe';
 import { LoadingpageComponent } from './components/loadingpage/loadingpage.component';
 import { ApiserviceService } from './services/apiservice.service';
 import { ApiComponent } from './routes/api/api.component';
+import { ApiMeteoService } from './services/api-meteo.service';
+import { ApiMeteoComponent } from './routes/api-meteo/api-meteo.component';
 
 @NgModule({
   declarations: [
@@ -41,7 +43,9 @@ import { ApiComponent } from './routes/api/api.component';
     WelcomepageComponent,
     FilterbycountryComponent,
     CountryPipe,
-    ApiComponent
+    ApiComponent,
+    
+    ApiMeteoComponent
   ],
   imports: [
     BrowserModule,
@@ -50,7 +54,7 @@ import { ApiComponent } from './routes/api/api.component';
     HttpClientModule,
     FormsModule
   ],
-  providers: [DataService, ApiserviceService],
+  providers: [DataService, ApiserviceService,ApiMeteoService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

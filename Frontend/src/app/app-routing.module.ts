@@ -10,6 +10,7 @@ import { SortByComponent } from './routes/sort-by/sort-by.component';
 import { WelcomepageComponent } from './routes/welcomepage/welcomepage.component';
 import { FilterbycountryComponent } from './routes/filterbycountry/filterbycountry.component';
 import { ApiComponent } from './routes/api/api.component';
+import { ApiMeteoComponent } from './routes/api-meteo/api-meteo.component';
 
 
 const routes: Routes = [
@@ -23,7 +24,8 @@ const routes: Routes = [
   { path: "sortBy", component: SortByComponent},
   { path: "welcome", component: WelcomepageComponent},
   { path: "filterByCountry", component: FilterbycountryComponent},
-  { path: "apicorona", component:ApiComponent}
+  { path: "apicorona", component:ApiComponent},
+  {path: "apimeteo", component: ApiMeteoComponent},
 ];
 
 @NgModule({
