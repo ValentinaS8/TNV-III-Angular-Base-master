@@ -1,7 +1,7 @@
 'use strict';
 
 module.exports = (sequelize, DataType) => {
-  let DataEntry = sequelize.define('MeteoDataEntry', {
+  let MeteoDataEntry = sequelize.define('MeteoDataEntry', {
     // id missing because Sequelize adds it by default
     nome_citta:  DataType.STRING(20),
     data: DataType.INTEGER(12),
@@ -16,7 +16,7 @@ module.exports = (sequelize, DataType) => {
   });
 
   // Association to other models (foreign keys)
-  DataEntry.associate = function (models) {
+  MeteoDataEntry.associate = function (models) {
 
   };
 
