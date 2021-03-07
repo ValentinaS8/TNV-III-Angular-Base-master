@@ -16,6 +16,7 @@ export class ProveApiCoronaComponent implements OnInit {
   constructor(private router: Router, private apiCovidService: ApiCovidService) { }
 
   covidCountriesData: ApiCoronaData;
+  covidCountriesDataArray: Array<ApiCoronaData> = [];
   afghanistanData: ApiCoronaData;
   afghanistanDataArray: Array<ApiCoronaData> = [];
   //countryCode : "AF";
@@ -31,6 +32,18 @@ export class ProveApiCoronaComponent implements OnInit {
       () => console.log("Loading countries data completed", this.covidCountriesData)     
     )
   }
+  
+
+  /*PROVA:
+  getCountriesCovidData() {
+    this.apiCovidService.getCountriesData().subscribe((data: ApiCoronaData) => {
+      this.covidCountriesData = data,
+      this.covidCountriesDataArray.push(this.covidCountriesData)
+    },     
+      err => console.log(err),
+      () => console.log("Loading countries data completed", this.covidCountriesData)     
+    )
+  }*/
 
   getAfghanistanData() {
     this.apiCovidService.getAfghanistanData().subscribe((data: ApiCoronaData) => {
@@ -41,9 +54,13 @@ export class ProveApiCoronaComponent implements OnInit {
       for (let item in this.afghanistanData) {        
         if(this.afghanistanData.data.updated_at.includes("T"))
         {
-          let correctData = this.afghanistanData.data.updated_at.substring(0, 10);
-          this.afghanistanData.data.updated_at = correctData;          
+          let correctedData = this.afghanistanData.data.updated_at.substring(0, 10);
+          this.afghanistanData.data.updated_at = correctedData;          
         }
+        /*
+        TODO: ridurre il numero alle ultime 2 cifre decimali
+        this.afghanistanData.data.latest_data.calculated.death_rate
+        */
       }      
       this.afghanistanDataArray.push(this.afghanistanData);
     },

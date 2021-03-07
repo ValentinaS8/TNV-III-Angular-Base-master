@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { CoronaCountryProva } from '../models/coronaCountryProva.model';
+import { ApiCoronaData, ApiCovidData } from '../models/apiCorona.model';
+
 
 @Injectable({
   providedIn: 'root'
@@ -16,13 +17,13 @@ export class ApiCovidService {
   /*creazione chiamata http per la get che interroga l'api per avere i dati di tutte le nazioni*/
   getCountriesData()
   {
-    return this.http.get<CoronaCountryProva>(this.baseUrl + '/countries'); //url che restituisce i dati di tutte le nazioni
+    return this.http.get<ApiCoronaData>(this.baseUrl + '/countries'); //url che restituisce i dati di tutte le nazioni
   }
 
   /*creazione chiamata http per la get che interroga l'api per avere i dati di una sola nazione (Afghanistan)*/
   getAfghanistanData()
   {
-    return this.http.get<CoronaCountryProva>(this.baseUrl + '/countries' + '/AF'); //url che restituisce i dati di tutte le nazioni
+    return this.http.get<ApiCoronaData>(this.baseUrl + '/countries' + '/AF'); //url che restituisce i dati di tutte le nazioni
   }
   
   /*creazione chiamata http per la get che interroga l'api per avere i dati di una sola nazione (Afghanistan)*

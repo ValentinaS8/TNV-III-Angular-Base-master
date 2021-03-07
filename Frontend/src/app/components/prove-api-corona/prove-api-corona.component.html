@@ -1,8 +1,11 @@
 <!-- bottone di prova api corona -> fa la chiamata get per avere i dati di tutte le nazioni-->
-<button (click)="getCountriesCovidData()">Dati di tutte le nazioni - Api corona</button>
-<button (click)="getAfghanistanData()">Dati dell'Afghanistan - Api corona</button>
+<div class="container">
+    
+</div>
 
 <div class="container p-5">
+    <button (click)="getCountriesCovidData()">Dati di tutte le nazioni - Api corona</button>
+    <button (click)="getAfghanistanData()">Dati dell'Afghanistan - Api corona</button>
     <table class="table">
         <thead class="thead-dark">
         <tr>
@@ -32,3 +35,35 @@
         </tbody>
     </table> 
 </div>
+
+<!--<div class="container p-5">
+    <table class="table">
+        <thead class="thead-dark">
+        <tr>
+            <th scope="col">Nome</th>
+            <th scope="col">Popolazione</th>
+            <th scope="col">Data</th>
+            <th scope="col">Morti di oggi</th>
+            <th scope="col">Casi confermati oggi</th> 
+            <th scope="col">Storico morti</th>
+            <th scope="col">Storico casi</th>
+            <th scope="col">Morti percentuali</th>
+            <th scope="col">Casi su un milione di abitanti</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr class="pointer" *ngFor="let entry of covidCountriesDataArray">
+            <th scope="row"> {{entry.data.name}}</th>
+            <td>{{entry.data.population}}</td>
+            <td>{{entry.data.updated_at}}</td>
+            <td>{{entry.data.today.deaths}}</td>
+            <td>{{entry.data.today.confirmed}}</td>
+            <td>{{entry.data.latest_data.deaths}}</td>
+            <td>{{entry.data.latest_data.confirmed}}</td>
+            <td>{{entry.data.latest_data.calculated.death_rate}}</td>
+            <td>{{entry.data.latest_data.calculated.cases_per_million_population}}</td>            
+        </tr>
+        </tbody>
+    </table> 
+</div>-->
+

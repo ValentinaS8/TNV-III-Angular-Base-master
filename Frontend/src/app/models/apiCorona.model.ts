@@ -17,8 +17,8 @@ export interface Today {
 
 export interface LatestData{
     deaths : number, //storico dei morti
-    confirmed:number, //storico dei casi
-    calculated : Calculated //contiene la ercentuale di morti e il numero di casi su un milione di abitanti
+    confirmed : number, //storico dei casi
+    calculated : Calculated //contiene la percentuale di morti e il numero di casi su un milione di abitanti
 }
 
 export interface Calculated{
