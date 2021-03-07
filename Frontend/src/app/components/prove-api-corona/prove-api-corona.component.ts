@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Console } from 'console';
 import { ApiCoronaData } from 'src/app/models/apiCorona.model';
 import { ApiCovidService } from '../../services/api-covid.service';
 
@@ -27,20 +28,30 @@ export class ProveApiCoronaComponent implements OnInit {
     this.apiCovidService.getCountriesData().subscribe((data: ApiCoronaData) =>
       this.covidCountriesData = data,
       err => console.log(err),
-      () => console.log("Loading countries data completed", this.covidCountriesData)
-      //() => console.log("Loading countries data completed", JSON.stringify(this.covidCountriesData))
+      () => console.log("Loading countries data completed", this.covidCountriesData)     
     )
   }
 
   getAfghanistanData() {
     this.apiCovidService.getAfghanistanData().subscribe((data: ApiCoronaData) => {
-      this.afghanistanData = data,
+      this.afghanistanData = data;
+
+      /*il campo che contiene la data all'interno del file json contiene 
+      anche l'orario -> estrapolo la data*/ 
+      for (let item in this.afghanistanData) {        
+        if(this.afghanistanData.data.updated_at.includes("T"))
+        {
+          let correctData = this.afghanistanData.data.updated_at.substring(0, 10);
+          this.afghanistanData.data.updated_at = correctData;          
+        }
+      }      
       this.afghanistanDataArray.push(this.afghanistanData);
     },
       err => console.log(err),
       () => console.log("Loading countries data completed", this.afghanistanData)
     )
   }
+
   /* getOneCountryData(countryCode : string)
    {
      this.apiCovidService.getOneCountryData(countryCode).subscribe((data: CoronaCountryProva) => {
