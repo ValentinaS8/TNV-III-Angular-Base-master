@@ -1,4 +1,4 @@
-export interface CoronaCountryProva {
+export interface ApiCoronaData {
     data : ApiCovidData
 }
 
