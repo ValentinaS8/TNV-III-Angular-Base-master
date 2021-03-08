@@ -35,15 +35,17 @@ const meteoGetEntryById = (req, res) => {
 };
 
 const meteoCreateEntry = (req, res) => {
-  const {nome_citta, data, temp_max, temp_min, temp_media, umidita_perc,} = req.body;
+  const {timezone, time, temperature, temperatureMax,
+     temperatureMin, relHumidity,airQualityIndex} = req.body;
 
   MeteoDataEntry.create({
-    nome_citta: nome_citta,
-    data: data,
-    temp_max: temp_max,
-    temp_min: temp_min,
-    temp_media: temp_media,
-    umidita_perc: umidita_perc,    
+    timezone: timezone,
+    time: time,
+    temperature: temperature,
+    temperatureMax: temperatureMax,
+    temperatureMin: temperatureMin,
+    relHumidity: relHumidity,    
+    airQualityIndex : airQualityIndex
   })
     .then(entry => {
       return res.status(201).send(entry);
@@ -55,7 +57,8 @@ const meteoCreateEntry = (req, res) => {
 
 const meteoEditEntry = (req, res) => {
   const meteoEntryId = req.params.id;
-  const {nome_citta, data, temp_max, temp_min, temp_media, umidita_perc,} = req.body;
+  const {timezone, time, temperature, temperatureMax, 
+    temperatureMin, relHumidity,airQualityIndex} = req.body;
 
   MeteoDataEntry.findOne({
     where: {
@@ -72,12 +75,13 @@ const meteoEditEntry = (req, res) => {
       }
 
       MeteoDataEntry.update({
-        nome_citta: nome_citta,
-        data: data,
-        temp_max: temp_max,
-        temp_min: temp_min,
-        temp_media: temp_media,
-        umidita_perc: umidita_perc,       
+        timezone: timezone,
+        time: time,
+        temperature: temperature,
+        temperatureMax: temperatureMax,
+        temperatureMin: temperatureMin,
+        relHumidity: relHumidity, 
+        airQualityIndex : airQualityIndex      
       }, {
         where: {
           id: meteoEntryId
