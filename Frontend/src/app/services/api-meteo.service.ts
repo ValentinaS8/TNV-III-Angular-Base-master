@@ -20,14 +20,13 @@ export class ApiMeteoService {
   addMeteoEntry = (meteoCountries: ApiMeteo) => {
     return this.http.post<ApiMeteo>(this.baseDBURL, {     
       
-      "timezone": meteoCountries.timezone,
-      "time": meteoCountries.time,
-      "temperature": meteoCountries.temperature,
-      "temperatureMax": meteoCountries.temperatureMax,
-      "temperaturemin": meteoCountries.temperatureMin,
-      "relHumidity": meteoCountries.relHumidity,
-      "fatalityRate": meteoCountries.airQualityIndex,
-      "airQuality": meteoCountries.airQualityIndex,     
+      "timezone": meteoCountries.data.current.timezone,
+      "time": meteoCountries.data.current.time,
+      "temperature": meteoCountries.data.current.temperature,
+      "temperatureMax": meteoCountries.data.current.temperatureMax,
+      "temperaturemin": meteoCountries.data.current.temperatureMin,
+      "relHumidity": meteoCountries.data.current.relHumidity,
+      "airQuality": meteoCountries.data.current.airQualityIndex,     
       
     });
   };

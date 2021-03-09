@@ -66,7 +66,7 @@ COMMIT;
 -- --------------------------------------------------------
 
 --
--- Table structure for table `data`
+-- Table structure for table `meteodata`
 --
 
 CREATE TABLE `meteodata` (
