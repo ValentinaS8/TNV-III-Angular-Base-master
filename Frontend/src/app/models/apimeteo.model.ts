@@ -1,7 +1,10 @@
 export interface ApiMeteo{
-    current : ApiMeteoData
+    data: current 
 }
 
+export interface current{
+    current : ApiMeteoData
+}
 export interface ApiMeteoData{
     timezone : string,
     time : number,    

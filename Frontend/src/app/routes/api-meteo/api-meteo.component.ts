@@ -1,6 +1,8 @@
 import { ApiMeteo } from './../../models/apimeteo.model';
 import { Component, OnInit } from '@angular/core';
 import { ApiMeteoService } from '../../services/api-meteo.service';
+import { Router } from '@angular/router';
+
 
 
 @Component({
@@ -17,15 +19,29 @@ meteoCountries : ApiMeteo;
   ngOnInit(): void {
   }
 
-  getMeteoCountries(){
-    this.apimeteoService.getMeteoCountries().subscribe((meteoData :ApiMeteo) =>
+  getMeteoApiData(){
+    this.apimeteoService.getMeteoApiData().subscribe((meteoData : ApiMeteo) =>
       {
         this.meteoCountries = meteoData
+        console.log(this.meteoCountries.data.current.time)
       },
       err => console.log(err),
       ()=> console.log("miracolo!!!", this.meteoCountries)
             
         );
 
+  }
+
+  postMeteoApiData(meteoCountries : ApiMeteo){
+    this.meteoCountries;
+    console.log(meteoCountries.data.current.airQualityIndex)  
+
+    this.apimeteoService.addMeteoEntry(this.meteoCountries).subscribe(response => {
+      console.log(response);
+      },
+    (err) => {
+      //fai qualcosa
+    }
+    )
   }
 }
