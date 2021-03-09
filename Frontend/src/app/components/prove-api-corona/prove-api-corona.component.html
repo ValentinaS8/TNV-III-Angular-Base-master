@@ -22,15 +22,15 @@
         </thead>
         <tbody>
         <tr class="pointer" *ngFor="let entry of afghanistanDataArray">
-            <th scope="row"> {{entry.data.name}}</th>
-            <td>{{entry.data.population}}</td>
-            <td>{{entry.data.updated_at}}</td>
-            <td>{{entry.data.today.deaths}}</td>
-            <td>{{entry.data.today.confirmed}}</td>
-            <td>{{entry.data.latest_data.deaths}}</td>
-            <td>{{entry.data.latest_data.confirmed}}</td>
-            <td>{{entry.data.latest_data.calculated.death_rate}}</td>
-            <td>{{entry.data.latest_data.calculated.cases_per_million_population}}</td>            
+            <th scope="row"> {{entry.country_name}}</th>
+            <td>{{entry.population}}</td>
+            <td>{{entry.date}}</td>
+            <td>{{entry.today_deaths}}</td>
+            <td>{{entry.total_cases}}</td>
+            <td>{{entry.total_deaths}}</td>
+            <td>{{entry.total_cases}}</td>
+            <td>{{entry.death_rate}}</td>
+            <td>{{entry.cases_per_million_people}}</td>            
         </tr>
         </tbody>
     </table> 

@@ -1,55 +1,55 @@
 //copia da data.service.ts
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { ApiCoronaData } from '../models/apiCorona.model';
+import { ApiCoronaDataSemplified } from '../models/apiCoronaSemplified.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CovidService {
 
-  baseURL = 'http://localhost:3000/data';
+  baseURL = 'http://localhost:3000/dati_covid';
 
   constructor(private http: HttpClient) { }
 
   getData() {
-    return this.http.get<Array<ApiCoronaData>>(this.baseURL)
+    return this.http.get<Array<ApiCoronaDataSemplified>>(this.baseURL)
   }
 
   getEntry(id) {
-    return this.http.get<ApiCoronaData>(this.baseURL + "/" + id)
+    return this.http.get<ApiCoronaDataSemplified>(this.baseURL + "/" + id)
   }
 
-  addEntry = (data: ApiCoronaData) => {
-    return this.http.post<ApiCoronaData>(this.baseURL, {
+  addEntry = (data: ApiCoronaDataSemplified) => {
+    return this.http.post<ApiCoronaDataSemplified>(this.baseURL, {
       //l'id è automatico e autoincrementante, quindi non lo inserisco
-      "nome_stato": data.data.name,
-      "data": data.data.updated_at,
-      "popolazione": data.data.population,
-      "morti_giornaliere": data.data.today.deaths,
-      "casi_giornalieri": data.data.today.confirmed,
-      "morti_totali": data.data.latest_data.deaths,
-      "casi_totali": data.data.latest_data.confirmed,
-      "percentuale_morti": data.data.latest_data.calculated.death_rate,
-      "casi_su_un_milione_di_abitanti": data.data.latest_data.calculated.cases_per_million_population
+      "name": data.country_name,
+      "population": data.population,
+      "date": data.date,
+      "today_deaths": data.today_deaths,
+      "today_cases": data.today_cases,
+      "total_deaths": data.today_deaths,
+      "total_cases": data.total_cases,
+      "death_rate": data.death_rate,
+      "cases_per_million_people": data.cases_per_million_people
     });
   };
-
+ 
   deleteEntry(id) {
     return this.http.delete(this.baseURL + "/" + id)
   }
 
-  editEntry = (data: ApiCoronaData) => {
-    return this.http.put(this.baseURL + '/' + data.data.name, {
-      "nome_stato": data.data.name,
-      "data": data.data.updated_at,
-      "popolazione": data.data.population,
-      "morti_giornaliere": data.data.today.deaths,
-      "casi_giornalieri": data.data.today.confirmed,
-      "morti_totali": data.data.latest_data.deaths,
-      "casi_totali": data.data.latest_data.confirmed,
-      "percentuale_morti": data.data.latest_data.calculated.death_rate,
-      "casi_su_un_milione_di_abitanti": data.data.latest_data.calculated.cases_per_million_population
+  editEntry = (data: ApiCoronaDataSemplified) => {
+    return this.http.put(this.baseURL + '/' + data.country_name, {
+      "name": data.country_name,
+      "population": data.population,
+      "date": data.date,
+      "today_deaths": data.today_deaths,
+      "today_cases": data.today_cases,
+      "total_deaths": data.today_deaths,
+      "total_cases": data.total_cases,
+      "death_rate": data.death_rate,
+      "cases_per_million_people": data.cases_per_million_people
     });
   };
 
