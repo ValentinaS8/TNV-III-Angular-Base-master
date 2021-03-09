@@ -23,7 +23,7 @@ meteoCountries : ApiMeteo;
     this.apimeteoService.getMeteoApiData().subscribe((meteoData : ApiMeteo) =>
       {
         this.meteoCountries = meteoData
-        console.log(this.meteoCountries.data.current.time)
+        console.log(this.meteoCountries.time)
       },
       err => console.log(err),
       ()=> console.log("miracolo!!!", this.meteoCountries)
@@ -34,7 +34,7 @@ meteoCountries : ApiMeteo;
 
   postMeteoApiData(meteoCountries : ApiMeteo){
     this.meteoCountries;
-    console.log(meteoCountries.data.current.airQualityIndex)  
+    console.log(meteoCountries.airQualityIndex)  
 
     this.apimeteoService.addMeteoEntry(this.meteoCountries).subscribe(response => {
       console.log(response);
