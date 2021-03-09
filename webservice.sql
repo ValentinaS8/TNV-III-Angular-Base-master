@@ -59,7 +59,46 @@ ALTER TABLE `data`
 --
 -- AUTO_INCREMENT for table `data`
 --
-ALTER TABLE `data`
+ALTER TABLE `meteodata`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+COMMIT;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `data`
+--
+
+CREATE TABLE `meteodata` (
+  `id` int(11) NOT NULL,
+  `timezone` varchar(50) ,
+  `time` datetime ,
+  `temperature` float(11) NOT NULL,
+  `temperatureMax` float(11) NOT NULL,
+  `temperatureMin` float(11) NOT NULL,
+  `relHumidity` float NOT NULL,
+  `airQualityIndex` float NOT NULL,
+  
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `data`
+--
+ALTER TABLE `meteodata`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `data`
+--
+ALTER TABLE `meteodata`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 COMMIT;
 

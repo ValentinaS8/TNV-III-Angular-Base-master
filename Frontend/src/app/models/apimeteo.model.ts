@@ -1,11 +1,11 @@
-export interface ApiMeteo{
+/*export interface ApiMeteo{
     data: current 
 }
 
 export interface current{
     current : ApiMeteoData
-}
-export interface ApiMeteoData{
+}*/
+export interface ApiMeteo{
     timezone : string,
     time : number,    
     temperature : number,
