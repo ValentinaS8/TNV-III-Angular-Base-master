@@ -1,2 +1,93 @@
-<button (click)="getMeteoApiData()" >GET METEO ENTRIES</button> 
+
+
+<div class="input-group mb-3">
+    <button class="btn btn-outline-secondary" type="button"  (click)="getMeteoApiData()" >Select Countries</button>
+    <select class="form-select" aria-label="Example select with button addon">
+      <option selected>Choose...</option>
+      
+      <option value="All">All</option>
+
+      <option value="Amsterdam">Amsterdam</option>
+
+      <option value="Atene">Atene</option>
+
+      <option value="Berlino">Berlino</option>
+
+      <option value="Bratislava">Bratislava</option>
+
+      <option value="Bruxelles">Bruxelles</option>
+
+      <option value="Bucarest">Bucarest</option>
+
+      <option value="Copenaghen">Copenaghen</option>
+
+      <option value="Dublinio">Dublino</option>
+
+      <option value="Helsinki">Helsinki</option>
+
+      <option value="La Valletta">La Valletta</option>
+
+      <option value="Lisbona">Lisbona</option>
+
+      <option value="Londra">Londra</option>
+
+      <option value="Lubiana">Lubiana</option>
+
+      <option value="Lussemburgo">Lussemburgo</option>
+
+      <option value="Madrid">Madrid</option>
+
+      <option value="Nicosia">Nicosia</option>
+
+      <option value="Parigi">Parigi</option>
+
+      <option value="Praga">Praga</option>
+
+      <option value="Riga">Riga</option>
+
+      <option value="Roma">Roma</option>
+
+      <option value="Stocolma">Stocolma</option>
+
+      <option value="Tallinn">Tallinn</option>
+
+      <option value="Varsavia">Varsavia</option>
+
+      <option value="Vienna">Vienna</option>
+
+      <option value="Vilnius">Vilnius</option>
+
+      <option value="Zagabria">Zagabria</option>
+
+    </select>
+  </div>
+
 <button (click)="postMeteoApiData(meteoCountries)">POST METEO DATA</button>
+<button (click)="getMeteoApiData()">Roma</button>
+
+<div class="container p-5">
+    <h1 class="text-center mb-5">
+      Weather Data
+    </h1>
+  
+    <table class="table">
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col">Countrie</th>
+          <th scope="col">Date</th>
+          <th scope="col">Temperature</th>
+          <th scope="col">Humidity</th>
+          <th scope="col">Air Quality Index</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="pointer" *ngFor="let entry of meteoDataArray">
+          <th scope="row"> {{entry.data.timezone}}</th>
+          <td>{{entry.data.current.time}}</td>
+          <td>{{entry.data.current.temperature}}</td>
+          <td>{{entry.data.current.relHumidity}}</td>
+          <td>{{entry.data.current.airQualityIndex}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>

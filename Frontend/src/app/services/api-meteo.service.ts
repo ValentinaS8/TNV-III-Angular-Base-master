@@ -14,13 +14,13 @@ export class ApiMeteoService {
     
   }
   getMeteoApiData(){
-    return this.http.get(this.baseApiUrl+this.apiKey);
+    return this.http.get<ApiMeteo>(this.baseApiUrl+this.apiKey);
   }
 
   addMeteoEntry = (meteoCountries: ApiMeteo) => {
     return this.http.post<ApiMeteo>(this.baseDBURL, {     
       
-      "timezone": meteoCountries.data.current.timezone,
+      "timezone": meteoCountries.data.timezone,
       "time": meteoCountries.data.current.time,
       "temperature": meteoCountries.data.current.temperature,
       "temperatureMax": meteoCountries.data.current.temperatureMax,
