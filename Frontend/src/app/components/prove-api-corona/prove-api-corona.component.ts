@@ -41,7 +41,7 @@ export class ProveApiCoronaComponent implements OnInit {
       this.afghanistanData = data;
 
       /*il campo che contiene la data all'interno del file json contiene 
-      anche l'orario -> estrapolo la data*/
+       anche l'orario -> estrapolo la data*/
       for (let item in this.afghanistanData) {
         if (this.afghanistanData.data.updated_at.includes("T")) {
           let correctedData = this.afghanistanData.data.updated_at.substring(0, 10);
@@ -56,17 +56,17 @@ export class ProveApiCoronaComponent implements OnInit {
       this.transfertData();
 
       this.afghanistanDataArray.push(this.afghanistanSemplifiedData);//questo corrisponde a  this.dataEntry = form.form.value;
-      //chiama il servizio e gli dà i dati da scrivere            
-      this.covidService.addEntry(this.afghanistanSemplifiedData).subscribe(response => {
+      //chiama il servizio del db e gli dà i dati da scrivere            
+      this.covidService.addCovidEntry(this.afghanistanSemplifiedData).subscribe(response => {
         console.log("Ho inviato i dati al db?"),
           this.router.navigate(['/dashboard']);
       }
       )
     },
       err => console.log(err),
-      () => console.log("Loading countries data completed", this.afghanistanData)
+      () => console.log("Loading countries data completed", this.afghanistanSemplifiedData.date)
     )
-  }
+  } 
 
   transfertData() {
     for (let item in this.afghanistanData) {
@@ -84,47 +84,47 @@ export class ProveApiCoronaComponent implements OnInit {
   }
 }
   /*
-   onSubmit(form : NgForm){
-    this.dataEntry = form.form.value;
-    console.log(form)
-    console.log(this.dataEntry);
+onSubmit(form : NgForm){
+this.dataEntry = form.form.value;
+console.log(form)
+console.log(this.dataEntry);
 
-    //chiama il servizio e gli dà i dati da scrivere
-    this.dataService.addEntry(this.dataEntry).subscribe(response => {
-      console.log(response);
-      this.router.navigate(['/dashboard']);
-    },
-    (err) => {
-      //fai qualcosa
-    }
-    )
-  }
-   */
+//chiama il servizio e gli dà i dati da scrivere
+this.dataService.addEntry(this.dataEntry).subscribe(response => {
+  console.log(response);
+  this.router.navigate(['/dashboard']);
+},
+(err) => {
+  //fai qualcosa
+}
+)
+}
+*/
 
-  /*PROVA:
-  getCountriesCovidData() {
-    this.apiCovidService.getCountriesData().subscribe((data: ApiCoronaData) => {
-      this.covidCountriesData = data,
-      this.covidCountriesDataArray.push(this.covidCountriesData)
-    },     
-      err => console.log(err),
-      () => console.log("Loading countries data completed", this.covidCountriesData)     
-    )
-  }*/
+/*PROVA:
+getCountriesCovidData() {
+  this.apiCovidService.getCountriesData().subscribe((data: ApiCoronaData) => {
+    this.covidCountriesData = data,
+    this.covidCountriesDataArray.push(this.covidCountriesData)
+  },
+    err => console.log(err),
+    () => console.log("Loading countries data completed", this.covidCountriesData)
+  )
+}*/
 
 
 
-  /* getOneCountryData(countryCode : string)
-   {
-     this.apiCovidService.getOneCountryData(countryCode).subscribe((data: CoronaCountryProva) => {
-       this.oneCountryData = data;
-     },
-     err => console.log(err),
-     () => console.log("Loading countries data completed", JSON.stringify(this.oneCountryData))
-     //() => console.log("Loading countries data completed", JSON.stringify(this.covidCountriesData))
-   )
-  // return null;
-   }*/
+/* getOneCountryData(countryCode : string)
+ {
+   this.apiCovidService.getOneCountryData(countryCode).subscribe((data: CoronaCountryProva) => {
+     this.oneCountryData = data;
+   },
+   err => console.log(err),
+   () => console.log("Loading countries data completed", JSON.stringify(this.oneCountryData))
+   //() => console.log("Loading countries data completed", JSON.stringify(this.covidCountriesData))
+ )
+// return null;
+ }*/
 
 
 

@@ -8,7 +8,7 @@
     <button (click)="getAfghanistanData()">Dati dell'Afghanistan - Api corona</button>
     <table class="table">
         <thead class="thead-dark">
-        <tr>
+        <tr>           
             <th scope="col">Nome</th>
             <th scope="col">Popolazione</th>
             <th scope="col">Data</th>
@@ -17,7 +17,7 @@
             <th scope="col">Storico morti</th>
             <th scope="col">Storico casi</th>
             <th scope="col">Morti percentuali</th>
-            <th scope="col">Casi su un milione di abitanti</th>
+            <th scope="col">Casi su un milione di abitanti</th>           
         </tr>
         </thead>
         <tbody>
@@ -26,11 +26,11 @@
             <td>{{entry.population}}</td>
             <td>{{entry.date}}</td>
             <td>{{entry.today_deaths}}</td>
-            <td>{{entry.total_cases}}</td>
+            <td>{{entry.today_cases}}</td>
             <td>{{entry.total_deaths}}</td>
-            <td>{{entry.total_cases}}</td>
+            <td>{{entry.total_cases}}</td>           
             <td>{{entry.death_rate}}</td>
-            <td>{{entry.cases_per_million_people}}</td>            
+            <td>{{entry.cases_per_million_people}}</td>           
         </tr>
         </tbody>
     </table> 
