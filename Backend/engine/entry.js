@@ -130,6 +130,7 @@ const deleteEntry = (req, res) => {
     })
 };
 
+/************ */
 const getCovidEntry = (req, res) => {
   DataEntry.findAll({})
     .then(entry => {
@@ -166,7 +167,7 @@ const getCovidEntryById = (req, res) => {
 
 const createCovidEntry = (req, res) => {
   const {country_name, population, date, today_deaths, today_cases, total_deaths, total_cases, death_rate, cases_per_million_people} = req.body;
-
+  console.log("createCovidEntry");
   DataEntry.create({
     country_name : country_name,
     population : population,

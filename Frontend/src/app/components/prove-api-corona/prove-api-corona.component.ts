@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ApiCoronaData } from 'src/app/models/apiCorona.model';
-import { ApiCoronaDataSemplified } from 'src/app/models/apiCoronaSemplified.model';
 import { CovidService } from 'src/app/services/covid.service';
 import { ApiCovidService } from '../../services/api-covid.service';
 
@@ -19,10 +18,9 @@ export class ProveApiCoronaComponent implements OnInit {
   covidCountriesData: ApiCoronaData;
   covidCountriesDataArray: Array<ApiCoronaData> = [];
   afghanistanData: ApiCoronaData;
-  afghanistanSemplifiedData: ApiCoronaDataSemplified;
-  //afghanistanDataArray: Array<ApiCoronaData> = [];
-  afghanistanDataArray: Array<ApiCoronaDataSemplified> = [];
-  //countryCode : "AF";
+  //afghanistanSemplifiedData: ApiCoronaDataSemplified;
+  afghanistanDataArray: Array<ApiCoronaData> = [];
+  //afghanistanDataArray: Array<ApiCoronaDataSemplified> = [];
 
   ngOnInit(): void {
   }
@@ -53,22 +51,23 @@ export class ProveApiCoronaComponent implements OnInit {
         */
       }
       //qui chiama una funzione che trasferisce i dati da un oggetto all'altro prima di pusharli
-      this.transfertData();
-
-      this.afghanistanDataArray.push(this.afghanistanSemplifiedData);//questo corrisponde a  this.dataEntry = form.form.value;
+     // this.transfertData();
+      console.log(this.afghanistanData);
+      this.afghanistanDataArray.push(this.afghanistanData);//questo corrisponde a  this.dataEntry = form.form.value;
       //chiama il servizio del db e gli dà i dati da scrivere            
-      this.covidService.addCovidEntry(this.afghanistanSemplifiedData).subscribe(response => {
-        console.log("Ho inviato i dati al db?"),
+      this.covidService.addCovidEntry(this.afghanistanData).subscribe(response => {
+        console.log("Ho inviato i dati al db"),
           this.router.navigate(['/dashboard']);
       }
       )
     },
       err => console.log(err),
-      () => console.log("Loading countries data completed", this.afghanistanSemplifiedData.date)
+      () => console.log("Loading countries data completed", this.afghanistanData.data.latest_data)
     )
   } 
 
-  transfertData() {
+/*  transfertData() {
+    //this.afghanistanSemplifiedData = JSON.parse(JSON.stringify(this.afghanistanData))
     for (let item in this.afghanistanData) {
       this.afghanistanSemplifiedData.country_name = this.afghanistanData.data.name;
       this.afghanistanSemplifiedData.population = this.afghanistanData.data.population;
@@ -81,7 +80,7 @@ export class ProveApiCoronaComponent implements OnInit {
       this.afghanistanSemplifiedData.cases_per_million_people = this.afghanistanData.data.latest_data.calculated.cases_per_million_population;
     }
 
-  }
+  }*/
 }
   /*
 onSubmit(form : NgForm){

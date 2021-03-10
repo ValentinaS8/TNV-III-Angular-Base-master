@@ -28,7 +28,7 @@ module.exports = (sequelize, DataType) => {
 };
 
 module.exports = (sequelize, DataType) => {
-  let DataEntry = sequelize.define('DataCovidEntry', {
+  let DataCovidEntry = sequelize.define('DataCovidEntry', {
     // id missing because Sequelize adds it by default
         country_name : DataType.STRING(100),
         population : DataType.INTEGER(11),

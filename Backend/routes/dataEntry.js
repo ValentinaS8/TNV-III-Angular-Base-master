@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const DataEntry = require('../models/index').dataEntry;
-const DataCovidEntry = require('../models/index').dataEntry; 
+const DataCovidEntry = require('../models/index').DataCovidEntry; 
 
 router.get('/', function (req, res, next) {
     DataEntry.findAll({})
@@ -111,6 +111,7 @@ router.get('/:id', function (req, res, next) {
 
 router.post('/', function (req, res, next) {
     //dati passati dal frontend attraverso il body
+    console.log("body:", req.body)
     const {country_name, population, date, today_deaths, today_cases, total_deaths, total_cases, death_rate, cases_per_million_people} = req.body;
     DataCovidEntry.create({
         //questi sono esattamente i nomi delle colonne della tabella
