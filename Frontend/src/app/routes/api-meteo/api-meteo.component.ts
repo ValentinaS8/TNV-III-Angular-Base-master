@@ -14,15 +14,17 @@ import { NgSelectOption, NgForm } from '@angular/forms';
 export class ApiMeteoComponent implements OnInit {
 
   constructor(private apimeteoService: ApiMeteoService) { }
-  value;
-europe=["Amsterdam","Atene","Berlino","Bratislava","Bruxelles","Bucarest","Budapest","Copenaghen","Dublino","Helsinki","La Valletta","Lisbona","Londra","Lubiana","Lussemburgo","Madrid","Nicosia","Parigi","Praga","Riga","Roma","Stoccolma","Tallinn","Varsavia","Vienna","Vilnius","Zagabria",];
+dataCity: string;
+europe=["Amsterdam","Atene","Berlino","Bratislava","Bruxelles","Bucarest","Budapest","Copenaghen","Dublino","Helsinki","La Valletta","Lisbona","Londra","Lubiana","Lussemburgo","Madrid","Nicosia","Parigi","Praga","Riga","Roma","Stocolma","Tallinn","Varsavia","Vienna","Vilnius","Zagabria",];
 meteoCountries : ApiMeteo;
 meteoDataArray : Array<ApiMeteo>=[];
   ngOnInit(): void {
   }
 
   getMeteoApiData(form : NgForm){
-    this.apimeteoService.getMeteoApiData().subscribe((meteoData : ApiMeteo) =>
+    this.dataCity=form.form.value.city
+    console.log(this.dataCity);
+    this.apimeteoService.getMeteoApiData(this.dataCity).subscribe((meteoData : ApiMeteo) =>
       {
         this.meteoCountries = meteoData
         this.meteoDataArray.push(this.meteoCountries)
