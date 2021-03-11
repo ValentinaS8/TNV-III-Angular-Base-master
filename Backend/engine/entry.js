@@ -1,4 +1,5 @@
 const DataEntry = require('../models/index').DataEntry; //dovrebbe essere giusto così (file senza riferimento al modello dei dati)
+const DataCovidEntry = require('../models/index').DataCovidEntry;
 
 const getEntry = (req, res) => {
   DataEntry.findAll({})
@@ -132,7 +133,7 @@ const deleteEntry = (req, res) => {
 
 /************ */
 const getCovidEntry = (req, res) => {
-  DataEntry.findAll({})
+  DataCovidEntry.findAll({})
     .then(entry => {
       return res.status(200).send(entry)
     })
@@ -144,7 +145,7 @@ const getCovidEntry = (req, res) => {
 const getCovidEntryById = (req, res) => {
   const entryId = req.params.id;
 
-  DataEntry.findOne({
+  DataCovidEntry.findOne({
     where: {
       id: entryId
     }
@@ -168,7 +169,7 @@ const getCovidEntryById = (req, res) => {
 const createCovidEntry = (req, res) => {
   const {country_name, population, date, today_deaths, today_cases, total_deaths, total_cases, death_rate, cases_per_million_people} = req.body;
   console.log("createCovidEntry");
-  DataEntry.create({
+  DataCovidEntry.create({
     country_name : country_name,
     population : population,
     date: date,
@@ -191,7 +192,7 @@ const editCovidEntry = (req, res) => {
   const entryId = req.params.id;
   const {country_name, population, date, today_deaths, today_cases, total_deaths, total_cases, death_rate, cases_per_million_people} = req.body;
 
-  DataEntry.findOne({
+  DataCovidEntry.findOne({
     where: {
       id: entryId
     }
@@ -205,7 +206,7 @@ const editCovidEntry = (req, res) => {
         })
       }
 
-      DataEntry.update({
+      DataCovidEntry.update({
         country_name : country_name,
         population : population,
         date: date,
@@ -246,7 +247,7 @@ const editCovidEntry = (req, res) => {
 const deleteCovidEntry = (req, res) => {
   const entryId = req.params.id;
 
-  DataEntry.destroy({
+  DataCovidEntry.destroy({
     where: {
       id: entryId
     }
