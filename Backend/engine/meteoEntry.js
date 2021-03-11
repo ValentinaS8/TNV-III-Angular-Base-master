@@ -35,6 +35,7 @@ const meteoGetEntryById = (req, res) => {
 };
 
 const meteoCreateEntry = (req, res) => {
+  console.log(req)
   const {timezone, time, temperature, temperatureMax,
      temperatureMin, relHumidity,airQualityIndex} = req.body;
 

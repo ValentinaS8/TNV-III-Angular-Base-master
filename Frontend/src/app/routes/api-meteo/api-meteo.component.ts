@@ -2,7 +2,7 @@ import { ApiMeteo } from './../../models/apimeteo.model';
 import { Component, OnInit } from '@angular/core';
 import { ApiMeteoService } from '../../services/api-meteo.service';
 import { Router } from '@angular/router';
-import { NgSelectOption } from '@angular/forms';
+import { NgSelectOption, NgForm } from '@angular/forms';
 
 
 
@@ -21,12 +21,13 @@ meteoDataArray : Array<ApiMeteo>=[];
   ngOnInit(): void {
   }
 
-  getMeteoApiData(){
+  getMeteoApiData(form : NgForm){
     this.apimeteoService.getMeteoApiData().subscribe((meteoData : ApiMeteo) =>
       {
         this.meteoCountries = meteoData
         this.meteoDataArray.push(this.meteoCountries)
         console.log(this.meteoCountries.data.current.time)
+
       },
       err => console.log(err),
       ()=> console.log("miracolo!!!", this.meteoCountries)
@@ -34,7 +35,7 @@ meteoDataArray : Array<ApiMeteo>=[];
         );
 
   }
-
+// funzione da inserire all'interno della getMetteo al fine di fare tutto in un unico passo
   postMeteoApiData(meteoCountries : ApiMeteo){
     this.meteoCountries;
     console.log(meteoCountries.data.current.airQualityIndex)  
@@ -43,7 +44,7 @@ meteoDataArray : Array<ApiMeteo>=[];
       console.log(response);
       },
     (err) => {
-      //fai qualcosa
+      console.log ("Esaurimento Nervoso In Arrivo") 
     }
     )
   }
