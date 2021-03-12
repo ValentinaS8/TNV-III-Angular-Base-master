@@ -20,24 +20,36 @@ export class GraphicsComponent implements OnInit {
 
   ngOnInit(): void {
     this.getMeteoApiData();
+    this.getCovidApiData();
   }
 
   getMeteoApiData() {
     this.apimeteoService.getMeteoApiData().subscribe((meteoData: ApiMeteo) => {
       this.romeTemperature = meteoData.data.current.temperature;
-      this.createGraph();
+      this.createMeteoGraph();
     },
       err => console.log(err),
-      () => console.log("miracolo!!!", this.romeTemperature)
+      () => console.log("Dato ottenuto: (C°)", this.romeTemperature)
 
     );
   }
 
-  createGraph() {
-    let myCanvas = document.getElementById("myCanvas");
-    let myCanvas1 = document.getElementById("myCanvas1");
+  getCovidApiData() {
+    //TODO: Sviluppare GET in base al Service di Valentina (Covid Data)
+    this.apimeteoService.getMeteoApiData().subscribe((meteoData: ApiMeteo) => {
+      this.romeTemperature = meteoData.data.current.temperature;
+      this.createCovidGraph();
+    },
+      err => console.log(err),
+      () => console.log("", this.romeTemperature)
+
+    );
+  }
+
+  createMeteoGraph() {
+    let myCanvas = document.getElementById("meteo-grafico1");
     let myLabels = this.europe;
-    const data = this.putData();
+    const data = this.putDataMeteo();
     console.log(data);
 
     let chart = new Chart(myCanvas, {
@@ -46,7 +58,7 @@ export class GraphicsComponent implements OnInit {
         labels: myLabels,
         datasets: [{
           label: "Temperature registrate",
-          data: data.dataMeteo,
+          data: data,
           backgroundColor: 'blue',
           fill: false
         }]
@@ -55,6 +67,14 @@ export class GraphicsComponent implements OnInit {
 
       }
     });
+  }
+
+  createCovidGraph(){
+    let myCanvas1 = document.getElementById("covid-grafico1");
+    let myLabels = this.europe;
+    const data = this.putDataCovid();
+    console.log(data);
+    
     let chart1 = new Chart(myCanvas1, {
       type: 'bar',
       data: {
@@ -72,11 +92,19 @@ export class GraphicsComponent implements OnInit {
     });
   }
 
-  putData(){
+  putDataMeteo(){
+    //TODO: Ciclare ALL GET temperature di tutte le città
     const dataMeteo = [];
-    const dataCovid = [];
     dataMeteo.push(this.romeTemperature);
     console.log(dataMeteo);
-    return {dataMeteo, dataCovid};
+    return dataMeteo;
+  }
+
+  putDataCovid(){
+    //TODO: Ciclare ALL GET casi di tutte le città
+    const dataCovid = [];
+    dataCovid.push();
+    console.log(dataCovid);
+    return {dataCovid};
   }
 }
