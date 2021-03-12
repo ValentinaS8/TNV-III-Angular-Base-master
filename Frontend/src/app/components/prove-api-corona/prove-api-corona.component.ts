@@ -1,3 +1,4 @@
+import { StringMap } from '@angular/compiler/src/compiler_facade_interface';
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -21,15 +22,58 @@ export class ProveApiCoronaComponent implements OnInit {
   afghanistanData: ApiCoronaData;
   afghanistanDataArray: Array<ApiCoronaData> = [];
   countryName: string;
-  europeCountries = ["Italia", "Portogallo", "Spagna", "Francia", "Belgio", "Paesi Bassi", "Lussemburgo",
-    "Cipro", "Malta", "Austria", "Germania", "Polonia", "Danimarca", "Svezia", "Lettonia", "Lituania",
-    "Estonia", "Regno Unito", "Irlanda", "Romania", "Grecia", "Croazia", "Slovenia", "Ungheria", "Repubblica Ceca",
-    "Slovacchia", "Finlandia"];
+  europeCountries: Array<string> = ["Italia", "Portogallo", "Spagna", "Francia", "Belgio", "Paesi Bassi",
+    "Lussemburgo", "Cipro", "Malta", "Austria", "Germania", "Polonia", "Danimarca", "Svezia", "Lettonia", 
+    "Lituania", "Estonia", "Regno Unito", "Irlanda", "Romania", "Grecia", "Croazia", "Slovenia", "Ungheria",
+    "Repubblica Ceca", "Slovacchia", "Finlandia"];
 
   ngOnInit(): void {
   }
 
-  getCountryCovidData(form: NgForm) {
+  getAllEuropeCountriesCovidData() {
+    //console.log("sono entrato nella funzione");
+    for (let i = 0; i < (this.europeCountries).length; i++) {
+      //console.log(this.europeCountries[i]);
+      this.getCountryCovidDataFromArray(this.europeCountries[i]);
+    }
+  }
+
+  getCountryCovidDataFromArray(countryName: string) {
+    this.apiCovidService.getCountryCovidData(countryName).subscribe((data: ApiCoronaData) => {
+      this.covidCountriesData = data;
+
+      /*il campo che contiene la data all'interno del file json contiene 
+       anche l'orario -> estrapolo la data*/
+      for (let item in this.covidCountriesData) {
+        if (this.covidCountriesData.data.updated_at.includes("T")) {
+          let correctedData = this.covidCountriesData.data.updated_at.substring(0, 10);
+          this.covidCountriesData.data.updated_at = correctedData;
+        }
+
+        //riduzione del numero delle cifre decimali del death_rate
+        let deathrateString = (this.covidCountriesData.data.latest_data.calculated.death_rate).toString();
+        //{{(this.afghanistanData.data.latest_data.calculated.death_rate) | number: '2.2-2'}}
+        deathrateString = deathrateString.substring(0, 4);
+        let deathrateCorrectedNumber = parseFloat(deathrateString);
+        this.covidCountriesData.data.latest_data.calculated.death_rate = deathrateCorrectedNumber;
+      }
+
+      this.covidCountriesDataArray.push(this.covidCountriesData);//questo corrisponde a  this.dataEntry = form.form.value;
+      //chiama il servizio del db e gli dà i dati da scrivere            
+      this.covidService.addCovidEntry(this.covidCountriesData).subscribe(response => {
+        console.log("Ho inviato i dati al db")
+        //this.router.navigate(['/dashboard']);
+      }
+      )
+    },
+      err => console.log(err),
+      () => console.log("Loading countries data completed", this.covidCountriesData.data.latest_data)
+    )
+  }
+
+
+
+  getCountryCovidDataFromForm(form: NgForm) {
     this.countryName = form.form.value.country;
     console.log(this.countryName);
     this.apiCovidService.getCountryCovidData(this.countryName).subscribe((data: ApiCoronaData) => {
@@ -53,11 +97,11 @@ export class ProveApiCoronaComponent implements OnInit {
 
       this.covidCountriesDataArray.push(this.covidCountriesData);//questo corrisponde a  this.dataEntry = form.form.value;
       //chiama il servizio del db e gli dà i dati da scrivere            
-        this.covidService.addCovidEntry(this.covidCountriesData).subscribe(response => {
-          console.log("Ho inviato i dati al db")
-            //this.router.navigate(['/dashboard']);
-        }
-        )
+      this.covidService.addCovidEntry(this.covidCountriesData).subscribe(response => {
+        console.log("Ho inviato i dati al db")
+        //this.router.navigate(['/dashboard']);
+      }
+      )
     },
       err => console.log(err),
       () => console.log("Loading countries data completed", this.covidCountriesData.data.latest_data)
