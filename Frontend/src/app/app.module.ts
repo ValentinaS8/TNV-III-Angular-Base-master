@@ -26,6 +26,8 @@ import { ApiComponent } from './routes/api/api.component';
 import { ApiMeteoService } from './services/api-meteo.service';
 import { ApiMeteoComponent } from './routes/api-meteo/api-meteo.component';
 import { GraphicsComponent } from './routes/graphics/graphics.component';
+import { LoginComponent } from './routes/login/login.component';
+import { RegisterComponent } from './routes/register/register.component';
 
 @NgModule({
   declarations: [
@@ -46,7 +48,10 @@ import { GraphicsComponent } from './routes/graphics/graphics.component';
     CountryPipe,
     ApiComponent,
     ApiMeteoComponent,
-    GraphicsComponent
+    GraphicsComponent,
+    LoginComponent,
+    RegisterComponent,
+
   ],
   imports: [
     BrowserModule,

@@ -12,11 +12,15 @@ import { FilterbycountryComponent } from './routes/filterbycountry/filterbycount
 import { ApiComponent } from './routes/api/api.component';
 import { ApiMeteoComponent } from './routes/api-meteo/api-meteo.component';
 import { GraphicsComponent } from './routes/graphics/graphics.component';
+import { LoginComponent } from './routes/login/login.component';
+import { RegisterComponent } from './routes/register/register.component';
+import { AuthGuard } from './services/auth.guard';
+
 
 
 const routes: Routes = [
   { path: "", redirectTo: '/welcome', pathMatch: 'full' },
-  { path: "dashboard", component: DashboardComponent },
+  { path: "dashboard", component: DashboardComponent, canActivate: [AuthGuard] },
   { path: "add", component: AddComponent },
   { path: "details/:id", component: DetailsComponent },
   { path: "edit/:id", component: EditComponent },
@@ -28,6 +32,10 @@ const routes: Routes = [
   { path: "apicorona", component: ApiComponent },
   { path: "apimeteo", component: ApiMeteoComponent },
   { path: "graphics", component: GraphicsComponent },
+  { path: "login", component: LoginComponent },
+  { path: "register", component: RegisterComponent },
+
+
 ];
 
 @NgModule({
