@@ -23,8 +23,9 @@ import { CountryPipe } from './pipes/country.pipe';
 import { LoadingpageComponent } from './components/loadingpage/loadingpage.component';
 import { ApiserviceService } from './services/apiservice.service';
 import { ApiComponent } from './routes/api/api.component';
-import { ApiCovidService } from './services/api-covid.service';
-import { ProveApiCoronaComponent } from './components/prove-api-corona/prove-api-corona.component';
+import { ApiMeteoService } from './services/api-meteo.service';
+import { ApiMeteoComponent } from './routes/api-meteo/api-meteo.component';
+import { GraphicsComponent } from './routes/graphics/graphics.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +45,8 @@ import { ProveApiCoronaComponent } from './components/prove-api-corona/prove-api
     FilterbycountryComponent,
     CountryPipe,
     ApiComponent,
-    ProveApiCoronaComponent
+    ApiMeteoComponent,
+    GraphicsComponent
   ],
   imports: [
     BrowserModule,
@@ -53,7 +55,7 @@ import { ProveApiCoronaComponent } from './components/prove-api-corona/prove-api
     HttpClientModule,
     FormsModule
   ],
-  providers: [DataService, ApiserviceService, ApiCovidService],
+  providers: [DataService, ApiserviceService, ApiMeteoService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

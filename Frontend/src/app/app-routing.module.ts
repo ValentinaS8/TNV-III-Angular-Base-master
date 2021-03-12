@@ -10,22 +10,24 @@ import { SortByComponent } from './routes/sort-by/sort-by.component';
 import { WelcomepageComponent } from './routes/welcomepage/welcomepage.component';
 import { FilterbycountryComponent } from './routes/filterbycountry/filterbycountry.component';
 import { ApiComponent } from './routes/api/api.component';
-import { ProveApiCoronaComponent } from './components/prove-api-corona/prove-api-corona.component';
+import { ApiMeteoComponent } from './routes/api-meteo/api-meteo.component';
+import { GraphicsComponent } from './routes/graphics/graphics.component';
 
 
 const routes: Routes = [
-  { path: "", redirectTo : '/welcome', pathMatch: 'full' },
-  { path: "dashboard", component : DashboardComponent },
-  { path: "add", component : AddComponent },
-  { path: "details/:id", component : DetailsComponent },
+  { path: "", redirectTo: '/welcome', pathMatch: 'full' },
+  { path: "dashboard", component: DashboardComponent },
+  { path: "add", component: AddComponent },
+  { path: "details/:id", component: DetailsComponent },
   { path: "edit/:id", component: EditComponent },
-  { path: "filterdouble", component: FilterDoubleComponent},
-  { path: "sortingbydeath", component: SortingbydeathComponent},
-  { path: "sortBy", component: SortByComponent},
-  { path: "welcome", component: WelcomepageComponent},
-  { path: "filterByCountry", component: FilterbycountryComponent},
-  { path: "apicorona", component:ApiComponent},
-  { path: "apicoronatest", component: ProveApiCoronaComponent}
+  { path: "filterdouble", component: FilterDoubleComponent },
+  { path: "sortingbydeath", component: SortingbydeathComponent },
+  { path: "sortBy", component: SortByComponent },
+  { path: "welcome", component: WelcomepageComponent },
+  { path: "filterByCountry", component: FilterbycountryComponent },
+  { path: "apicorona", component: ApiComponent },
+  { path: "apimeteo", component: ApiMeteoComponent },
+  { path: "graphics", component: GraphicsComponent },
 ];
 
 @NgModule({
