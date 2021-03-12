@@ -1,0 +1,97 @@
+
+<div class="container">
+
+</div>
+<!-- getCountryCovidData(form : NgForm) -->
+<div class="container p-5">
+    <!-- Bottone per avere i dati covid/meteo di tutte le nazioni -->
+    <button (click)="getAllEuropeCountriesMeteoCovidData()">Scarica i dati di tutta Europa</button>
+    <!-- Selettore per scegliere la nazione di cui si vogliono avere i dati covid/meteo -->
+    <form class="pt-5" (ngSubmit)="getCountryMeteoCovidDataFromForm(form)" #form="ngForm">
+        <div class="form-group row">
+            <label for="country" class="col-sm-2 col-form-label"></label>
+            <div class="col-sm-10">
+                <select class="form-control" id="country" ngModel required name="country">
+                    <option *ngFor="let country of europeCountries"> {{country}} </option>
+                </select>
+            </div>
+        </div>
+        <!-- La chiamata alla funzione parte alla pressione del tasto submit -->
+        <button type="submit" [disabled]="!form.valid" class="btn btn-success">Submit Country</button>
+    </form>
+</div>
+
+
+<div>
+    <table class="table">
+        <thead class="thead-dark">
+            <tr>
+                <!--parte covid-->
+                <th scope="col">Nome</th>
+                <th scope="col">Popolazione</th>
+                <th scope="col">Data</th>
+                <th scope="col">Morti di oggi</th>
+                <th scope="col">Casi confermati oggi</th>
+                <th scope="col">Storico morti</th>
+                <th scope="col">Storico casi</th>
+                <th scope="col">Morti percentuali</th>
+                <th scope="col">Casi su un milione di abitanti</th>
+                <!--parte meteo-->
+                <th scope="col">Temperatura</th>
+                <th scope="col">Umidità</th>
+                <th scope="col">Indice di qualità dell'aria</th>
+            </tr>
+        </thead>
+        <tbody>
+             <!--parte covid-->
+            <tr class="pointer" *ngFor="let entry of covidCountriesDataArray">
+                <th scope="row"> {{entry.data.name}}</th>
+                <td>{{entry.data.population}}</td>
+                <td>{{entry.data.updated_at}}</td>
+                <td>{{entry.data.today.confirmed}}</td>
+                <td>{{entry.data.today.deaths}}</td>
+                <td>{{entry.data.latest_data.deaths}}</td>
+                <td>{{entry.data.latest_data.confirmed}}</td>
+                <td>{{entry.data.latest_data.calculated.death_rate}}</td>
+                <td>{{entry.data.latest_data.calculated.cases_per_million_population}}</td>
+                <!--parte meteo-->
+                <td class="pointer" *ngFor="let entry of meteoDataArray">
+                <td>{{entry.data.current.temperature}}</td>
+                <td>{{entry.data.current.relHumidity}}</td>
+                <td>{{entry.data.current.airQualityIndex}}</td>
+                 
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<!--<div class="container p-5">
+    <table class="table">
+        <thead class="thead-dark">
+        <tr>
+            <th scope="col">Nome</th>
+            <th scope="col">Popolazione</th>
+            <th scope="col">Data</th>
+            <th scope="col">Morti di oggi</th>
+            <th scope="col">Casi confermati oggi</th> 
+            <th scope="col">Storico morti</th>
+            <th scope="col">Storico casi</th>
+            <th scope="col">Morti percentuali</th>
+            <th scope="col">Casi su un milione di abitanti</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr class="pointer" *ngFor="let entry of covidCountriesDataArray">
+            <th scope="row"> {{entry.data.name}}</th>
+            <td>{{entry.data.population}}</td>
+            <td>{{entry.data.updated_at}}</td>
+            <td>{{entry.data.today.deaths}}</td>
+            <td>{{entry.data.today.confirmed}}</td>
+            <td>{{entry.data.latest_data.deaths}}</td>
+            <td>{{entry.data.latest_data.confirmed}}</td>
+            <td>{{entry.data.latest_data.calculated.death_rate}}</td>
+            <td>{{entry.data.latest_data.calculated.cases_per_million_population}}</td>            
+        </tr>
+        </tbody>
+    </table> 
+</div>-->

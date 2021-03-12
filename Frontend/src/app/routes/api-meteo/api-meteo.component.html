@@ -2,7 +2,6 @@
 
  <div class="row">
   <button class="btn btn-primary mr-5" [routerLink]="['/dashboard']">Back</button>
-<button (click)="postMeteoApiData(meteoCountries)">POST METEO DATA</button>
 <!--<button class="btn btn-primary mb-3" (click)="getMeteoApiData(form)">Select Cauntrie</button>-->
 <form class="pt-5" (ngSubmit)="getMeteoApiData(form)" #form="ngForm">
   <div class="form-group row">
@@ -36,7 +35,6 @@
       <tbody>
         <tr class="pointer" *ngFor="let entry of meteoDataArray">
           <th scope="row"> {{entry.data.timezone}}</th>
-          <td>{{entry.data.current.time | date}}</td>
           <td>{{entry.data.current.temperature}}</td>
           <td>{{entry.data.current.relHumidity}}</td>
           <td>{{entry.data.current.airQualityIndex}}</td>

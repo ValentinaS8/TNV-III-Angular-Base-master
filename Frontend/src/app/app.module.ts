@@ -27,6 +27,7 @@ import { ApiCovidService } from './services/api-covid.service';
 import { ProveApiCoronaComponent } from './components/prove-api-corona/prove-api-corona.component';
 import { ApiMeteoComponent } from './routes/api-meteo/api-meteo.component';
 import { ApiMeteoService } from './services/api-meteo.service';
+import { MeteoCovidComponent } from './components/meteo-covid/meteo-covid.component';
 
 
 @NgModule({
@@ -48,7 +49,8 @@ import { ApiMeteoService } from './services/api-meteo.service';
     CountryPipe,
     ApiComponent,
     ProveApiCoronaComponent,    
-    ApiMeteoComponent
+    ApiMeteoComponent, 
+    MeteoCovidComponent
   ],
   imports: [
     BrowserModule,

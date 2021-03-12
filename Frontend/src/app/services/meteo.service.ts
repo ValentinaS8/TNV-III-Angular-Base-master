@@ -24,8 +24,7 @@ export class MeteoService {
     console.log("sono in addEntry", meteoCountries.data.current.relHumidity)
     return this.http.post<ApiMeteo>(this.baseURL, {     
       
-      "timezone": meteoCountries.data.timezone,
-      
+      "timezone": meteoCountries.data.timezone,      
       "temperature": meteoCountries.data.current.temperature,
       "temperatureMax": meteoCountries.data.current.temperatureMax,
       "temperatureMin": meteoCountries.data.current.temperatureMin,
