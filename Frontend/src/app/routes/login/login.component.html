@@ -1,24 +1,22 @@
    <form (ngSubmit)="login()" #loginForm="ngForm">
-    <div class="imgcontainer">
-    </div>
-  
     <div class="container">
       <div class="row py-5 mt-4 align-items-center">
-        <h1>Create an Account</h1>
-        
+        <h1>Login</h1>
+        <div class="container">
 
-      <label for="user"></label>
-      <input type="text" placeholder="Enter Username" id="name" required [(ngModel)]="userName" name ="userName"> 
-  
-      <label for="pwd"></label>
-      <input type="password" placeholder="Enter Password" id="pwd" required [(ngModel)]="pwd" name="pwd">
-  
-      <button type="submit" [disabled]="!loginForm.valid">Login</button>
-     
-    </div>
+        <label for="name"><b>Username</b></label>
+        
+        <input type="text" placeholder="Enter Username" id="name" required [(ngModel)]="userName" name ="userName"> 
+        <label for="pwd"><b>Password</b></label>
+        <input type="password" placeholder="Enter Password" id="pwd" required [(ngModel)]="pwd" name="pwd">
+    
+        <button type="submit" [disabled]="!loginForm.valid">Login</button>
+        </div>
+      
+      </div>
   
     <div class="container" style="background-color:#f1f1f1">
-    <a class="nav-item" [routerLink]='["../register"]'>New account? Click here to Sign up</a>
+    <a class="nav-item" [routerLink]='["../register"]'>Sei nuovo? Registrarti!</a>
     </div>
   </div>
 
