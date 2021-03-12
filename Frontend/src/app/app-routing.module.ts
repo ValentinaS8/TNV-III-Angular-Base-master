@@ -11,7 +11,7 @@ import { WelcomepageComponent } from './routes/welcomepage/welcomepage.component
 import { FilterbycountryComponent } from './routes/filterbycountry/filterbycountry.component';
 import { ApiComponent } from './routes/api/api.component';
 import { ProveApiCoronaComponent } from './components/prove-api-corona/prove-api-corona.component';
-
+import { ApiMeteoComponent } from './routes/api-meteo/api-meteo.component';
 
 const routes: Routes = [
   { path: "", redirectTo : '/welcome', pathMatch: 'full' },
@@ -25,7 +25,8 @@ const routes: Routes = [
   { path: "welcome", component: WelcomepageComponent},
   { path: "filterByCountry", component: FilterbycountryComponent},
   { path: "apicorona", component:ApiComponent},
-  { path: "apicoronatest", component: ProveApiCoronaComponent}
+  { path: "apicoronatest", component: ProveApiCoronaComponent},
+  {path: "apimeteo", component: ApiMeteoComponent},
 ];
 
 @NgModule({

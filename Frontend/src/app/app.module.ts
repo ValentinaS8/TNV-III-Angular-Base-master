@@ -25,6 +25,9 @@ import { ApiserviceService } from './services/apiservice.service';
 import { ApiComponent } from './routes/api/api.component';
 import { ApiCovidService } from './services/api-covid.service';
 import { ProveApiCoronaComponent } from './components/prove-api-corona/prove-api-corona.component';
+import { ApiMeteoComponent } from './routes/api-meteo/api-meteo.component';
+import { ApiMeteoService } from './services/api-meteo.service';
+
 
 @NgModule({
   declarations: [
@@ -44,7 +47,8 @@ import { ProveApiCoronaComponent } from './components/prove-api-corona/prove-api
     FilterbycountryComponent,
     CountryPipe,
     ApiComponent,
-    ProveApiCoronaComponent
+    ProveApiCoronaComponent,    
+    ApiMeteoComponent
   ],
   imports: [
     BrowserModule,
@@ -53,7 +57,7 @@ import { ProveApiCoronaComponent } from './components/prove-api-corona/prove-api
     HttpClientModule,
     FormsModule
   ],
-  providers: [DataService, ApiserviceService, ApiCovidService],
+  providers: [DataService, ApiserviceService, ApiCovidService, ApiMeteoService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
