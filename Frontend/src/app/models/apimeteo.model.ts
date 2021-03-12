@@ -8,7 +8,7 @@ export interface current{
 }
 export interface ApiMeteoData{
     
-    time : number,    
+       
     temperature : number,
     temperatureMax : number,
     temperatureMin : number,

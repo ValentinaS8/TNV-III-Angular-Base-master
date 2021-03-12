@@ -7,36 +7,36 @@ import { ApiMeteo } from '../models/apimeteo.model';
 })
 export class ApiMeteoService {
 
-  private baseDBURL = 'http://localhost:3000/meteodata';
+ // private baseDBURL = 'http://localhost:3000/meteodata';
   private baseApiUrl='https://api.troposphere.io/forecast/';
 
-  private AmsterdamMeteoUrl='52.374,4.88969';
-  private AteneMeteoUrl='37.98376,23.72784';
-  private BerlinoMeteoUrl='52.52437,13.41053';
-  private BratislavaMeteoUrl='48.14816,17.10674';
-  private BruxellesMeteoUrl='50.85344,4.34878';
-  private BucarestMeteoUrl='44.43225,26.10626';
-  private BudapestMeteoUrl='47.498335,19.04045';
-  private CopenaghenMeteoUrl='55.67594,12.56553';
-  private DublinoMeteoUrl='53.33306,-6.24889';
-  private HelsinkiMeteoUrl='60.16952,24.93545';
-  private VallettaMeteoUrl='35.89968,14.5148';
-  private LisbonaMeteoUrl='38.71667,-9.133';
-  private LondraMeteoUrl='51.50853,-0.12574';
-  private LubianaMeteoUrl='46.05108,14.50513';
-  private LussemburgoMeteoUrl='49.61167,6.13';
-  private MadridMeteoUrl='40.4165,-3.70256';
-  private NicosiaMeteoUrl='35.17531,33.3642';
-  private ParigiMeteoUrl='48.85341,2.3488';
-  private PragaMeteoUrl='50.08804,14.42076';
-  private RigaMeteoUrl='56.946,24.10589';
-  private RomaMeteoUrl='41.89193,12.51133';
-  private StocolmaMeteoUrl='59.32938,18.06871';
-  private TallinMeteoUrl='59.43696,24.75353';
-  private VarsaviaMeteoUrl='52.22977,21.01178';
-  private ViennaMeteoUrl='48.20849,16.37208';
-  private ViniusMeteoUrl='54.68916,25.2798';
-  private ZagabriaMeteoUrl='45.81444,15.9798';
+    private AmsterdamMeteoUrl='52.374,4.88969';
+    private AteneMeteoUrl='37.98376,23.72784';
+    private BerlinoMeteoUrl='52.52437,13.41053';
+    private BratislavaMeteoUrl='48.14816,17.10674';
+    private BruxellesMeteoUrl='50.85344,4.34878';
+    private BucarestMeteoUrl='44.43225,26.10626';
+    private BudapestMeteoUrl='47.498335,19.04045';
+    private CopenaghenMeteoUrl='55.67594,12.56553';
+    private DublinoMeteoUrl='53.33306,-6.24889';
+    private HelsinkiMeteoUrl='60.16952,24.93545';
+    private VallettaMeteoUrl='35.89968,14.5148';
+    private LisbonaMeteoUrl='38.71667,-9.133';
+    private LondraMeteoUrl='51.50853,-0.12574';
+    private LubianaMeteoUrl='46.05108,14.50513';
+    private LussemburgoMeteoUrl='49.61167,6.13';
+    private MadridMeteoUrl='40.4165,-3.70256';
+    private NicosiaMeteoUrl='35.17531,33.3642';
+    private ParigiMeteoUrl='48.85341,2.3488';
+    private PragaMeteoUrl='50.08804,14.42076';
+    private RigaMeteoUrl='56.946,24.10589';
+    private RomaMeteoUrl='41.89193,12.51133';
+    private StocolmaMeteoUrl='59.32938,18.06871';
+    private TallinMeteoUrl='59.43696,24.75353';
+    private VarsaviaMeteoUrl='52.22977,21.01178';
+    private ViennaMeteoUrl='48.20849,16.37208';
+    private ViniusMeteoUrl='54.68916,25.2798';
+    private ZagabriaMeteoUrl='45.81444,15.9798';
   
 
   private apiKey= '?token=10c9c13c5e265318f48f0d3b78378254d47c18c999d5ee9caa';
@@ -75,7 +75,7 @@ export class ApiMeteoService {
     if (dataCity === "Zagabria") return this.http.get<ApiMeteo>(this.baseApiUrl+this.ZagabriaMeteoUrl+this.apiKey);
   }
 
-  addMeteoEntry = (meteoCountries: ApiMeteo) => {
+ /* addMeteoEntry = (meteoCountries: ApiMeteo) => {
     return this.http.post<ApiMeteo>(this.baseDBURL, {     
       
       "timezone": meteoCountries.data.timezone,
@@ -87,5 +87,5 @@ export class ApiMeteoService {
       "airQuality": meteoCountries.data.current.airQualityIndex,     
       
     });
-  };
+  };*/
 }

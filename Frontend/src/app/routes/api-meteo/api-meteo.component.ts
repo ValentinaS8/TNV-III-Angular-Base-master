@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { ApiMeteoService } from '../../services/api-meteo.service';
 import { Router } from '@angular/router';
 import { NgSelectOption, NgForm } from '@angular/forms';
+import { MeteoService } from '../../services/meteo.service';
 
 
 
@@ -13,11 +14,12 @@ import { NgSelectOption, NgForm } from '@angular/forms';
 })
 export class ApiMeteoComponent implements OnInit {
 
-  constructor(private apimeteoService: ApiMeteoService) { }
+  constructor(private apimeteoService: ApiMeteoService, private meteoService : MeteoService, private router: Router) { }
 dataCity: string;
 europe=["Amsterdam","Atene","Berlino","Bratislava","Bruxelles","Bucarest","Budapest","Copenaghen","Dublino","Helsinki","La Valletta","Lisbona","Londra","Lubiana","Lussemburgo","Madrid","Nicosia","Parigi","Praga","Riga","Roma","Stocolma","Tallinn","Varsavia","Vienna","Vilnius","Zagabria",];
 meteoCountries : ApiMeteo;
 meteoDataArray : Array<ApiMeteo>=[];
+
   ngOnInit(): void {
   }
 
@@ -28,7 +30,7 @@ meteoDataArray : Array<ApiMeteo>=[];
       {
         this.meteoCountries = meteoData
         this.meteoDataArray.push(this.meteoCountries)
-        console.log(this.meteoCountries.data.current.time)
+        console.log(this.meteoCountries.data.current.temperatureMin)
 
       },
       err => console.log(err),
@@ -42,12 +44,12 @@ meteoDataArray : Array<ApiMeteo>=[];
     this.meteoCountries;
     console.log(meteoCountries.data.current.airQualityIndex)  
 
-    this.apimeteoService.addMeteoEntry(this.meteoCountries).subscribe(response => {
-      console.log(response);
-      },
-    (err) => {
-      console.log ("Esaurimento Nervoso In Arrivo") 
-    }
+    this.meteoService.addMeteoEntry(this.meteoCountries).subscribe(response => {
+            console.log(response);
+        },     
+      
+    err => console.log ("Esaurimento Nervoso In Arrivo") 
+    
     )
   }
 }

@@ -26,6 +26,7 @@ const routes: Routes = [
   { path: "filterByCountry", component: FilterbycountryComponent},
   { path: "apicorona", component:ApiComponent},
   {path: "apimeteo", component: ApiMeteoComponent},
+  
 ];
 
 @NgModule({
