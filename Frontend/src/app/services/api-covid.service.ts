@@ -28,7 +28,8 @@ export class ApiCovidService {
   
   getCountryCovidData(countryName : any)
   {
-    if (countryName === "Italia") return this.http.get<ApiCoronaData>(this.baseUrl + '/countries' + '/IT');    
+    if (countryName === "Italia") return this.http.get<ApiCoronaData>(this.baseUrl + '/countries' + '/IT'); 
+    if (countryName === "Svizzera") return this.http.get<ApiCoronaData>(this.baseUrl + '/countries' + '/CH');   
     if (countryName === "Portogallo") return this.http.get<ApiCoronaData>(this.baseUrl + '/countries' + '/PT');
     if (countryName === "Spagna") return this.http.get<ApiCoronaData>(this.baseUrl + '/countries' + '/ES');
     if (countryName === "Francia") return this.http.get<ApiCoronaData>(this.baseUrl + '/countries' + '/FR');
