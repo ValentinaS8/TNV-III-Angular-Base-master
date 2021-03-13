@@ -31,7 +31,7 @@ export class MeteoCovidComponent implements OnInit {
   europeCountries: Array<string> = ["Austria","Belgio","Cipro","Croazia","Danimarca","Estonia",
   "Finlandia","Francia","Germania","Grecia","Irlanda","Italia","Lettonia","Lituania","Lussemburgo",
   "Malta","Paesi Bassi","Polonia","Portogallo","Regno Unito","Repubblica Ceca","Romania",
-  "Slovacchia","Slovenia","Spagna","Svezia","Svizzera","Ungheria",];
+  "Slovacchia","Slovenia","Spagna","Svezia","Svizzera","Ungheria"];
 
   dataCity: string;
  
@@ -163,7 +163,7 @@ getCovidMeteoApiData(form: NgForm){
 
   /********************parte meteo************************************/
 
-  //funzione per il recupero dei dati METEO deolla nazione scelta attraverso il form 
+  //funzione per il recupero dei dati METEO della nazione scelta attraverso il form 
   getMeteoApiData(form) {
     this.dataCity = form.form.value.country
     console.log(this.dataCity);
@@ -208,15 +208,53 @@ getCovidMeteoApiData(form: NgForm){
   }*/
 
   //Funzione che crea un terzo array a partire dall'array di dati covid e meteo
- /* createArray()
+  createArray()
   {
     //cicla per l'array covid
     for (let i = 0; i < (this.covidCountriesDataArray).length; i++) {
       //console.log(this.europeCountries[i]);
-      this.meteoCovidDataArray[i].population = this.covidCountriesDataArray[i].data.population;
+      this.meteoCovidDataArray[i].covidModel.data.population = this.covidCountriesDataArray[i].data.population;
+      this.meteoCovidDataArray[i].covidModel.data.updated_at =  this.covidCountriesDataArray[i].data.updated_at;
+      this.meteoCovidDataArray[i].covidModel.data.today.deaths = this.covidCountriesDataArray[i].data.today.deaths;
+      this.meteoCovidDataArray[i].covidModel.data.today.confirmed = this.covidCountriesDataArray[i].data.today.confirmed;
+      this.meteoCovidDataArray[i].covidModel.data.latest_data.deaths = this.covidCountriesDataArray[i].data.latest_data.deaths;
+      this.meteoCovidDataArray[i].covidModel.data.latest_data.confirmed = this.covidCountriesDataArray[i].data.latest_data.confirmed;
+      this.meteoCovidDataArray[i].covidModel.data.latest_data.calculated.death_rate = this.covidCountriesDataArray[i].data.latest_data.calculated.death_rate;
+      this.meteoCovidDataArray[i].covidModel.data.latest_data.calculated.cases_per_million_population = this.covidCountriesDataArray[i].data.latest_data.calculated.cases_per_million_population;
     }
 
     //cicla per l'array meteo
-  }*/
+    for (let i = 0; i < (this.meteoDataArray).length; i++) {
+      //console.log(this.europeCountries[i]);
+      this.meteoCovidDataArray[i].meteoModel.data.current.airQualityIndex = this.meteoDataArray[i].data.current.airQualityIndex;
+      this.meteoCovidDataArray[i].covidModel.data.updated_at =  this.covidCountriesDataArray[i].data.updated_at;
+      this.meteoCovidDataArray[i].covidModel.data.today.deaths = this.covidCountriesDataArray[i].data.today.deaths;
+      this.meteoCovidDataArray[i].covidModel.data.today.confirmed = this.covidCountriesDataArray[i].data.today.confirmed;
+      this.meteoCovidDataArray[i].covidModel.data.latest_data.deaths = this.covidCountriesDataArray[i].data.latest_data.deaths;
+      this.meteoCovidDataArray[i].covidModel.data.latest_data.confirmed = this.covidCountriesDataArray[i].data.latest_data.confirmed;
+      this.meteoCovidDataArray[i].covidModel.data.latest_data.calculated.death_rate = this.covidCountriesDataArray[i].data.latest_data.calculated.death_rate;
+      this.meteoCovidDataArray[i].covidModel.data.latest_data.calculated.cases_per_million_population = this.covidCountriesDataArray[i].data.latest_data.calculated.cases_per_million_population;
+    }
+
+  }
 
 }
+/*
+export interface ApiMeteo{
+    data: current 
+}
+
+export interface current{
+    timezone : string;
+    current : ApiMeteoData
+}
+export interface ApiMeteoData{
+    
+       
+    temperature : number,
+    temperatureMax : number,
+    temperatureMin : number,
+    relHumidity : number,
+    airQualityIndex: number,
+}
+*/
