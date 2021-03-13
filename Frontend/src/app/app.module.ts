@@ -23,11 +23,12 @@ import { CountryPipe } from './pipes/country.pipe';
 import { LoadingpageComponent } from './components/loadingpage/loadingpage.component';
 import { ApiserviceService } from './services/apiservice.service';
 import { ApiComponent } from './routes/api/api.component';
-import { ApiMeteoService } from './services/api-meteo.service';
+import { ApiCovidService } from './services/api-covid.service';
+import { ProveApiCoronaComponent } from './components/prove-api-corona/prove-api-corona.component';
 import { ApiMeteoComponent } from './routes/api-meteo/api-meteo.component';
-import { GraphicsComponent } from './routes/graphics/graphics.component';
-import { LoginComponent } from './routes/login/login.component';
-import { RegisterComponent } from './routes/register/register.component';
+import { ApiMeteoService } from './services/api-meteo.service';
+import { MeteoCovidComponent } from './components/meteo-covid/meteo-covid.component';
+
 
 @NgModule({
   declarations: [
@@ -47,11 +48,9 @@ import { RegisterComponent } from './routes/register/register.component';
     FilterbycountryComponent,
     CountryPipe,
     ApiComponent,
-    ApiMeteoComponent,
-    GraphicsComponent,
-    LoginComponent,
-    RegisterComponent,
-
+    ProveApiCoronaComponent,    
+    ApiMeteoComponent, 
+    MeteoCovidComponent
   ],
   imports: [
     BrowserModule,
@@ -60,7 +59,7 @@ import { RegisterComponent } from './routes/register/register.component';
     HttpClientModule,
     FormsModule
   ],
-  providers: [DataService, ApiserviceService, ApiMeteoService],
+  providers: [DataService, ApiserviceService, ApiCovidService, ApiMeteoService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

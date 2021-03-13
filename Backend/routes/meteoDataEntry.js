@@ -1,10 +1,10 @@
 const express = require('express');
 const router = express.Router();
-const MeteoDataEntry = require('../models/index').meteoDataEntry;
+const MeteoDataEntry = require('../models/index').MeteoDataEntry;
 
 router.get('/', function (req, res, next) {
     MeteoDataEntry.findAll({})
-        .then(meteoDataEntry => res.json(meteoDataEntry))
+        .then(MeteoDataEntry => res.json(MeteoDataEntry))
         .catch(err => res.json(err))
     ;
 });
@@ -16,24 +16,28 @@ router.get('/:id', function (req, res, next) {
             }
         }
     )
-        .then(meteoDataEntry => res.json(meteoDataEntry))
+        .then(MeteoDataEntry => res.json(MeteoDataEntry))
         .catch(err => res.json(err));
 });
 
 router.post('/', function (req, res, next) {
-    const {nome_citta, data, temp_max, temp_min, temp_media,
-         umidita_perc} = req.body;
+    
+    const {timezone, temperature, temperatureMax, temperatureMin,
+        relHumidity,airQualityIndex} = req.body;
+        console.log("body:", req.body)
 
-    MeteoDataEntry.create({
-        nome_citta: nome_citta,
-        data: data,
-        temp_max: temp_max,
-        temp_min: temp_min,
-        temp_media: temp_media,
-        umidita_perc: umidita_perc,        
+    MeteoDataEntry.create({ 
+
+        timezone: timezone,
+        
+        temperature: temperature,
+        temperatureMax: temperatureMax,
+        temperatureMin: temperatureMin,
+        relHumidity: relHumidity,  
+        airQualityIndex: airQualityIndex,      
     })
-        .then(meteoDataEntry => res.status(201).json({
-            meteoDataEntry
+        .then(MeteoDataEntry => res.status(201).json({
+            MeteoDataEntry
         }))
         .catch(error => res.status(500).json({
             error
@@ -41,24 +45,25 @@ router.post('/', function (req, res, next) {
 });
 
 router.put('/:id', function (req, res, next) {
-    const meteoId = req.meteo.params.id;
-    const { nome_citta, data, temp_max, temp_min, temp_media, umidita_perc, fatalityRate, continent, classification, date } = req.body;
+    const meteoId = req.params.id;
+    const { timezone, temperature, temperatureMax, temperatureMin,relHumidity, airQualityIndex} = req.body;
 
     DataEntry.update({
-        nome_citta: nome_citta,
-        data: data,
-        temp_max: temp_max,
-        temp_min: temp_min,
-        temp_media: temp_media,
-        umidita_perc: umidita_perc,
-       
+        timezone: timezone,
+        
+        temperature: temperature,
+        temperatureMax: temperatureMax,
+        temperatureMin: temperatureMin,
+        relHumidity:relHumidity,
+        airQualityIndex:airQualityIndex,
     }, {
+
         where: {
             id: meteoId
         }
     })
-        .then(meteoDataEntry => res.status(201).json({
-            meteoDataEntry
+        .then(MeteoDataEntry => res.status(201).json({
+            MeteoDataEntry
         }))
         .catch(error => res.status(500).json({
             error
@@ -66,7 +71,7 @@ router.put('/:id', function (req, res, next) {
 });
 
 router.delete('/:id', function (req, res, next) {
-    const meteo_id = req.meteo.params.id;
+    const meteo_id = req.params.id;
 
     DataEntry.destroy({
         where: {

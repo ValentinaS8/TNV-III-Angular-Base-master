@@ -1,7 +1,8 @@
+import { Calculated } from './../models/apiCorona.model';
 //copia da data.service.ts
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { ApiCoronaDataSemplified } from '../models/apiCoronaSemplified.model';
+import { ApiCoronaData, LatestData } from '../models/apiCorona.model';
 
 @Injectable({
   providedIn: 'root'
@@ -12,26 +13,26 @@ export class CovidService {
 
   constructor(private http: HttpClient) { }
 
-  getData() {
-    return this.http.get<Array<ApiCoronaDataSemplified>>(this.baseURL)
+  getCovidData() {
+    return this.http.get<Array<ApiCoronaData>>(this.baseURL)
   }
 
-  getEntry(id) {
-    return this.http.get<ApiCoronaDataSemplified>(this.baseURL + "/" + id)
+  getCovidEntry(id) {
+    return this.http.get<ApiCoronaData>(this.baseURL + "/" + id)
   }
 
-  addEntry = (data: ApiCoronaDataSemplified) => {
-    return this.http.post<ApiCoronaDataSemplified>(this.baseURL, {
+  addCovidEntry = (data: ApiCoronaData) => {
+    return this.http.post<ApiCoronaData>(this.baseURL, {
       //l'id è automatico e autoincrementante, quindi non lo inserisco
-      "name": data.country_name,
-      "population": data.population,
-      "date": data.date,
-      "today_deaths": data.today_deaths,
-      "today_cases": data.today_cases,
-      "total_deaths": data.today_deaths,
-      "total_cases": data.total_cases,
-      "death_rate": data.death_rate,
-      "cases_per_million_people": data.cases_per_million_people
+      "country_name": data.data.name,
+      "population": data.data.population,
+      "date": data.data.updated_at,
+      "today_deaths": data.data.latest_data.deaths,
+      "today_cases": data.data.latest_data.confirmed,
+      "total_deaths": data.data.latest_data.deaths,
+      "total_cases": data.data.latest_data.confirmed,
+      "death_rate": data.data.latest_data.calculated.death_rate,
+      "cases_per_million_people": data.data.latest_data.calculated.cases_per_million_population
     });
   };
  
@@ -39,17 +40,17 @@ export class CovidService {
     return this.http.delete(this.baseURL + "/" + id)
   }
 
-  editEntry = (data: ApiCoronaDataSemplified) => {
-    return this.http.put(this.baseURL + '/' + data.country_name, {
-      "name": data.country_name,
-      "population": data.population,
-      "date": data.date,
-      "today_deaths": data.today_deaths,
-      "today_cases": data.today_cases,
-      "total_deaths": data.today_deaths,
-      "total_cases": data.total_cases,
-      "death_rate": data.death_rate,
-      "cases_per_million_people": data.cases_per_million_people
+  editCovidEntry = (data: ApiCoronaData) => {
+    return this.http.put(this.baseURL + '/' + data.data.name, {
+      "name": data.data.name,
+      "population": data.data.population,
+      "date": data.data.updated_at,
+      "today_deaths": data.data.latest_data.deaths,
+      "today_cases": data.data.latest_data.confirmed,
+      "total_deaths": data.data.latest_data.deaths,
+      "total_cases": data.data.latest_data.confirmed,
+      "death_rate": data.data.latest_data.calculated.death_rate,
+      "cases_per_million_people": data.data.latest_data.calculated.cases_per_million_population
     });
   };
 
@@ -60,6 +61,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { CovidData } from '../models/data.model';
 import { ApiCoronaData } from '../models/apiCorona.model';
+import { ApiCoronaData } from 'src/app/models/apiCorona.model';
 
 
 @Injectable({

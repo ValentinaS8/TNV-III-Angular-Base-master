@@ -35,19 +35,21 @@ const meteoGetEntryById = (req, res) => {
 };
 
 const meteoCreateEntry = (req, res) => {
-  console.log(req)
-  const {timezone, time, temperature, temperatureMax,
+  
+  const {timezone,temperature, temperatureMax,
      temperatureMin, relHumidity,airQualityIndex} = req.body;
+     console.log("In MeteoDataEntry...", req.body);
 
   MeteoDataEntry.create({
-    timezone: timezone,
-    time: time,
-    temperature: temperature,
-    temperatureMax: temperatureMax,
-    temperatureMin: temperatureMin,
-    relHumidity: relHumidity,    
+    timezone : timezone,  
+    temperature : temperature,
+    temperatureMax : temperatureMax,
+    temperatureMin : temperatureMin,
+    relHumidity : relHumidity,    
     airQualityIndex : airQualityIndex
+    
   })
+  console.log("temperatura min" , meteoDataEntry.temperatureMin)
     .then(entry => {
       return res.status(201).send(entry);
     })
@@ -58,7 +60,7 @@ const meteoCreateEntry = (req, res) => {
 
 const meteoEditEntry = (req, res) => {
   const meteoEntryId = req.params.id;
-  const {timezone, time, temperature, temperatureMax, 
+  const {timezone, temperature, temperatureMax, 
     temperatureMin, relHumidity,airQualityIndex} = req.body;
 
   MeteoDataEntry.findOne({
@@ -76,12 +78,11 @@ const meteoEditEntry = (req, res) => {
       }
 
       MeteoDataEntry.update({
-        timezone: timezone,
-        time: time,
-        temperature: temperature,
-        temperatureMax: temperatureMax,
-        temperatureMin: temperatureMin,
-        relHumidity: relHumidity, 
+        timezone : timezone,
+        temperature : temperature,
+        temperatureMax : temperatureMax,
+        temperatureMin : temperatureMin,
+        relHumidity : relHumidity, 
         airQualityIndex : airQualityIndex      
       }, {
         where: {

@@ -5,6 +5,7 @@ const ErrorsEngine  = require('../engine/errors');
 module.exports = (app) => {
 
   const dataPath = '/data';
+  const dataCovidPath = '/dati_covid';
   const meteoDataPath = '/meteodata'
 
   /********** DATA REST APIs **********/
@@ -13,6 +14,9 @@ module.exports = (app) => {
   app.get(`${dataPath}/:id`, DataEngine.getEntryById);
   app.put(`${dataPath}/:id`, DataEngine.editEntry);
   app.delete(`${dataPath}/:id`, DataEngine.deleteEntry);
+  //funzioni aggiunte
+  app.get(dataCovidPath, DataEngine.getCovidEntry);
+  app.post(dataCovidPath, DataEngine.createCovidEntry);
 
   app.get(meteoDataPath, MeteoDataEngine.meteoGetEntry);
   app.post(meteoDataPath, MeteoDataEngine.meteoCreateEntry);
