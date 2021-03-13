@@ -1,5 +1,7 @@
+import { ApiCoronaData } from './apiCorona.model';
+import { ApiMeteo } from './apimeteo.model';
 export interface MeteoCovidData{
-    //campi covid
+   /* //campi covid
     population: number,
     updated_at: string, //data -> da convertire in formato corretto prima di salvare sul db
     today_deaths: number, //morti di oggi
@@ -14,5 +16,7 @@ export interface MeteoCovidData{
     temperatureMax : number,
     temperatureMin : number,
     relHumidity : number,
-    airQualityIndex: number,
+    airQualityIndex: number,*/
+    meteoModel: ApiMeteo
+    covidModel: ApiCoronaData
 }

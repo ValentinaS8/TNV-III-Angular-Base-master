@@ -28,15 +28,15 @@ export class MeteoCovidComponent implements OnInit {
   afghanistanData: ApiCoronaData;
   afghanistanDataArray: Array<ApiCoronaData> = [];
   countryName: string;
-  europeCountries: Array<string> = ["Italia", "Portogallo", "Spagna", "Francia", "Belgio", "Paesi Bassi",
-    "Lussemburgo", "Cipro", "Malta", "Austria", "Germania", "Polonia", "Danimarca", "Svezia", "Lettonia",
-    "Lituania", "Estonia", "Regno Unito", "Irlanda", "Romania", "Grecia", "Croazia", "Slovenia", "Ungheria",
-    "Repubblica Ceca", "Slovacchia", "Finlandia"];
+  europeCountries: Array<string> = ["Austria","Belgio","Cipro","Croazia","Danimarca","Estonia",
+  "Finlandia","Francia","Germania","Grecia","Irlanda","Italia","Lettonia","Lituania","Lussemburgo",
+  "Malta","Paesi Bassi","Polonia","Portogallo","Regno Unito","Repubblica Ceca","Romania",
+  "Slovacchia","Slovenia","Spagna","Svezia","Svizzera","Ungheria",];
 
   dataCity: string;
-  europe = ["Amsterdam", "Atene", "Berlino", "Bratislava", "Bruxelles", "Bucarest", "Budapest", "Copenaghen",
+ /* europe = ["Amsterdam", "Atene", "Berlino", "Bratislava", "Bruxelles", "Bucarest", "Budapest", "Copenaghen",
     "Dublino", "Helsinki", "La Valletta", "Lisbona", "Londra", "Lubiana", "Lussemburgo", "Madrid", "Nicosia",
-    "Parigi", "Praga", "Riga", "Roma", "Stocolma", "Tallinn", "Varsavia", "Vienna", "Vilnius", "Zagabria",];
+    "Parigi", "Praga", "Riga", "Roma", "Stocolma", "Tallinn", "Varsavia", "Vienna", "Vilnius", "Zagabria",];*/
   meteoCountries: ApiMeteo;
 
   meteoDataArray: Array<ApiMeteo> = [];
@@ -134,7 +134,7 @@ export class MeteoCovidComponent implements OnInit {
 
   //funzione per il recupero dei dati METEO deolla nazione scelta attraverso il form 
   getMeteoApiData(form: NgForm) {
-    this.dataCity = form.form.value.city
+    this.dataCity = form.form.value.country
     console.log(this.dataCity);
     this.apimeteoService.getMeteoApiData(this.dataCity).subscribe((meteoData: ApiMeteo) => {
       this.meteoCountries = meteoData
@@ -170,7 +170,7 @@ export class MeteoCovidComponent implements OnInit {
   }
 
   //Funzione che crea un terzo array a partire dall'array di dati covid e meteo
-  createArray()
+ /* createArray()
   {
     //cicla per l'array covid
     for (let i = 0; i < (this.covidCountriesDataArray).length; i++) {
@@ -179,6 +179,6 @@ export class MeteoCovidComponent implements OnInit {
     }
 
     //cicla per l'array meteo
-  }
+  }*/
 
 }
