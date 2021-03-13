@@ -48,9 +48,40 @@ export class MeteoCovidComponent implements OnInit {
   //funzione per il recupero dei dati METEO + COVID di tutte le nazioni
   getAllEuropeCountriesMeteoCovidData() {
     this.getAllEuropeCountriesCovidData();
+    this.getAllMeteoData()
     //inserire funzione che recupera dati meteo di tutte le nazioni    
   }
+ getAllMeteoData(){
+   for (let i=0;i < (this.europeCountries).length; i++){
+    this.getAllMeteoApiData(this.europeCountries[i])
+   }}
 
+   getAllMeteoApiData(nation){     
+    this.dataCity = nation
+    console.log(this.dataCity);
+    this.apimeteoService.getMeteoApiData(this.dataCity).subscribe((meteoData: ApiMeteo) => {
+      this.meteoCountries = meteoData
+      this.meteoDataArray.push(this.meteoCountries)
+      console.log(this.meteoCountries.data.current.temperatureMin)
+      this.meteoService.addMeteoEntry(this.meteoCountries).subscribe(response => {
+      console.log(response);
+        this.meteoService.addMeteoEntry(this.meteoCountries).subscribe(response => {
+          console.log(response);
+        },
+    
+          err => console.log("Errore")
+    
+        )
+      },
+        err => console.log("Errore")
+      )
+    },
+      err => console.log(err),
+      () => console.log("Loading completed", this.meteoCountries)
+
+    );
+   }
+ 
   //funzione per il recupero dei dati COVID di tutte le nazioni
   getAllEuropeCountriesCovidData() {
     //console.log("sono entrato nella funzione");
@@ -92,14 +123,15 @@ export class MeteoCovidComponent implements OnInit {
       () => console.log("Loading countries data completed", this.covidCountriesData.data.latest_data)
     )
   }
+  // Funzione che fa la chiamata sincronizzata dei dati covid e dei dati meteo
 getCovidMeteoApiData(form: NgForm){
   this.getCountryMeteoCovidDataFromForm(form);
   this.getMeteoApiData(form);
 
 }
 
-  //funzione per il recupero dei dati METEO + COVID di una nazione scelta
-  getCountryMeteoCovidDataFromForm(form: NgForm) {
+  // dati covid per ogni singola nazione
+  getCountryMeteoCovidDataFromForm(form) {
     this.countryName = form.form.value.country;
     console.log(this.countryName);
     this.apiCovidService.getCountryCovidData(this.countryName).subscribe((data: ApiCoronaData) => {
@@ -137,7 +169,7 @@ getCovidMeteoApiData(form: NgForm){
   /********************parte meteo************************************/
 
   //funzione per il recupero dei dati METEO deolla nazione scelta attraverso il form 
-  getMeteoApiData(form: NgForm) {
+  getMeteoApiData(form) {
     this.dataCity = form.form.value.country
     console.log(this.dataCity);
     this.apimeteoService.getMeteoApiData(this.dataCity).subscribe((meteoData: ApiMeteo) => {
