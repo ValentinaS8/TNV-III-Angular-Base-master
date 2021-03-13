@@ -16,6 +16,8 @@ import { MeteoCovidComponent } from './components/meteo-covid/meteo-covid.compon
 import { GraphicsComponent } from './routes/graphics/graphics.component';
 import { DocsComponent } from './routes/docs/docs.component';
 import { LoginComponent } from './routes/login/login.component';
+import { RegisterComponent } from './routes/register/register.component';
+import { AuthGuard } from './services/auth.guard';
 
 const routes: Routes = [
   { path: "", redirectTo: '/welcome', pathMatch: 'full' },
@@ -34,7 +36,8 @@ const routes: Routes = [
   { path: "meteocovid", component: MeteoCovidComponent}, 
   { path: "graphics", component: GraphicsComponent},
   { path: "docs", component: DocsComponent},
-  { path: "login", component: LoginComponent}
+  { path: "login", component: LoginComponent},
+  { path: "register", component: RegisterComponent}
   
 ]; 
 

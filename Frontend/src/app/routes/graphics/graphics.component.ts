@@ -18,10 +18,12 @@ export class GraphicsComponent implements OnInit {
   romeTemperature: number;
 
   ngOnInit(): void {
+    /*
     this.getMeteoApiData();
     this.getCovidApiData();
+    */
   }
-
+/*
   getMeteoApiData() {
     this.apimeteoService.getMeteoApiData().subscribe((meteoData: ApiMeteo) => {
       this.romeTemperature = meteoData.data.current.temperature;
@@ -44,7 +46,7 @@ export class GraphicsComponent implements OnInit {
 
     );
   }
-
+*/
   createMeteoGraph() {
     let myCanvas = document.getElementById("meteo-grafico1");
     let myLabels = this.europe;
