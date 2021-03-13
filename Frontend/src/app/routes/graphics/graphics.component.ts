@@ -17,6 +17,10 @@ export class GraphicsComponent implements OnInit {
   europe = ["Amsterdam", "Atene", "Berlino", "Bratislava", "Bruxelles", "Bucarest", "Budapest", "Copenaghen", "Dublino", "Helsinki", "La Valletta", "Lisbona", "Londra", "Lubiana", "Lussemburgo", "Madrid", "Nicosia", "Parigi", "Praga", "Riga", "Roma", "Stoccolma", "Tallinn", "Varsavia", "Vienna", "Vilnius", "Zagabria",];
   romeTemperature: number;
 
+  /* europeCountries: Array<string> = ["Austria","Belgio","Cipro","Croazia","Danimarca","Estonia",
+  "Finlandia","Francia","Germania","Grecia","Irlanda","Italia","Lettonia","Lituania","Lussemburgo",
+  "Malta","Paesi Bassi","Polonia","Portogallo","Regno Unito","Repubblica Ceca","Romania",
+  "Slovacchia","Slovenia","Spagna","Svezia","Svizzera","Ungheria",];*/ 
   ngOnInit(): void {
     /*
     this.getMeteoApiData();
