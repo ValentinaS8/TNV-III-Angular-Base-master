@@ -1,3 +1,4 @@
+<div style='margin:15px; padding:10px;'>
 <div *ngIf="dataEntry != null " class="container">
 
     <div class="row p-4 my-2 mx-1 border shadow">
@@ -25,4 +26,5 @@
         <button class="btn btn-danger ml-5" (click)='delete()'>Delete</button>
         <button class="btn btn-primary ml-3" [routerLink]="['/edit/'+ dataEntry.id]">Edit</button>
     </div>
+</div>
 </div>
