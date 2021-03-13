@@ -92,7 +92,11 @@ export class MeteoCovidComponent implements OnInit {
       () => console.log("Loading countries data completed", this.covidCountriesData.data.latest_data)
     )
   }
+getCovidMeteoApiData(form: NgForm){
+  this.getCountryMeteoCovidDataFromForm(form);
+  this.getMeteoApiData(form);
 
+}
 
   //funzione per il recupero dei dati METEO + COVID di una nazione scelta
   getCountryMeteoCovidDataFromForm(form: NgForm) {
@@ -143,6 +147,13 @@ export class MeteoCovidComponent implements OnInit {
       //scrittura a db
       this.meteoService.addMeteoEntry(this.meteoCountries).subscribe(response => {
         console.log(response);
+        this.meteoService.addMeteoEntry(this.meteoCountries).subscribe(response => {
+          console.log(response);
+        },
+    
+          err => console.log("Errore")
+    
+        )
       },
         err => console.log("Errore")
       )
@@ -156,7 +167,7 @@ export class MeteoCovidComponent implements OnInit {
 
 
   // funzione da inserire all'interno della getMeteo al fine di fare tutto in un unico passo
-  postMeteoApiData(meteoCountries: ApiMeteo) {
+ /* postMeteoApiData(meteoCountries: ApiMeteo) {
     this.meteoCountries;
     console.log(meteoCountries.data.current.airQualityIndex)
 
@@ -167,7 +178,7 @@ export class MeteoCovidComponent implements OnInit {
       err => console.log("Errore")
 
     )
-  }
+  }*/
 
   //Funzione che crea un terzo array a partire dall'array di dati covid e meteo
  /* createArray()

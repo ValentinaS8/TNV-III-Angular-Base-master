@@ -7,7 +7,7 @@
     <!-- Bottone per avere i dati covid/meteo di tutte le nazioni -->
     <button (click)="getAllEuropeCountriesMeteoCovidData()">Scarica i dati di tutta Europa</button>
     <!-- Selettore per scegliere la nazione di cui si vogliono avere i dati covid/meteo -->
-    <form class="pt-5" (ngSubmit)=" getMeteoApiData(form)" #form="ngForm">
+    <form class="pt-5" (ngSubmit)=" getCovidMeteoApiData(form)" #form="ngForm">
         <div class="form-group row">
             <label for="country" class="col-sm-2 col-form-label"></label>
             <div class="col-sm-10">
