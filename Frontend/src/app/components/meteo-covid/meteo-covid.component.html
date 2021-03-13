@@ -5,9 +5,9 @@
 <!-- getCountryCovidData(form : NgForm) -->
 <div class="container p-5">
     <!-- Bottone per avere i dati covid/meteo di tutte le nazioni -->
-    <button (click)="getAllData()">Scarica i dati di tutta Europa</button>
+    <button (click)="getAllEuropeCountriesMeteoCovidData()">Scarica i dati di tutta Europa</button>
     <!-- Selettore per scegliere la nazione di cui si vogliono avere i dati covid/meteo -->
-    <form class="pt-5" (ngSubmit)=" getCovidMeteoApiData(form)" #form="ngForm">
+    <form class="pt-5" (ngSubmit)="getCountryMeteoCovidDataFromForm(form)" #form="ngForm">
         <div class="form-group row">
             <label for="country" class="col-sm-2 col-form-label"></label>
             <div class="col-sm-10">
@@ -44,7 +44,7 @@
         </thead>
         <tbody>
              <!--parte covid-->
-            <tr class="pointer" *ngFor="let entry of covidCountriesDataArray" >
+            <tr class="pointer" *ngFor="let entry of covidCountriesDataArray">
                 <th scope="row"> {{entry.data.name}}</th>
                 <td>{{entry.data.population}}</td>
                 <td>{{entry.data.updated_at}}</td>
@@ -54,12 +54,31 @@
                 <td>{{entry.data.latest_data.confirmed}}</td>
                 <td>{{entry.data.latest_data.calculated.death_rate}}</td>
                 <td>{{entry.data.latest_data.calculated.cases_per_million_population}}</td>
-            </tr>
                 <!--parte meteo-->
-                <tr class="pointer" *ngFor="let entry of meteoDataArray">
-                <td>{{entry.data.current.temperature}}</td>
-                <td>{{entry.data.current.relHumidity}}</td>
-                <td>{{entry.data.current.airQualityIndex}}</td>
+                <td class="pointer" *ngFor="let data of meteoDataArray">
+                <td>{{data.data.current}}</td>
+                <td>{{meteoEntry.data.current.relHumidity}}</td>
+                <td>{{meteoEntry.data.current.airQualityIndex}}</td>
+
+                <!-- 
+                    export interface ApiMeteo{
+                        data: current 
+                    }
+
+                    export interface current{
+                        timezone : string;
+                        current : ApiMeteoData
+                    }
+                    export interface ApiMeteoData{
+                        
+                        
+                        temperature : number,
+                        temperatureMax : number,
+                        temperatureMin : number,
+                        relHumidity : number,
+                        airQualityIndex: number,
+                    }
+                -->
                  
             </tr>
         </tbody>
