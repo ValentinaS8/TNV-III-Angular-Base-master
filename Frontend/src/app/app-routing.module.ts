@@ -13,6 +13,9 @@ import { ApiComponent } from './routes/api/api.component';
 import { ProveApiCoronaComponent } from './components/prove-api-corona/prove-api-corona.component';
 import { ApiMeteoComponent } from './routes/api-meteo/api-meteo.component';
 import { MeteoCovidComponent } from './components/meteo-covid/meteo-covid.component';
+import { GraphicsComponent } from './routes/graphics/graphics.component';
+import { DocsComponent } from './routes/docs/docs.component';
+import { LoginComponent } from './routes/login/login.component';
 
 const routes: Routes = [
   { path: "", redirectTo: '/welcome', pathMatch: 'full' },
@@ -29,6 +32,10 @@ const routes: Routes = [
   { path: "apicoronatest", component: ProveApiCoronaComponent},
   { path: "apimeteo", component: ApiMeteoComponent},
   { path: "meteocovid", component: MeteoCovidComponent}, 
+  { path: "graphics", component: GraphicsComponent},
+  { path: "docs", component: DocsComponent},
+  { path: "login", component: LoginComponent}
+  
 ]; 
 
 @NgModule({

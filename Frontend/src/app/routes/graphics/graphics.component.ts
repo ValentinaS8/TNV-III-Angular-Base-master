@@ -2,7 +2,6 @@ import { FormatWidth } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ApiMeteo } from 'src/app/models/apimeteo.model';
 import { ApiMeteoService } from 'src/app/services/api-meteo.service';
-import { Chart } from 'chart.js';
 
 
 
