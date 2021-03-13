@@ -1,4 +1,5 @@
-<div *ngIf="dataEntry != null" class="container">
+<div style='margin:15px; padding:10px;'>
+    <div *ngIf="dataEntry != null" class="container">
 
     <div class="row p-3 shadow">
         <button class="btn btn-primary mr-5" [routerLink]="['/dashboard']">Back</button>
@@ -94,4 +95,5 @@
         <button type="submit" [disabled]="!form.valid" class="btn btn-success">Submit</button>
 
     </form>
+</div>
 </div>

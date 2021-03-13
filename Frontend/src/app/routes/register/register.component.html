@@ -1,14 +1,16 @@
+<div style='margin:15px; padding:10px;'>
 <form (ngSubmit)="addUsers()" #form="ngForm">
   <div class="container">
     <div class="row py-5 mt-4 align-items-center">
       <h1>Registrati</h1>
       <div class="container">
-      <label for="uname"><b>Username</b></label>
-      <input type="text" placeholder="Enter Username" id="name" required [(ngModel)]="userName" name ="userName">  
-      <label for="psw"><b>Password</b></label>
-      <input type="password" placeholder="Enter Password" id="pwd" required [(ngModel)]="pwd" name ="pwd">  
-      <button type="submit" [disabled]="!form.valid"  >Register</button>     
+        <label for="uname"><b>Username</b></label>
+        <input type="text" placeholder="Enter Username" id="name" required [(ngModel)]="userName" name="userName">
+        <label for="psw"><b>Password</b></label>
+        <input type="password" placeholder="Enter Password" id="pwd" required [(ngModel)]="pwd" name="pwd">
+        <button type="submit" [disabled]="!form.valid">Register</button>
       </div>
+    </div>
   </div>
-</div>
 </form>
+</div>
