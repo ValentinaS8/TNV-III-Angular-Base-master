@@ -34,9 +34,7 @@ export class MeteoCovidComponent implements OnInit {
   "Slovacchia","Slovenia","Spagna","Svezia","Svizzera","Ungheria",];
 
   dataCity: string;
- /* europe = ["Amsterdam", "Atene", "Berlino", "Bratislava", "Bruxelles", "Bucarest", "Budapest", "Copenaghen",
-    "Dublino", "Helsinki", "La Valletta", "Lisbona", "Londra", "Lubiana", "Lussemburgo", "Madrid", "Nicosia",
-    "Parigi", "Praga", "Riga", "Roma", "Stocolma", "Tallinn", "Varsavia", "Vienna", "Vilnius", "Zagabria",];*/
+ 
   meteoCountries: ApiMeteo;
 
   meteoDataArray: Array<ApiMeteo> = [];
