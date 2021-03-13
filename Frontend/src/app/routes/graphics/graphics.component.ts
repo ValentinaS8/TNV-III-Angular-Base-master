@@ -86,7 +86,7 @@ export class GraphicsComponent implements OnInit {
         labels: myLabels,
         datasets: [{
           label: "Casi di Covid registrati",
-          data: data.dataCovid,
+          data: this.putDataCovid,
           backgroundColor: 'red',
           fill: false
         }]
