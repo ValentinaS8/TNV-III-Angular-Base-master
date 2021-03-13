@@ -46,13 +46,10 @@ export class MeteoCovidComponent implements OnInit {
 
   /********************parte covid************************************/
   //funzione per il recupero dei dati METEO + COVID di tutte le nazioni
-  getAllEuropeCountriesMeteoCovidData() {
-    this.getAllEuropeCountriesCovidData();
-    this.getAllMeteoData()
-    //inserire funzione che recupera dati meteo di tutte le nazioni    
-  }
- getAllMeteoData(){
+  
+ getAllData(){
    for (let i=0;i < (this.europeCountries).length; i++){
+    this.getCountryCovidDataFromArray(this.europeCountries[i])
     this.getAllMeteoApiData(this.europeCountries[i])
    }}
 
