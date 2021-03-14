@@ -38,8 +38,6 @@ export class MeteoCovidComponent implements OnInit {
 
   meteoDataArray: Array<ApiMeteo> = [];
 
-  meteoCovidDataArray: Array<MeteoCovidData> = [];
-
 
   /********************parte covid************************************/
   //funzione per il recupero dei dati METEO + COVID di tutte le nazioni
@@ -103,7 +101,7 @@ export class MeteoCovidComponent implements OnInit {
         this.covidCountriesData.data.latest_data.calculated.death_rate = deathrateCorrectedNumber;
       }
 
-      this.covidCountriesDataArray.push(this.covidCountriesData);        
+      this.covidCountriesDataArray.push(this.covidCountriesData);
       this.covidService.addCovidPromiseEntry(this.covidCountriesData).then(response => {
         console.log("Ho inviato i dati al db", response)
       }
@@ -142,7 +140,7 @@ export class MeteoCovidComponent implements OnInit {
         this.covidCountriesData.data.latest_data.calculated.death_rate = deathrateCorrectedNumber;
       }
 
-      this.covidCountriesDataArray.push(this.covidCountriesData);      
+      this.covidCountriesDataArray.push(this.covidCountriesData);
       this.covidService.addCovidEntry(this.covidCountriesData).subscribe(response => {
         console.log("Ho inviato i dati al db")
       }

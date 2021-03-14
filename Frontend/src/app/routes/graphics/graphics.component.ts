@@ -35,30 +35,25 @@ export class GraphicsComponent implements OnInit {
   ngOnInit(): void {
     for (this.dataCity of this.europe) {
       this.getMeteoApiData(this.dataCity);
+      
     }
-    if (this.meteoDataArray.length == 28) {
       for (this.dataCity of this.europe) {
         this.getCovidApiData(this.dataCity);
       }
     }
-  }
 
   /********************CHIAMATE ALL'API METEO E API COVID***********************/
   getMeteoApiData(dataCity: any) {
     this.apimeteoService.getMeteoApiData(this.dataCity).subscribe((meteoData: ApiMeteo) => {
-      this.meteoCountries = meteoData
+      this.meteoCountries = meteoData;
       var temperature = this.meteoCountries.data.current.temperature;
       var humidity = this.meteoCountries.data.current.relHumidity;
       this.meteoDataArray.push(temperature);
-      console.log("Pushato: " + temperature + "°C a " + dataCity);
       this.humidityDataArray.push(humidity);
-      console.log("Pushato: " + humidity + "% a " + dataCity);
       this.countriesToShow.push(dataCity);
-
-      if (this.meteoDataArray.length == 28) {
-        this.createMeteoGraph();
-        this.createHumidityGraph();
-      }
+      console.log("MeteoData: " + this.meteoDataArray.length);
+      console.log("CountriesData: " + this.meteoDataArray.length);
+      console.log("HumidityData: " + this.meteoDataArray.length);
     });
   }
 
@@ -98,7 +93,7 @@ export class GraphicsComponent implements OnInit {
   createMeteoGraph() {
     let myCanvas = document.getElementById("meteo-grafico1");
     let myLabels = this.countriesToShow;
-    const data = this.putDataMeteo();
+    const data = this.putDataMeteo;
     console.log(data);
 
     let chart = new Chart(myCanvas, {
@@ -106,7 +101,7 @@ export class GraphicsComponent implements OnInit {
       data: {
         labels: myLabels,
         datasets: [{
-          label: "Temperature registrate",
+          label: "Temperature registrate (in °C)",
           data: data,
           backgroundColor: 'blue',
           fill: false
@@ -142,17 +137,17 @@ export class GraphicsComponent implements OnInit {
   }
 
   createHumidityGraph(){
-    let myCanvas = document.getElementById("meteo-grafico2");
+    let myCanvas2 = document.getElementById("meteo-grafico2");
     let myLabels = this.countriesToShow;
     const data = this.putDataHumidity();
     console.log(data);
 
-    let chart = new Chart(myCanvas, {
+    let chart = new Chart(myCanvas2, {
       type: 'bar',
       data: {
         labels: myLabels,
         datasets: [{
-          label: "Umidità registrata",
+          label: "Umidità registrata (in %)",
           data: data,
           backgroundColor: 'clear-blue',
           fill: false
