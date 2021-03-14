@@ -21,25 +21,25 @@ import { AuthGuard } from './services/auth.guard';
 
 const routes: Routes = [
   { path: "", redirectTo: '/welcome', pathMatch: 'full' },
-  { path: "dashboard", component: DashboardComponent },
-  { path: "add", component: AddComponent },
-  { path: "details/:id", component: DetailsComponent },
-  { path: "edit/:id", component: EditComponent },
-  { path: "filterdouble", component: FilterDoubleComponent},
-  { path: "sortingbydeath", component: SortingbydeathComponent},
-  { path: "sortBy", component: SortByComponent},
-  { path: "welcome", component: WelcomepageComponent},
-  { path: "filterByCountry", component: FilterbycountryComponent},
-  { path: "apicorona", component:ApiComponent},
-  { path: "apicoronatest", component: ProveApiCoronaComponent},
-  { path: "apimeteo", component: ApiMeteoComponent},
-  { path: "meteocovid", component: MeteoCovidComponent}, 
-  { path: "graphics", component: GraphicsComponent},
-  { path: "docs", component: DocsComponent},
-  { path: "login", component: LoginComponent},
-  { path: "register", component: RegisterComponent}
-  
-]; 
+  // { path: "dashboard", component: DashboardComponent },
+  // { path: "add", component: AddComponent },
+  //{ path: "details/:id", component: DetailsComponent },
+  //{ path: "edit/:id", component: EditComponent },
+  //{ path: "filterdouble", component: FilterDoubleComponent},
+  //{ path: "sortingbydeath", component: SortingbydeathComponent},
+  //{ path: "sortBy", component: SortByComponent},
+  { path: "welcome", component: WelcomepageComponent },
+  //{ path: "filterByCountry", component: FilterbycountryComponent},
+  //{ path: "apicorona", component:ApiComponent},
+  //{ path: "apicoronatest", component: ProveApiCoronaComponent},
+  //{ path: "apimeteo", component: ApiMeteoComponent},
+  { path: "meteocovid", component: MeteoCovidComponent },
+  { path: "graphics", component: GraphicsComponent },
+  { path: "docs", component: DocsComponent },
+  { path: "login", component: LoginComponent },
+  { path: "register", component: RegisterComponent }
+
+];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

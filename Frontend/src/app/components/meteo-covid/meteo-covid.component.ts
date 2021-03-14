@@ -48,7 +48,6 @@ export class MeteoCovidComponent implements OnInit {
   getAllData() {
     for (let i = 0; i < (this.europeCountries).length; i++) {
       this.getCountryCovidDataFromArray(this.europeCountries[i])
-     // this.getAllMeteoApiData(this.europeCountries[i])
     }
   }
 
@@ -60,16 +59,16 @@ export class MeteoCovidComponent implements OnInit {
       this.meteoDataArray.push(this.meteoCountries)
       console.log(this.meteoCountries.data.current.temperatureMin)
       this.meteoService.addMeteoEntry(this.meteoCountries).subscribe(response => {
-        console.log(response);       
+        console.log(response);
       },
         err => console.log("Errore")
       )
     },
       err => console.log(err),
-     
+
 
     );
-  } 
+  }
 
   getCountryCovidDataFromArray(countryName: string) {
     this.apiCovidService.getCovidPromiseData(countryName).then((data: ApiCoronaData) => {
@@ -81,18 +80,17 @@ export class MeteoCovidComponent implements OnInit {
         this.meteoDataArray.push(this.meteoCountries)
         console.log(this.meteoCountries.data.current.temperatureMin)
         this.meteoService.addMeteoPromiseEntry(this.meteoCountries).then(response => {
-          console.log(response);       
+          console.log(response);
         },
           err => console.log("Errore")
         )
       },
         err => console.log(err),
-       
-  
+
+
       );
 
-      /*il campo che contiene la data all'interno del file json contiene 
-       anche l'orario -> estrapolo la data*/
+      /*Estrapolazione del valore "Data" dal file .json*/
       for (let item in this.covidCountriesData) {
         if (this.covidCountriesData.data.updated_at.includes("T")) {
           let correctedData = this.covidCountriesData.data.updated_at.substring(0, 10);
@@ -101,22 +99,19 @@ export class MeteoCovidComponent implements OnInit {
 
         //riduzione del numero delle cifre decimali del death_rate
         let deathrateString = (this.covidCountriesData.data.latest_data.calculated.death_rate).toString();
-        //{{(this.afghanistanData.data.latest_data.calculated.death_rate) | number: '2.2-2'}}
         deathrateString = deathrateString.substring(0, 4);
         let deathrateCorrectedNumber = parseFloat(deathrateString);
         this.covidCountriesData.data.latest_data.calculated.death_rate = deathrateCorrectedNumber;
       }
 
-      this.covidCountriesDataArray.push(this.covidCountriesData);//questo corrisponde a  this.dataEntry = form.form.value;
-      //chiama il servizio del db e gli dà i dati da scrivere            
+      this.covidCountriesDataArray.push(this.covidCountriesData);        
       this.covidService.addCovidPromiseEntry(this.covidCountriesData).then(response => {
         console.log("Ho inviato i dati al db", response)
-        //this.router.navigate(['/dashboard']);
       }
       )
     },
       err => console.log(err),
-      
+
     )
   }
 
@@ -134,8 +129,7 @@ export class MeteoCovidComponent implements OnInit {
     this.apiCovidService.getCountryCovidData(this.countryName).subscribe((data: ApiCoronaData) => {
       this.covidCountriesData = data;
 
-      /*il campo che contiene la data all'interno del file json contiene 
-       anche l'orario -> estrapolo la data*/
+      /*Estrapolazione del valore "Data" dal file .json*/
       for (let item in this.covidCountriesData) {
         if (this.covidCountriesData.data.updated_at.includes("T")) {
           let correctedData = this.covidCountriesData.data.updated_at.substring(0, 10);
@@ -144,17 +138,14 @@ export class MeteoCovidComponent implements OnInit {
 
         //riduzione del numero delle cifre decimali del death_rate
         let deathrateString = (this.covidCountriesData.data.latest_data.calculated.death_rate).toString();
-        //{{(this.afghanistanData.data.latest_data.calculated.death_rate) | number: '2.2-2'}}
         deathrateString = deathrateString.substring(0, 4);
         let deathrateCorrectedNumber = parseFloat(deathrateString);
         this.covidCountriesData.data.latest_data.calculated.death_rate = deathrateCorrectedNumber;
       }
 
-      this.covidCountriesDataArray.push(this.covidCountriesData);//questo corrisponde a  this.dataEntry = form.form.value;
-      //chiama il servizio del db e gli dà i dati da scrivere            
+      this.covidCountriesDataArray.push(this.covidCountriesData);      
       this.covidService.addCovidEntry(this.covidCountriesData).subscribe(response => {
         console.log("Ho inviato i dati al db")
-        //this.router.navigate(['/dashboard']);
       }
       )
     },
@@ -167,7 +158,7 @@ export class MeteoCovidComponent implements OnInit {
 
 
   //funzione per il recupero dei dati METEO deolla nazione scelta attraverso il form 
-  getMeteoApiData(form :NgForm) {
+  getMeteoApiData(form: NgForm) {
 
     this.dataCity = form.form.value.country
     console.log(this.dataCity);
@@ -177,7 +168,7 @@ export class MeteoCovidComponent implements OnInit {
       console.log(this.meteoCountries.data.current.temperatureMin)
       //scrittura a db
       this.meteoService.addMeteoEntry(this.meteoCountries).subscribe(response => {
-        console.log(response);        
+        console.log(response);
       },
         err => console.log("Errore")
       )
@@ -188,51 +179,4 @@ export class MeteoCovidComponent implements OnInit {
     );
 
   }
-
-
-  // funzione da inserire all'interno della getMeteo al fine di fare tutto in un unico passo
-  /* postMeteoApiData(meteoCountries: ApiMeteo) {
-     this.meteoCountries;
-     console.log(meteoCountries.data.current.airQualityIndex)
- 
-     this.meteoService.addMeteoEntry(this.meteoCountries).subscribe(response => {
-       console.log(response);
-     },
- 
-       err => console.log("Errore")
- 
-     )
-   }*/
-
-  //Funzione che crea un terzo array a partire dall'array di dati covid e meteo
-  /* createArray()
-   {
-     //cicla per l'array covid
-     for (let i = 0; i < (this.covidCountriesDataArray).length; i++) {
-       //console.log(this.europeCountries[i]);
-       this.meteoCovidDataArray[i].population = this.covidCountriesDataArray[i].data.population;
-     }
- 
-     //cicla per l'array meteo
-   }*/
-
 }
-/*
-export interface ApiMeteo{
-    data: current 
-}
-
-export interface current{
-    timezone : string;
-    current : ApiMeteoData
-}
-export interface ApiMeteoData{
-    
-       
-    temperature : number,
-    temperatureMax : number,
-    temperatureMin : number,
-    relHumidity : number,
-    airQualityIndex: number,
-}
-*/

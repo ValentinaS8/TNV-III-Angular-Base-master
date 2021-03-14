@@ -1,89 +1,58 @@
 <br><br>
-<div><!-- bottone di prova api corona -> fa la chiamata get per avere i dati di tutte le nazioni-->
-<div class="container">
+<div>
+  <!-- bottone di prova api corona -> fa la chiamata get per avere i dati di tutte le nazioni-->
+  <div class="container">
 
-</div>
-<!-- getCountryCovidData(form : NgForm) -->
-<div class="container p-5">
-    <!-- <button (click)="getCountriesCovidData()">Dati di tutte le nazioni - Api corona</button> -->
-    <span><button class="btn btn-secondary" (click)="getAfghanistanData()">Dati dell'Afghanistan - Api corona</button></span>
-    <button class="btn btn-secondary" (click)="getAllEuropeCountriesCovidData()">Dati di tutte le nazioni - funzioneProva</button>
-    <!-- parte nuova -->
+  </div>
+  <!-- getCountryCovidData(form : NgForm) -->
+  <div class="container p-5">
+    <span><button class="btn btn-secondary" (click)="getAfghanistanData()">Dati dell'Afghanistan - Api
+        corona</button></span>
+    <button class="btn btn-secondary" (click)="getAllEuropeCountriesCovidData()">Dati di tutte le nazioni -
+      funzioneProva</button>
     <form class="pt-5" (ngSubmit)="getCountryCovidDataFromForm(form)" #form="ngForm">
-        <div class="form-group row">
-            <label for="country" class="col-sm-2 col-form-label"></label>
-            <div class="col-sm-10">
-                <select class="form-control" id="country" ngModel required name="country">
-                    <option *ngFor="let country of europeCountries"> {{country}} </option>
-                </select>
-            </div>
+      <div class="form-group row">
+        <label for="country" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-10">
+          <select class="form-control" id="country" ngModel required name="country">
+            <option *ngFor="let country of europeCountries"> {{country}} </option>
+          </select>
         </div>
-        <button type="submit" [disabled]="!form.valid" class="btn btn-success">Submit Country</button>
+      </div>
+      <button type="submit" [disabled]="!form.valid" class="btn btn-success">Submit Country</button>
 
     </form>
-</div>
+  </div>
 
-<!--fine parte nuova -->
-<div class="container">
+  <div class="container">
     <table class="table">
-        <thead class="thead-dark">
-            <tr>
-                <th scope="col">Nome</th>
-                <th scope="col">Popolazione</th>
-                <th scope="col">Data</th>
-                <th scope="col">Morti di oggi</th>
-                <th scope="col">Casi confermati oggi</th>
-                <th scope="col">Storico morti</th>
-                <th scope="col">Storico casi</th>
-                <th scope="col">Morti percentuali</th>
-                <th scope="col">Casi su un milione di abitanti</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr class="pointer" *ngFor="let entry of covidCountriesDataArray">
-                <th scope="row"> {{entry.data.name}}</th>
-                <td>{{entry.data.population}}</td>
-                <td>{{entry.data.updated_at}}</td>
-                <td>{{entry.data.today.confirmed}}</td>
-                <td>{{entry.data.today.deaths}}</td>
-                <td>{{entry.data.latest_data.deaths}}</td>
-                <td>{{entry.data.latest_data.confirmed}}</td>
-                <td>{{entry.data.latest_data.calculated.death_rate}}</td>
-                <td>{{entry.data.latest_data.calculated.cases_per_million_population}}</td>
-            </tr>
-        </tbody>
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col">Nome</th>
+          <th scope="col">Popolazione</th>
+          <th scope="col">Data</th>
+          <th scope="col">Morti di oggi</th>
+          <th scope="col">Casi confermati oggi</th>
+          <th scope="col">Storico morti</th>
+          <th scope="col">Storico casi</th>
+          <th scope="col">Morti percentuali</th>
+          <th scope="col">Casi su un milione di abitanti</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="pointer" *ngFor="let entry of covidCountriesDataArray">
+          <th scope="row"> {{entry.data.name}}</th>
+          <td>{{entry.data.population}}</td>
+          <td>{{entry.data.updated_at}}</td>
+          <td>{{entry.data.today.confirmed}}</td>
+          <td>{{entry.data.today.deaths}}</td>
+          <td>{{entry.data.latest_data.deaths}}</td>
+          <td>{{entry.data.latest_data.confirmed}}</td>
+          <td>{{entry.data.latest_data.calculated.death_rate}}</td>
+          <td>{{entry.data.latest_data.calculated.cases_per_million_population}}</td>
+        </tr>
+      </tbody>
     </table>
     <br>
-</div>
-
-<!--<div class="container p-5">
-    <table class="table">
-        <thead class="thead-dark">
-        <tr>
-            <th scope="col">Nome</th>
-            <th scope="col">Popolazione</th>
-            <th scope="col">Data</th>
-            <th scope="col">Morti di oggi</th>
-            <th scope="col">Casi confermati oggi</th> 
-            <th scope="col">Storico morti</th>
-            <th scope="col">Storico casi</th>
-            <th scope="col">Morti percentuali</th>
-            <th scope="col">Casi su un milione di abitanti</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr class="pointer" *ngFor="let entry of covidCountriesDataArray">
-            <th scope="row"> {{entry.data.name}}</th>
-            <td>{{entry.data.population}}</td>
-            <td>{{entry.data.updated_at}}</td>
-            <td>{{entry.data.today.deaths}}</td>
-            <td>{{entry.data.today.confirmed}}</td>
-            <td>{{entry.data.latest_data.deaths}}</td>
-            <td>{{entry.data.latest_data.confirmed}}</td>
-            <td>{{entry.data.latest_data.calculated.death_rate}}</td>
-            <td>{{entry.data.latest_data.calculated.cases_per_million_population}}</td>            
-        </tr>
-        </tbody>
-    </table> 
-</div>-->
+  </div>
 </div>

@@ -28,9 +28,9 @@ export class LoginComponent implements OnInit {
    login() {
     let checkLogin = this.loginService.checkUser(this.userName, this.pwd);
     if (checkLogin) {
-      this.router.navigate(['/dashboard']);
+      this.router.navigate(['/docs']);
     } else {
-      alert("errore");
+      alert("Campi inseriti non correttamente. Riprovare.");
     }
   }
 }
