@@ -42,8 +42,8 @@ export class MeteoCovidComponent implements OnInit {
   meteoCovidDataArray: Array<MeteoCovidData> = [];
 
 
-  /************************** dati covid + dati meteo **************************/
-  //funzione che sincronizza la chiamata dei dati covid e dei dati meteo
+  /********************parte covid************************************/
+  //funzione per il recupero dei dati METEO + COVID di tutte le nazioni
 
   getAllData() {
     for (let i = 0; i < (this.europeCountries).length; i++) {
@@ -51,8 +51,7 @@ export class MeteoCovidComponent implements OnInit {
       this.getAllMeteoApiData(this.europeCountries[i])
     }
   }
-  
-  /****************************** dati meteo ******************************/
+
   getAllMeteoApiData(nation) {
     this.dataCity = nation
     console.log(this.dataCity);
@@ -61,12 +60,7 @@ export class MeteoCovidComponent implements OnInit {
       this.meteoDataArray.push(this.meteoCountries)
       console.log(this.meteoCountries.data.current.temperatureMin)
       this.meteoService.addMeteoEntry(this.meteoCountries).subscribe(response => {
-        console.log(response);
-        this.meteoService.addMeteoEntry(this.meteoCountries).subscribe(response => {
-          console.log(response);
-        },
-          err => console.log("Errore")
-        )
+        console.log(response);       
       },
         err => console.log("Errore")
       )
@@ -75,10 +69,8 @@ export class MeteoCovidComponent implements OnInit {
       () => console.log("Loading completed", this.meteoCountries)
 
     );
-  }
+  } 
 
-   /****************************** dati covid ******************************/
-   
   getCountryCovidDataFromArray(countryName: string) {
     this.apiCovidService.getCountryCovidData(countryName).subscribe((data: ApiCoronaData) => {
       this.covidCountriesData = data;
@@ -102,7 +94,7 @@ export class MeteoCovidComponent implements OnInit {
       this.covidCountriesDataArray.push(this.covidCountriesData);//questo corrisponde a  this.dataEntry = form.form.value;
       //chiama il servizio del db e gli dà i dati da scrivere            
       this.covidService.addCovidEntry(this.covidCountriesData).subscribe(response => {
-        console.log("Ho inviato i dati al db")
+        console.log("Ho inviato i dati al db", response)
         //this.router.navigate(['/dashboard']);
       }
       )
@@ -111,7 +103,8 @@ export class MeteoCovidComponent implements OnInit {
       () => console.log("Loading countries data completed", this.covidCountriesData.data.latest_data)
     )
   }
-  // Funzione che fa la chiamata sincronizzata dei dati covid e dei dati meteo
+
+  // chiamata sincronizzata dei dati covid e dei dati meteo per ogni singola nazione
   getCovidMeteoApiData(form: NgForm) {
     this.getCountryMeteoCovidDataFromForm(form);
     this.getMeteoApiData(form);
@@ -119,7 +112,7 @@ export class MeteoCovidComponent implements OnInit {
   }
 
   // dati covid per ogni singola nazione
-  getCountryMeteoCovidDataFromForm(form) {
+  getCountryMeteoCovidDataFromForm(form: NgForm) {
     this.countryName = form.form.value.country;
     console.log(this.countryName);
     this.apiCovidService.getCountryCovidData(this.countryName).subscribe((data: ApiCoronaData) => {
@@ -157,7 +150,7 @@ export class MeteoCovidComponent implements OnInit {
   /********************parte meteo************************************/
 
   //funzione per il recupero dei dati METEO deolla nazione scelta attraverso il form 
-  getMeteoApiData(form) {
+  getMeteoApiData(form :NgForm) {
     this.dataCity = form.form.value.country
     console.log(this.dataCity);
     this.apimeteoService.getMeteoApiData(this.dataCity).subscribe((meteoData: ApiMeteo) => {
@@ -166,14 +159,7 @@ export class MeteoCovidComponent implements OnInit {
       console.log(this.meteoCountries.data.current.temperatureMin)
       //scrittura a db
       this.meteoService.addMeteoEntry(this.meteoCountries).subscribe(response => {
-        console.log(response);
-        this.meteoService.addMeteoEntry(this.meteoCountries).subscribe(response => {
-          console.log(response);
-        },
-
-          err => console.log("Errore")
-
-        )
+        console.log(response);        
       },
         err => console.log("Errore")
       )

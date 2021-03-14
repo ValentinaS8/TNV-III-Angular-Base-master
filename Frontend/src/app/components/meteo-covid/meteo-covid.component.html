@@ -16,18 +16,18 @@
             </div>
         </div>
         <!-- La chiamata alla funzione parte alla pressione del tasto submit -->
-        <button type="submit" [disabled]="!form.valid" class="btn btn-success">Submit Country</button>
+        <button type="submit" [disabled]="!form.valid" class="btn btn-success">Ricerca per singola Nazione</button>
     </form>
 </div>
 
 
-<table>
+<table width="100%">
     <tr>
         <td>
-            <table class="table">
-                <thead class="thead-dark">
-                    <tr>
-                        <th scope="col">Nome</th>
+            <table class="table" width="75%">
+                <thead class="thead-dark" width="75%">
+                    <tr width="75%">
+                        <th scope="col">Nazione</th>
                         <th scope="col">Popolazione</th>
                         <th scope="col">Data di riferimento</th>
                         <th scope="col">Morti di oggi</th>
@@ -53,9 +53,9 @@
             </table>
         </td>
         <td>
-            <table class="table">
-                <thead class="thead-dark">
-                    <tr>
+            <table class="table" width="25%">
+                <thead class="thead-dark" width="25%">
+                    <tr width="25%">
                         <th scope="col">Capitale</th>
                         <th scope="col">Temp. °C</th>
                         <th scope="col">Umidità</th>
@@ -67,7 +67,7 @@
                         <th scope="row"> {{entry.data.timezone}}</th>
                         <td>{{entry.data.current.temperature}}</td>
                         <td>{{entry.data.current.relHumidity}}</td>
-                        <td>{{entry.data.current.airQualityIndex}}</td>
+                        <td alt="Air Quality Index">{{entry.data.current.airQualityIndex}}</td>
 
                     </tr>
                 </tbody>
