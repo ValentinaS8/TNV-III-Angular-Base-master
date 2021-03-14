@@ -9,38 +9,35 @@ import { ApiCoronaData } from '../models/apiCorona.model';
 export class ApiCovidService {
 
   private baseUrl = 'https://corona-api.com/';
-  private countryCode : string;
+  private countryCode: string;
 
-  constructor( private http : HttpClient) //iniezione del modulo http per usare i suoi metodi get
+  constructor(private http: HttpClient) //iniezione del modulo http per usare i suoi metodi get
   { }
 
   /*creazione chiamata http per la get che interroga l'api per avere i dati di tutte le nazioni*/
-  getCountriesData()
-  {
+  getCountriesData() {
     return this.http.get<ApiCoronaData>(this.baseUrl + '/countries'); //url che restituisce i dati di tutte le nazioni
   }
 
   /*creazione chiamata http per la get che interroga l'api per avere i dati di una sola nazione (Afghanistan)*/
-  getAfghanistanData()
-  {
+  getAfghanistanData() {
     return this.http.get<ApiCoronaData>(this.baseUrl + '/countries' + '/AF'); //url che restituisce i dati dell'Afghanistan
   }
-  
-  getCountryCovidData(countryName : any)
-  {
-    if (countryName === "Italia") return this.http.get<ApiCoronaData>(this.baseUrl + '/countries' + '/IT'); 
-    if (countryName === "Svizzera") return this.http.get<ApiCoronaData>(this.baseUrl + '/countries' + '/CH');   
+
+  getCountryCovidData(countryName: any) {
+    if (countryName === "Italia") return this.http.get<ApiCoronaData>(this.baseUrl + '/countries' + '/IT');
+    if (countryName === "Svizzera") return this.http.get<ApiCoronaData>(this.baseUrl + '/countries' + '/CH');
     if (countryName === "Portogallo") return this.http.get<ApiCoronaData>(this.baseUrl + '/countries' + '/PT');
     if (countryName === "Spagna") return this.http.get<ApiCoronaData>(this.baseUrl + '/countries' + '/ES');
     if (countryName === "Francia") return this.http.get<ApiCoronaData>(this.baseUrl + '/countries' + '/FR');
     if (countryName === "Belgio") return this.http.get<ApiCoronaData>(this.baseUrl + '/countries' + '/BE');
     if (countryName === "Paesi Bassi") return this.http.get<ApiCoronaData>(this.baseUrl + '/countries' + '/NL');
-    if (countryName === "Lussemburgo") return this.http.get<ApiCoronaData>(this.baseUrl + '/countries' + '/LU'); 
+    if (countryName === "Lussemburgo") return this.http.get<ApiCoronaData>(this.baseUrl + '/countries' + '/LU');
     if (countryName === "Cipro") return this.http.get<ApiCoronaData>(this.baseUrl + '/countries' + '/CY');
     if (countryName === "Malta") return this.http.get<ApiCoronaData>(this.baseUrl + '/countries' + '/MT');
     if (countryName === "Austria") return this.http.get<ApiCoronaData>(this.baseUrl + '/countries' + '/AT');
     if (countryName === "Germania") return this.http.get<ApiCoronaData>(this.baseUrl + '/countries' + '/DE');
-    if (countryName === "Polonia") return this.http.get<ApiCoronaData>(this.baseUrl + '/countries' + '/PL'); 
+    if (countryName === "Polonia") return this.http.get<ApiCoronaData>(this.baseUrl + '/countries' + '/PL');
     if (countryName === "Danimarca") return this.http.get<ApiCoronaData>(this.baseUrl + '/countries' + '/DK');
     if (countryName === "Svezia") return this.http.get<ApiCoronaData>(this.baseUrl + '/countries' + '/SE');
     if (countryName === "Lettonia") return this.http.get<ApiCoronaData>(this.baseUrl + '/countries' + '/LV');
@@ -55,7 +52,7 @@ export class ApiCovidService {
     if (countryName === "Ungheria") return this.http.get<ApiCoronaData>(this.baseUrl + '/countries' + '/HU');
     if (countryName === "Repubblica Ceca") return this.http.get<ApiCoronaData>(this.baseUrl + '/countries' + '/CZ');
     if (countryName === "Slovacchia") return this.http.get<ApiCoronaData>(this.baseUrl + '/countries' + '/SK');
-    if (countryName === "Finlandia") return this.http.get<ApiCoronaData>(this.baseUrl + '/countries' + '/FI');    
+    if (countryName === "Finlandia") return this.http.get<ApiCoronaData>(this.baseUrl + '/countries' + '/FI');
   }
   /*creazione chiamata http per la get che interroga l'api per avere i dati di una sola nazione (Afghanistan)*
   getOneCountryData(countryCode : string)
@@ -63,6 +60,6 @@ export class ApiCovidService {
     return this.http.get(this.baseUrl + "'/" + countryCode + "'"); //url che restituisce i dati di tutte le nazioni
   }*/
 
-   
+
 
 }
