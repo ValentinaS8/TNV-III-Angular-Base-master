@@ -19,7 +19,7 @@ export class GraphicsComponent implements OnInit {
   meteoCountries: ApiMeteo;
   meteoDataArray: any;
 
-  constructor(private apimeteoService: ApiMeteoService) { }
+  constructor(private apimeteoService: ApiMeteoService, private apiCovidService: ApiCovidService) { }
 
   europe = ["Austria", "Belgio", "Cipro", "Croazia", "Danimarca", "Estonia",
     "Finlandia", "Francia", "Germania", "Grecia", "Irlanda", "Italia", "Lettonia", "Lituania", "Lussemburgo",
@@ -28,7 +28,7 @@ export class GraphicsComponent implements OnInit {
 
   ngOnInit(): void {
     this.dataCity = "Austria";
-    console.log(this.apimeteoService.getMeteoApiData(this.dataCity));
+    console.log(this.apiCovidService.getCountriesData);
   }
 
 

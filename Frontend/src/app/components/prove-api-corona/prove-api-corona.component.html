@@ -6,8 +6,8 @@
 <!-- getCountryCovidData(form : NgForm) -->
 <div class="container p-5">
     <!-- <button (click)="getCountriesCovidData()">Dati di tutte le nazioni - Api corona</button> -->
-    <button (click)="getAfghanistanData()">Dati dell'Afghanistan - Api corona</button>
-    <button (click)="getAllEuropeCountriesCovidData()">Dati di tutte le nazioni - funzioneProva</button>
+    <span><button class="btn btn-secondary" (click)="getAfghanistanData()">Dati dell'Afghanistan - Api corona</button></span>
+    <button class="btn btn-secondary" (click)="getAllEuropeCountriesCovidData()">Dati di tutte le nazioni - funzioneProva</button>
     <!-- parte nuova -->
     <form class="pt-5" (ngSubmit)="getCountryCovidDataFromForm(form)" #form="ngForm">
         <div class="form-group row">

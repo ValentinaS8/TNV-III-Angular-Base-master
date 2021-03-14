@@ -1,15 +1,13 @@
-<<<<<<< HEAD
 <br><br><div>
-=======
->>>>>>> origin/Beckend
 <div class="container">
 
 </div>
 <!-- getCountryCovidData(form : NgForm) -->
 <div class="container p-5">
     <!-- Bottone per avere i dati covid/meteo di tutte le nazioni -->
-    <button (click)="getAllData()">Scarica i dati di tutta Europa</button>
+    <button class="btn btn-secondary" (click)="getAllData()">Scarica i dati di tutta Europa</button>
     <!-- Selettore per scegliere la nazione di cui si vogliono avere i dati covid/meteo -->
+    <div class="text-right">
     <form class="pt-5" (ngSubmit)=" getCovidMeteoApiData(form)" #form="ngForm">
         <div class="form-group row">
             <label for="country" class="col-sm-2 col-form-label"></label>
@@ -22,6 +20,7 @@
         <!-- La chiamata alla funzione parte alla pressione del tasto submit -->
         <button type="submit" [disabled]="!form.valid" class="btn btn-success">Ricerca per singola Nazione</button>
     </form>
+</div>
 </div>
 
 
