@@ -80,7 +80,7 @@ export class MeteoCovidComponent implements OnInit {
         this.meteoCountries = meteoData
         this.meteoDataArray.push(this.meteoCountries)
         console.log(this.meteoCountries.data.current.temperatureMin)
-        this.meteoService.addMeteoEntry(this.meteoCountries).subscribe(response => {
+        this.meteoService.addMeteoPromiseEntry(this.meteoCountries).then(response => {
           console.log(response);       
         },
           err => console.log("Errore")
@@ -109,7 +109,7 @@ export class MeteoCovidComponent implements OnInit {
 
       this.covidCountriesDataArray.push(this.covidCountriesData);//questo corrisponde a  this.dataEntry = form.form.value;
       //chiama il servizio del db e gli dà i dati da scrivere            
-      this.covidService.addCovidEntry(this.covidCountriesData).subscribe(response => {
+      this.covidService.addCovidPromiseEntry(this.covidCountriesData).then(response => {
         console.log("Ho inviato i dati al db", response)
         //this.router.navigate(['/dashboard']);
       }
