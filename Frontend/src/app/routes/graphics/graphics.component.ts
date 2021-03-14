@@ -21,6 +21,7 @@ export class GraphicsComponent implements OnInit {
   meteoCountries: ApiMeteo;
   covidCountries: ApiCoronaData;
   meteoDataArray: number[] = [];
+  humidityDataArray: number[] = [];
   covidDataArray: number[] = [];
   countriesToShow: string[] = [];
 
@@ -47,11 +48,16 @@ export class GraphicsComponent implements OnInit {
     this.apimeteoService.getMeteoApiData(this.dataCity).subscribe((meteoData: ApiMeteo) => {
       this.meteoCountries = meteoData
       var temperature = this.meteoCountries.data.current.temperature;
+      var humidity = this.meteoCountries.data.current.relHumidity;
       this.meteoDataArray.push(temperature);
       console.log("Pushato: " + temperature + "°C a " + dataCity);
+      this.humidityDataArray.push(humidity);
+      console.log("Pushato: " + humidity + "% a " + dataCity);
       this.countriesToShow.push(dataCity);
+
       if (this.meteoDataArray.length == 28) {
         this.createMeteoGraph();
+        this.createHumidityGraph();
       }
     });
   }
@@ -79,6 +85,10 @@ export class GraphicsComponent implements OnInit {
 
   putDataCovid() {
     return this.covidDataArray;
+  }
+
+  putDataHumidity(){
+    return this.humidityDataArray;
   }
 
   /*******************CARICAMENTO DATI SUGLI ARRAY DEI GRAFICI******************/
@@ -122,6 +132,29 @@ export class GraphicsComponent implements OnInit {
           label: "Casi di Covid registrati",
           data: data,
           backgroundColor: 'red',
+          fill: false
+        }]
+      },
+      options: {
+
+      }
+    });
+  }
+
+  createHumidityGraph(){
+    let myCanvas = document.getElementById("meteo-grafico2");
+    let myLabels = this.countriesToShow;
+    const data = this.putDataHumidity();
+    console.log(data);
+
+    let chart = new Chart(myCanvas, {
+      type: 'bar',
+      data: {
+        labels: myLabels,
+        datasets: [{
+          label: "Umidità registrata",
+          data: data,
+          backgroundColor: 'clear-blue',
           fill: false
         }]
       },
