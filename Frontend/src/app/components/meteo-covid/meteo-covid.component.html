@@ -1,4 +1,3 @@
-
 <div class="container">
 
 </div>
@@ -19,62 +18,60 @@
         <!-- La chiamata alla funzione parte alla pressione del tasto submit -->
         <button type="submit" [disabled]="!form.valid" class="btn btn-success">Submit Country</button>
     </form>
-</div>   
+</div>
 
 
-    <div class="main_wrapper">
-    <!--Tabella 1-->
-    <div class="canvas_wrapper">
-        <table class="table">
-            <thead class="thead-dark">
-                <tr>
-                    <!--parte covid-->
-                    <th scope="col">Nome</th>
-                    <th scope="col">Popolazione</th>
-                    <th scope="col">Data di riferimento</th>
-                    <th scope="col">Morti di oggi</th>
-                    <th scope="col">Casi di oggi</th>
-                    <th scope="col">Storico morti</th>
-                    <th scope="col">Storico casi</th>
-                    <th scope="col">Morti %</th>                           
-                </tr>
-            </thead>
-            <tbody>
-                 <!--parte covid-->
-                <tr class="pointer" *ngFor="let entry of covidCountriesDataArray" >
-                    <th scope="row"> {{entry.data.name}}</th>
-                    <td>{{entry.data.population}}</td>
-                    <td>{{entry.data.updated_at}}</td>
-                    <td>{{entry.data.today.confirmed}}</td>
-                    <td>{{entry.data.today.deaths}}</td>
-                    <td>{{entry.data.latest_data.deaths}}</td>
-                    <td>{{entry.data.latest_data.confirmed}}</td>
-                    <td>{{entry.data.latest_data.calculated.death_rate}}</td>
-                   
-                </tr>               
-            </tbody>
-        </table>
-    </div>
-    <!--Tabella 2-->
-    <div class="canvas_wrapper">
-        <table class="table">
-            <thead class="thead-dark">
-                <tr>            
-                    <th scope="col">Capitale</th>    
-                    <th scope="col">Temp. °C</th>
-                    <th scope="col">Umidità</th>
-                    <th scope="col">AQI</th>
-                </tr>
-            </thead>
-            <tbody>
-                 <!--parte covid-->
+<table>
+    <tr>
+        <td>
+            <table class="table">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">Nome</th>
+                        <th scope="col">Popolazione</th>
+                        <th scope="col">Data di riferimento</th>
+                        <th scope="col">Morti di oggi</th>
+                        <th scope="col">Casi di oggi</th>
+                        <th scope="col">Storico morti</th>
+                        <th scope="col">Storico casi</th>
+                        <th scope="col">Morti %</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="pointer" *ngFor="let entry of covidCountriesDataArray">
+                        <th scope="row"> {{entry.data.name}}</th>
+                        <td>{{entry.data.population}}</td>
+                        <td>{{entry.data.updated_at}}</td>
+                        <td>{{entry.data.today.confirmed}}</td>
+                        <td>{{entry.data.today.deaths}}</td>
+                        <td>{{entry.data.latest_data.deaths}}</td>
+                        <td>{{entry.data.latest_data.confirmed}}</td>
+                        <td>{{entry.data.latest_data.calculated.death_rate}}</td>
+
+                    </tr>
+                </tbody>
+            </table>
+        </td>
+        <td>
+            <table class="table">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">Capitale</th>
+                        <th scope="col">Temp. °C</th>
+                        <th scope="col">Umidità</th>
+                        <th scope="col">AQI</th>
+                    </tr>
+                </thead>
+                <tbody>
                     <tr class="pointer" *ngFor="let entry of meteoDataArray">
-                        <th scope="row"> {{entry.data.timezone}}</th> 
-                    <td>{{entry.data.current.temperature}}</td>
-                    <td>{{entry.data.current.relHumidity}}</td>
-                    <td>{{entry.data.current.airQualityIndex}}</td>
-                     
-                </tr>
-            </tbody>
-        </table>
-    </div></div>
+                        <th scope="row"> {{entry.data.timezone}}</th>
+                        <td>{{entry.data.current.temperature}}</td>
+                        <td>{{entry.data.current.relHumidity}}</td>
+                        <td>{{entry.data.current.airQualityIndex}}</td>
+
+                    </tr>
+                </tbody>
+            </table>
+        </td>
+    </tr>
+</table>

@@ -28,13 +28,13 @@ export class MeteoCovidComponent implements OnInit {
   afghanistanData: ApiCoronaData;
   afghanistanDataArray: Array<ApiCoronaData> = [];
   countryName: string;
-  europeCountries: Array<string> = ["Austria","Belgio","Cipro","Croazia","Danimarca","Estonia",
-  "Finlandia","Francia","Germania","Grecia","Irlanda","Italia","Lettonia","Lituania","Lussemburgo",
-  "Malta","Paesi Bassi","Polonia","Portogallo","Regno Unito","Repubblica Ceca","Romania",
-  "Slovacchia","Slovenia","Spagna","Svezia","Svizzera","Ungheria",];
+  europeCountries: Array<string> = ["Austria", "Belgio", "Cipro", "Croazia", "Danimarca", "Estonia",
+    "Finlandia", "Francia", "Germania", "Grecia", "Irlanda", "Italia", "Lettonia", "Lituania", "Lussemburgo",
+    "Malta", "Paesi Bassi", "Polonia", "Portogallo", "Regno Unito", "Repubblica Ceca", "Romania",
+    "Slovacchia", "Slovenia", "Spagna", "Svezia", "Svizzera", "Ungheria",];
 
   dataCity: string;
- 
+
   meteoCountries: ApiMeteo;
 
   meteoDataArray: Array<ApiMeteo> = [];
@@ -42,16 +42,18 @@ export class MeteoCovidComponent implements OnInit {
   meteoCovidDataArray: Array<MeteoCovidData> = [];
 
 
-  /********************parte covid************************************/
-  //funzione per il recupero dei dati METEO + COVID di tutte le nazioni
-  
- getAllData(){
-   for (let i=0;i < (this.europeCountries).length; i++){
-    this.getCountryCovidDataFromArray(this.europeCountries[i])
-    this.getAllMeteoApiData(this.europeCountries[i])
-   }}
+  /************************** dati covid + dati meteo **************************/
+  //funzione che sincronizza la chiamata dei dati covid e dei dati meteo
 
-   getAllMeteoApiData(nation){     
+  getAllData() {
+    for (let i = 0; i < (this.europeCountries).length; i++) {
+      this.getCountryCovidDataFromArray(this.europeCountries[i])
+      this.getAllMeteoApiData(this.europeCountries[i])
+    }
+  }
+  
+  /****************************** dati meteo ******************************/
+  getAllMeteoApiData(nation) {
     this.dataCity = nation
     console.log(this.dataCity);
     this.apimeteoService.getMeteoApiData(this.dataCity).subscribe((meteoData: ApiMeteo) => {
@@ -59,13 +61,11 @@ export class MeteoCovidComponent implements OnInit {
       this.meteoDataArray.push(this.meteoCountries)
       console.log(this.meteoCountries.data.current.temperatureMin)
       this.meteoService.addMeteoEntry(this.meteoCountries).subscribe(response => {
-      console.log(response);
+        console.log(response);
         this.meteoService.addMeteoEntry(this.meteoCountries).subscribe(response => {
           console.log(response);
         },
-    
           err => console.log("Errore")
-    
         )
       },
         err => console.log("Errore")
@@ -75,17 +75,10 @@ export class MeteoCovidComponent implements OnInit {
       () => console.log("Loading completed", this.meteoCountries)
 
     );
-   }
- 
-  //funzione per il recupero dei dati COVID di tutte le nazioni
-  getAllEuropeCountriesCovidData() {
-    //console.log("sono entrato nella funzione");
-    for (let i = 0; i < (this.europeCountries).length; i++) {
-      //console.log(this.europeCountries[i]);
-      this.getCountryCovidDataFromArray(this.europeCountries[i]);
-    }
   }
 
+   /****************************** dati covid ******************************/
+   
   getCountryCovidDataFromArray(countryName: string) {
     this.apiCovidService.getCountryCovidData(countryName).subscribe((data: ApiCoronaData) => {
       this.covidCountriesData = data;
@@ -119,11 +112,11 @@ export class MeteoCovidComponent implements OnInit {
     )
   }
   // Funzione che fa la chiamata sincronizzata dei dati covid e dei dati meteo
-getCovidMeteoApiData(form: NgForm){
-  this.getCountryMeteoCovidDataFromForm(form);
-  this.getMeteoApiData(form);
+  getCovidMeteoApiData(form: NgForm) {
+    this.getCountryMeteoCovidDataFromForm(form);
+    this.getMeteoApiData(form);
 
-}
+  }
 
   // dati covid per ogni singola nazione
   getCountryMeteoCovidDataFromForm(form) {
@@ -177,9 +170,9 @@ getCovidMeteoApiData(form: NgForm){
         this.meteoService.addMeteoEntry(this.meteoCountries).subscribe(response => {
           console.log(response);
         },
-    
+
           err => console.log("Errore")
-    
+
         )
       },
         err => console.log("Errore")
@@ -194,29 +187,29 @@ getCovidMeteoApiData(form: NgForm){
 
 
   // funzione da inserire all'interno della getMeteo al fine di fare tutto in un unico passo
- /* postMeteoApiData(meteoCountries: ApiMeteo) {
-    this.meteoCountries;
-    console.log(meteoCountries.data.current.airQualityIndex)
-
-    this.meteoService.addMeteoEntry(this.meteoCountries).subscribe(response => {
-      console.log(response);
-    },
-
-      err => console.log("Errore")
-
-    )
-  }*/
+  /* postMeteoApiData(meteoCountries: ApiMeteo) {
+     this.meteoCountries;
+     console.log(meteoCountries.data.current.airQualityIndex)
+ 
+     this.meteoService.addMeteoEntry(this.meteoCountries).subscribe(response => {
+       console.log(response);
+     },
+ 
+       err => console.log("Errore")
+ 
+     )
+   }*/
 
   //Funzione che crea un terzo array a partire dall'array di dati covid e meteo
- /* createArray()
-  {
-    //cicla per l'array covid
-    for (let i = 0; i < (this.covidCountriesDataArray).length; i++) {
-      //console.log(this.europeCountries[i]);
-      this.meteoCovidDataArray[i].population = this.covidCountriesDataArray[i].data.population;
-    }
-
-    //cicla per l'array meteo
-  }*/
+  /* createArray()
+   {
+     //cicla per l'array covid
+     for (let i = 0; i < (this.covidCountriesDataArray).length; i++) {
+       //console.log(this.europeCountries[i]);
+       this.meteoCovidDataArray[i].population = this.covidCountriesDataArray[i].data.population;
+     }
+ 
+     //cicla per l'array meteo
+   }*/
 
 }
