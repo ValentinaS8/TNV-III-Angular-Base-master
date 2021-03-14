@@ -19,11 +19,14 @@ import { ApiCoronaData } from '../../models/apiCorona.model';
 export class GraphicsComponent implements OnInit {
   dataCity: any;
   meteoCountries: ApiMeteo;
+  meteoCountries1: ApiMeteo;
   covidCountries: ApiCoronaData;
   meteoDataArray: number[] = [];
   humidityDataArray: number[] = [];
   covidDataArray: number[] = [];
-  countriesToShow: string[] = [];
+  countriesToShowMeteo: string[] = [];
+  countriesToShowCovid: string[] = [];
+  countriesToShowHumidity: string[] = [];
 
   constructor(private apimeteoService: ApiMeteoService, private apiCovidService: ApiCovidService) { }
 
@@ -40,6 +43,9 @@ export class GraphicsComponent implements OnInit {
       for (this.dataCity of this.europe) {
         this.getCovidApiData(this.dataCity);
       }
+      for (this.dataCity of this.europe) {
+        this.getHumidityApiData(this.dataCity);
+      }
     }
 
   /********************CHIAMATE ALL'API METEO E API COVID***********************/
@@ -47,14 +53,19 @@ export class GraphicsComponent implements OnInit {
     this.apimeteoService.getMeteoApiData(this.dataCity).subscribe((meteoData: ApiMeteo) => {
       this.meteoCountries = meteoData;
       var temperature = this.meteoCountries.data.current.temperature;
-      var humidity = this.meteoCountries.data.current.relHumidity;
       this.meteoDataArray.push(temperature);
-      this.humidityDataArray.push(humidity);
-      this.countriesToShow.push(dataCity);
-      console.log("MeteoData: " + this.meteoDataArray.length);
-      console.log("CountriesData: " + this.meteoDataArray.length);
-      console.log("HumidityData: " + this.meteoDataArray.length);
-    });
+      this.countriesToShowMeteo.push(dataCity);
+      if (this.meteoDataArray.length == 28) {
+        this.createMeteoGraph();
+    }
+    this.meteoCountries1 = meteoData;
+        var humidity = this.meteoCountries.data.current.relHumidity;
+        this.humidityDataArray.push(humidity);
+        this.countriesToShowHumidity.push(dataCity);
+        if (this.humidityDataArray.length == 28) {
+          this.createHumidityGraph();
+        }
+  });
   }
 
   getCovidApiData(dataCity: any) {
@@ -62,8 +73,7 @@ export class GraphicsComponent implements OnInit {
       this.covidCountries = covidData;
       var cases = this.covidCountries.data.latest_data.confirmed;
       this.covidDataArray.push(cases);
-      console.log("Pushato: " + cases + " casi a " + dataCity);
-      this.countriesToShow.push(dataCity);
+      this.countriesToShowCovid.push(dataCity);
       if (this.covidDataArray.length == 28) {
         this.createCovidGraph();
       }
@@ -92,9 +102,8 @@ export class GraphicsComponent implements OnInit {
 
   createMeteoGraph() {
     let myCanvas = document.getElementById("meteo-grafico1");
-    let myLabels = this.countriesToShow;
-    const data = this.putDataMeteo;
-    console.log(data);
+    let myLabels = this.countriesToShowMeteo;
+    const data = this.putDataMeteo();
 
     let chart = new Chart(myCanvas, {
       type: 'bar',
@@ -115,9 +124,8 @@ export class GraphicsComponent implements OnInit {
 
   createCovidGraph() {
     let myCanvas1 = document.getElementById("covid-grafico1");
-    let myLabels = this.europe;
+    let myLabels = this.countriesToShowCovid;
     const data = this.putDataCovid();
-    console.log(data);
 
     let chart1 = new Chart(myCanvas1, {
       type: 'bar',
@@ -138,9 +146,8 @@ export class GraphicsComponent implements OnInit {
 
   createHumidityGraph(){
     let myCanvas2 = document.getElementById("meteo-grafico2");
-    let myLabels = this.countriesToShow;
+    let myLabels = this.countriesToShowHumidity;
     const data = this.putDataHumidity();
-    console.log(data);
 
     let chart = new Chart(myCanvas2, {
       type: 'bar',
