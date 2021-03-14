@@ -86,8 +86,7 @@ export class MeteoCovidComponent implements OnInit {
           err => console.log("Errore")
         )
       },
-        err => console.log(err),
-       
+        err => console.log(err),    
   
       );
 
