@@ -5,9 +5,9 @@ export interface ApiCoronaData {
 export interface ApiCovidData {
     name : string,
     population: number,
-    updated_at: string, //data -> da convertire in formato corretto prima di salvare sul db
-    today: Today //contiene casi di morte e positivi di oggi
-    latest_data : LatestData //contiene storico dei morti e dei positivi
+    updated_at: string, // Data di aggiornamento del file JSON
+    today: Today //Dati totali di oggi (morti, casi confermati etc..)
+    latest_data : LatestData //storico dei morti e dei positivi
 }
 
 export interface Today {

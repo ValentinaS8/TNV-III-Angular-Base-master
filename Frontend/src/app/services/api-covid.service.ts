@@ -54,11 +54,6 @@ export class ApiCovidService {
     if (countryName === "Slovacchia") return this.http.get<ApiCoronaData>(this.baseUrl + '/countries' + '/SK');
     if (countryName === "Finlandia") return this.http.get<ApiCoronaData>(this.baseUrl + '/countries' + '/FI');
   }
-  /*creazione chiamata http per la get che interroga l'api per avere i dati di una sola nazione (Afghanistan)*
-  getOneCountryData(countryCode : string)
-  {
-    return this.http.get(this.baseUrl + "'/" + countryCode + "'"); //url che restituisce i dati di tutte le nazioni
-  }*/
 
   getCovidPromiseData(countryName: any) {
     if (countryName === "Italia") return this.http.get<ApiCoronaData>(this.baseUrl + '/countries' + '/IT').toPromise();

@@ -1,1 +1,52 @@
-<p>docs works!</p>
+<div class="container">
+  <h1>Documentazione ufficiale</h1>
+
+  <p>Per la realizzazione del progetto, abbiamo usufruito delle seguenti API:
+    <br><a href="https://www.troposphere.io/developer">Troposphere.io</a> (API Meteo)
+    <br><a href="https://about-corona.net/documentation">About-corona</a> (API Covid)
+    <br>Per la realizzazione dei grafici, abbiamo utilizzato la libreria "ChartJs":
+    <br><a href="https://www.chartjs.org/">ChartJs</a> (Documentazione ufficiale)
+    <br>Il nostro piano di lavoro su Trello presenta tutti gli appunti e i riferimenti utili per ottenere informazioni e
+    documentazioni:
+    <br><a href="https://trello.com/b/aSDtw41t/it-project-workflow">Trello</a> (WorkFlow)
+    <br><br>Per ulteriori riferimenti, consultare il piano di lavoro di Trello.
+  </p>
+
+  <h2>Indice</h2>
+  <ol>
+    <li>Presentazione del progetto</li>
+    <li>FAQ e risoluzione rapida di problemi</li>
+  </ol>
+
+  <br>
+  <h3>Presentazione del progetto</h3>
+  <p>Il progetto si divide essenzialmente in due piani: </p><ol>
+    <li>La Dashboard</li>
+    <li>I Grafici</li>
+  </ol>
+  <h5>La Dashboard</h5>
+  <p>La Dashboard ci permette di visualizzare in tempo reale l'andamento meteo/covid su una panoramica europea. </p>
+      <div> Selezionando il bottone "Scarica i dati di tutta Europa", verranno selezionati tutti i seguenti paesi:
+  <div><br><ul *ngFor="let country of europe">
+    <li>{{country}}</li>
+</ul>
+</div>
+</div>
+<div>Inoltre, si può visualizzare in dettaglio ognuno di questi stati selezionando lo Stato nella droplist di destra, e premendo "Submit Country".</div>
+<br><h5>I Grafici</h5>  
+<div>I Grafici rappresentano l'andamento generale di rapporti statistici come le temperature e l'andamento dei casi di Covid, oltre alla qualità dell'aria, tutto in tempo reale.</div>
+
+<br><h3>FAQ e risoluzione rapida di problemi</h3>
+<h5>Errore (Generale): CANNOT GET/</h5>
+<p>In caso si presentasse questo problema, consigliamo di andare su: <br><br>Frontend > src > app > routes > graphics > graphics.component.ts <br><br> e fare una compilazione (solitamente basta una volta) con la shortcut "CTRL + S".<br> Questo errore deriva da un'errata lettura dell'IDE del componente "Chart" (Il generatore dei grafici) nonostante vengano effettivamente stampati.</p>
+<h5>Errore (Login/Register): Browser indica la pericolosità nell'inserire credenziali</h5>
+<p>In caso si presentasse questo problema, vi incoraggiamo a non aver timore: Il browser non riconosce il nostro script di autenticazione (che nel rispetto della privacy, non carica nessun dato sul Database) e quindi lo dichiara come malevolo.</p>
+<h5>Errore(Dashboard): Le città non sono esattamente allineate con i risultati della tabella sinistra</h5>
+<p>In caso si presentasse questo problema, abbiamo trovato diverse soluzioni disponibili, ma per questione di tempo (e per questioni tecniche) non abbiamo potuto implementarle. Per ulteriori informazioni, consultare il piano di lavoro <a href="https://trello.com/b/aSDtw41t/it-project-workflow">Trello</a>.</p>
+
+
+  <div class="text-right"><button class="btn btn-success" [routerLink]="['/meteocovid']">Vai alla Dashboard <i
+        class="fa fa-arrow-right" aria-hidden="true"></i></button></div>
+  <br>
+
+</div>

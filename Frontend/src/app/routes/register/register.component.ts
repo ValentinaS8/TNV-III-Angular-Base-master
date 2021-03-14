@@ -25,11 +25,9 @@ export class RegisterComponent implements OnInit {
   }
 
   addUsers() {
-    //this.currentuser.userName = this.userName;
-    //this.currentuser.pwd = this.pwd
     this.currentUser = { userName: this.userName, pwd: this.pwd }
     this.loginService.addUser(this.currentUser);
-    console.log(this.currentUser,this.loginService.users);
+    console.log(this.currentUser, this.loginService.users);
     this.router.navigate(['/login']);
   }
 }

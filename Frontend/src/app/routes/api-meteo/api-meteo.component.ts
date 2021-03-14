@@ -30,20 +30,20 @@ export class ApiMeteoComponent implements OnInit {
       this.meteoCountries = meteoData
       this.meteoDataArray.push(this.meteoCountries)
       console.log(this.meteoCountries.data.current.temperatureMin)
-      //scrittura a db
+      //scrittura su db
       this.meteoService.addMeteoEntry(this.meteoCountries).subscribe(response => {
         console.log(response);
       },
-        err => console.log("Esaurimento Nervoso In Arrivo")
+        err => console.log("E' avvenuto un errore.")
               )
     },
       err => console.log(err),
-      () => console.log("miracolo!!!", this.meteoCountries)
+      () => console.log("Dati caricati.", this.meteoCountries)
 
     );
 
   }
-  // funzione da inserire all'interno della getMetteo al fine di fare tutto in un unico passo
+  // funzione da inserire all'interno della getMeteo al fine di fare tutto in un unico passo
   postMeteoApiData(meteoCountries: ApiMeteo) {
     this.meteoCountries;
     console.log(meteoCountries.data.current.airQualityIndex)
@@ -52,7 +52,7 @@ export class ApiMeteoComponent implements OnInit {
       console.log(response);
     },
 
-      err => console.log("Esaurimento Nervoso In Arrivo")
+      err => console.log("E' avvenuto un errore.")
 
     )
   }
