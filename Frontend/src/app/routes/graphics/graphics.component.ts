@@ -6,6 +6,8 @@ import { ApiCovidService } from '../../services/api-covid.service';
 import { Observable } from 'rxjs';
 import { Data } from '@angular/router';
 import { analyzeAndValidateNgModules } from '@angular/compiler';
+import { ApiCountry, ApiCountryData } from '../../models/apicountry.model';
+import { ApiCoronaData } from '../../models/apiCorona.model';
 
 
 
@@ -17,7 +19,10 @@ import { analyzeAndValidateNgModules } from '@angular/compiler';
 export class GraphicsComponent implements OnInit {
   dataCity: any;
   meteoCountries: ApiMeteo;
-  meteoDataArray: any;
+  covidCountries: ApiCoronaData;
+  meteoDataArray: number[] = [];
+  covidDataArray: number[] = [];
+  countriesToShow: string[] = [];
 
   constructor(private apimeteoService: ApiMeteoService, private apiCovidService: ApiCovidService) { }
 
@@ -27,16 +32,62 @@ export class GraphicsComponent implements OnInit {
     "Slovacchia", "Slovenia", "Spagna", "Svezia", "Svizzera", "Ungheria"];
 
   ngOnInit(): void {
-    this.dataCity = "Austria";
-    console.log(this.apiCovidService.getCountriesData);
+    for (this.dataCity of this.europe) {
+      this.getMeteoApiData(this.dataCity);
+    }
+    if (this.meteoDataArray.length == 28) {
+      for (this.dataCity of this.europe) {
+        this.getCovidApiData(this.dataCity);
+      }
+    }
   }
 
+  /********************CHIAMATE ALL'API METEO E API COVID***********************/
+  getMeteoApiData(dataCity: any) {
+    this.apimeteoService.getMeteoApiData(this.dataCity).subscribe((meteoData: ApiMeteo) => {
+      this.meteoCountries = meteoData
+      var temperature = this.meteoCountries.data.current.temperature;
+      this.meteoDataArray.push(temperature);
+      console.log("Pushato: " + temperature + "°C a " + dataCity);
+      this.countriesToShow.push(dataCity);
+      if (this.meteoDataArray.length == 28) {
+        this.createMeteoGraph();
+      }
+    });
+  }
 
+  getCovidApiData(dataCity: any) {
+    this.apiCovidService.getCountryCovidData(this.dataCity).subscribe((covidData: ApiCoronaData) => {
+      this.covidCountries = covidData;
+      var cases = this.covidCountries.data.latest_data.confirmed;
+      this.covidDataArray.push(cases);
+      console.log("Pushato: " + cases + " casi a " + dataCity);
+      this.countriesToShow.push(dataCity);
+      if (this.covidDataArray.length == 28) {
+        this.createCovidGraph();
+      }
+    });
+  }
 
-  //Crea il grafico
+  /********************CHIAMATE ALL'API METEO E API COVID***********************/
+
+  /*******************CARICAMENTO DATI SUGLI ARRAY DEI GRAFICI******************/
+
+  putDataMeteo() {
+    return this.meteoDataArray;
+  }
+
+  putDataCovid() {
+    return this.covidDataArray;
+  }
+
+  /*******************CARICAMENTO DATI SUGLI ARRAY DEI GRAFICI******************/
+
+  /*****************************CREAZIONE GRAFICI*******************************/
+
   createMeteoGraph() {
     let myCanvas = document.getElementById("meteo-grafico1");
-    let myLabels = this.europe;
+    let myLabels = this.countriesToShow;
     const data = this.putDataMeteo();
     console.log(data);
 
@@ -80,20 +131,7 @@ export class GraphicsComponent implements OnInit {
     });
   }
 
-  //Prende l'array di dati dal Servizio Meteo e lo pusha nell'array del grafico
-  putDataMeteo() {
-    const dataMeteo = [];
-    dataMeteo.push();
-    console.log(dataMeteo);
-    return dataMeteo;
-  }
+  /*****************************CREAZIONE GRAFICI*******************************/
 
-  //Prende l'array di dati dal Servizio Covid e lo pusha nell'array del grafico
-  putDataCovid() {
 
-    const dataCovid = [];
-    dataCovid.push();
-    console.log(dataCovid);
-    return dataCovid;
-  }
 }
