@@ -40,7 +40,7 @@ export class ApiMeteoService {
   private ZagabriaMeteoUrl = '45.81444,15.9798';
 
 
-  private apiKey = '?token=5c951c99923d64b9820d1f000802f3dd1af3a101d6e9666bff';
+  private apiKey = '?token=f19bef232249628a0c50f16cfd349d603200210fcda08eff42';
   constructor(private http: HttpClient) {
 
   }
@@ -75,5 +75,38 @@ export class ApiMeteoService {
     if (dataCity === "Lituania") return this.http.get<ApiMeteo>(this.baseApiUrl + this.ViniusMeteoUrl + this.apiKey);
     if (dataCity === "Svizzera") return this.http.get<ApiMeteo>(this.baseApiUrl + this.BernaMeteoUrl + this.apiKey);
     if (dataCity === "Croazia") return this.http.get<ApiMeteo>(this.baseApiUrl + this.ZagabriaMeteoUrl + this.apiKey);
+  }
+
+  getMeteoPromiseData(dataCity: string) {
+    console.log(dataCity)
+
+    if (dataCity === "Paesi Bassi") return this.http.get<ApiMeteo>(this.baseApiUrl + this.AmsterdamMeteoUrl + this.apiKey).toPromise();
+    if (dataCity === "Grecia") return this.http.get<ApiMeteo>(this.baseApiUrl + this.AteneMeteoUrl + this.apiKey).toPromise();
+    if (dataCity === "Germania") return this.http.get<ApiMeteo>(this.baseApiUrl + this.BerlinoMeteoUrl + this.apiKey).toPromise();
+    if (dataCity === "Slovacchia") return this.http.get<ApiMeteo>(this.baseApiUrl + this.BratislavaMeteoUrl + this.apiKey).toPromise();
+    if (dataCity === "Belgio") return this.http.get<ApiMeteo>(this.baseApiUrl + this.BruxellesMeteoUrl + this.apiKey).toPromise();
+    if (dataCity === "Romania") return this.http.get<ApiMeteo>(this.baseApiUrl + this.BucarestMeteoUrl + this.apiKey).toPromise();
+    if (dataCity === "Ungheria") return this.http.get<ApiMeteo>(this.baseApiUrl + this.BudapestMeteoUrl + this.apiKey).toPromise();
+    if (dataCity === "Danimarca") return this.http.get<ApiMeteo>(this.baseApiUrl + this.CopenaghenMeteoUrl + this.apiKey).toPromise();
+    if (dataCity === "Irlanda") return this.http.get<ApiMeteo>(this.baseApiUrl + this.DublinoMeteoUrl + this.apiKey).toPromise();
+    if (dataCity === "Finlandia") return this.http.get<ApiMeteo>(this.baseApiUrl + this.HelsinkiMeteoUrl + this.apiKey).toPromise();
+    if (dataCity === "Malta") return this.http.get<ApiMeteo>(this.baseApiUrl + this.VallettaMeteoUrl + this.apiKey).toPromise();
+    if (dataCity === "Portogallo") return this.http.get<ApiMeteo>(this.baseApiUrl + this.LisbonaMeteoUrl + this.apiKey).toPromise();
+    if (dataCity === "Regno Unito") return this.http.get<ApiMeteo>(this.baseApiUrl + this.LondraMeteoUrl + this.apiKey).toPromise();
+    if (dataCity === "Slovenia") return this.http.get<ApiMeteo>(this.baseApiUrl + this.LubianaMeteoUrl + this.apiKey).toPromise();
+    if (dataCity === "Lussemburgo") return this.http.get<ApiMeteo>(this.baseApiUrl + this.LussemburgoMeteoUrl + this.apiKey).toPromise();
+    if (dataCity === "Spagna") return this.http.get<ApiMeteo>(this.baseApiUrl + this.MadridMeteoUrl + this.apiKey).toPromise();
+    if (dataCity === "Cipro") return this.http.get<ApiMeteo>(this.baseApiUrl + this.NicosiaMeteoUrl + this.apiKey).toPromise();
+    if (dataCity === "Repubblica Ceca") return this.http.get<ApiMeteo>(this.baseApiUrl + this.PragaMeteoUrl + this.apiKey).toPromise();
+    if (dataCity === "Francia") return this.http.get<ApiMeteo>(this.baseApiUrl + this.ParigiMeteoUrl + this.apiKey).toPromise();
+    if (dataCity === "Lettonia") return this.http.get<ApiMeteo>(this.baseApiUrl + this.RigaMeteoUrl + this.apiKey).toPromise();
+    if (dataCity === "Italia") return this.http.get<ApiMeteo>(this.baseApiUrl + this.RomaMeteoUrl + this.apiKey).toPromise();
+    if (dataCity === "Svezia") return this.http.get<ApiMeteo>(this.baseApiUrl + this.StocolmaMeteoUrl + this.apiKey).toPromise();
+    if (dataCity === "Estonia") return this.http.get<ApiMeteo>(this.baseApiUrl + this.TallinMeteoUrl + this.apiKey).toPromise();
+    if (dataCity === "Polonia") return this.http.get<ApiMeteo>(this.baseApiUrl + this.VarsaviaMeteoUrl + this.apiKey).toPromise();
+    if (dataCity === "Austria") return this.http.get<ApiMeteo>(this.baseApiUrl + this.ViennaMeteoUrl + this.apiKey).toPromise();
+    if (dataCity === "Lituania") return this.http.get<ApiMeteo>(this.baseApiUrl + this.ViniusMeteoUrl + this.apiKey).toPromise();
+    if (dataCity === "Svizzera") return this.http.get<ApiMeteo>(this.baseApiUrl + this.BernaMeteoUrl + this.apiKey).toPromise();
+    if (dataCity === "Croazia") return this.http.get<ApiMeteo>(this.baseApiUrl + this.ZagabriaMeteoUrl + this.apiKey).toPromise();
   }
 }

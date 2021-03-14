@@ -36,6 +36,21 @@ export class CovidService {
     });
   };
 
+  addCovidPromiseEntry = (data: ApiCoronaData) => {
+    return this.http.post<ApiCoronaData>(this.baseURL, {
+      //l'id è automatico e autoincrementante, quindi non lo inserisco
+      "country_name": data.data.name,
+      "population": data.data.population,
+      "date": data.data.updated_at,
+      "today_deaths": data.data.latest_data.deaths,
+      "today_cases": data.data.latest_data.confirmed,
+      "total_deaths": data.data.latest_data.deaths,
+      "total_cases": data.data.latest_data.confirmed,
+      "death_rate": data.data.latest_data.calculated.death_rate,
+      "cases_per_million_people": data.data.latest_data.calculated.cases_per_million_population
+    }).toPromise();
+  };
+
   deleteEntry(id) {
     return this.http.delete(this.baseURL + "/" + id)
   }
