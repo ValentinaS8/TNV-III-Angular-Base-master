@@ -7,7 +7,6 @@ import { CovidService } from 'src/app/services/covid.service';
 import { ApiMeteoService } from '../../services/api-meteo.service';
 import { MeteoService } from '../../services/meteo.service';
 import { ApiMeteo } from '../../models/apimeteo.model';
-import { MeteoCovidData } from 'src/app/models/meteoCovidData.model';
 
 @Component({
   selector: 'app-meteo-covid',
