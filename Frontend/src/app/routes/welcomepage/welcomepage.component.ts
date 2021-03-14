@@ -12,9 +12,12 @@ export class WelcomepageComponent implements OnInit {
 
   ngOnInit(): void {
   }
-
-  goToDashboard(){
-    this.router.navigateByUrl('dashboard');
+  goToLogin(){
+    this.router.navigateByUrl('login');
   }
+
+  /*goToDashboard(){
+    this.router.navigateByUrl('dashboard');
+  }*/
 
 }

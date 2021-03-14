@@ -1,8 +1,10 @@
-<div class="container p-5" *ngIf="covidDataLoader">
+<br><div style='margin:15px; padding:10px;'>
+  <div class="container p-5" *ngIf="covidDataLoader">
   <h1 class="text-center mb-5">
     Covid-21 Tracker
   </h1>
 
+  <!--Ok-->
   <div class="text-right">
     
     <button type="button"  style="font-size: 30px" class="btn btn-default" aria-label="Left Align" [routerLink]='["/add"]'>
@@ -14,6 +16,7 @@
     <button class="btn btn-primary mb-3" [routerLink]='["/sortBy"]'>Sort by </button>
     <button class="btn btn-primary mb-3" [routerLink]='["/filterByCountry"]'>Filter By Country</button>
     <button class="btn btn-primary mb-3" [routerLink]='["/apicorona"]'>Api</button>
+
   </div>
 
   <table class="table">
@@ -33,6 +36,7 @@
         <td>{{entry.date | date}}</td>
       </tr>
     </tbody>
-  </table> 
+  </table>
 </div>
 <app-loadingpage *ngIf="!covidDataLoader" ></app-loadingpage>
+</div>

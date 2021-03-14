@@ -1,1 +1,15 @@
-<button type="button" id="DashboardRedirectButton" class="btn btn-success" (click)="goToDashboard()">Entra nel Data-Tracker  <i class="fa fa-arrow-right" aria-hidden="true"></i></button>
+<header class="masthead">
+    <div class="container h-100">
+        <div class="row h-100 align-items-center">
+            <div class="col-12 text-left">
+                <div class="margin-text-app">
+                    <h2 class="font-weight-light text-white covid-text">covid-<span class="h1 _21-text">21</span>
+                    </h2>
+                    <hr class="logo-divider">
+                    <h1 class="text-white h1 tracker-text">&nbsp;Tracker</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<button type="button" id="DashboardRedirectButton" class="btn btn-success" [routerLink]="['../login']">Login <i class="fa fa-arrow-right" aria-hidden="true"></i></button>

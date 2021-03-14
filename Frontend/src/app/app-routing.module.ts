@@ -13,12 +13,17 @@ import { ApiComponent } from './routes/api/api.component';
 import { ProveApiCoronaComponent } from './components/prove-api-corona/prove-api-corona.component';
 import { ApiMeteoComponent } from './routes/api-meteo/api-meteo.component';
 import { MeteoCovidComponent } from './components/meteo-covid/meteo-covid.component';
+import { GraphicsComponent } from './routes/graphics/graphics.component';
+import { DocsComponent } from './routes/docs/docs.component';
+import { LoginComponent } from './routes/login/login.component';
+import { RegisterComponent } from './routes/register/register.component';
+import { AuthGuard } from './services/auth.guard';
 
 const routes: Routes = [
-  { path: "", redirectTo : '/welcome', pathMatch: 'full' },
-  { path: "dashboard", component : DashboardComponent },
-  { path: "add", component : AddComponent },
-  { path: "details/:id", component : DetailsComponent },
+  { path: "", redirectTo: '/welcome', pathMatch: 'full' },
+  { path: "dashboard", component: DashboardComponent },
+  { path: "add", component: AddComponent },
+  { path: "details/:id", component: DetailsComponent },
   { path: "edit/:id", component: EditComponent },
   { path: "filterdouble", component: FilterDoubleComponent},
   { path: "sortingbydeath", component: SortingbydeathComponent},
@@ -29,6 +34,11 @@ const routes: Routes = [
   { path: "apicoronatest", component: ProveApiCoronaComponent},
   { path: "apimeteo", component: ApiMeteoComponent},
   { path: "meteocovid", component: MeteoCovidComponent}, 
+  { path: "graphics", component: GraphicsComponent},
+  { path: "docs", component: DocsComponent},
+  { path: "login", component: LoginComponent},
+  { path: "register", component: RegisterComponent}
+  
 ]; 
 
 @NgModule({

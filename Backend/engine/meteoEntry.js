@@ -38,7 +38,7 @@ const meteoCreateEntry = (req, res) => {
   
   const {timezone,temperature, temperatureMax,
      temperatureMin, relHumidity,airQualityIndex} = req.body;
-     console.log("sono in meteoCreateEntry", req.body);
+     console.log("In MeteoDataEntry...", req.body);
 
   MeteoDataEntry.create({
     timezone : timezone,  
@@ -79,7 +79,6 @@ const meteoEditEntry = (req, res) => {
 
       MeteoDataEntry.update({
         timezone : timezone,
-      
         temperature : temperature,
         temperatureMax : temperatureMax,
         temperatureMin : temperatureMin,

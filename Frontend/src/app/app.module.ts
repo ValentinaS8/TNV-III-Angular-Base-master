@@ -28,6 +28,9 @@ import { ProveApiCoronaComponent } from './components/prove-api-corona/prove-api
 import { ApiMeteoComponent } from './routes/api-meteo/api-meteo.component';
 import { ApiMeteoService } from './services/api-meteo.service';
 import { MeteoCovidComponent } from './components/meteo-covid/meteo-covid.component';
+import { DocsComponent } from './routes/docs/docs.component';
+import { LoginComponent } from './routes/login/login.component';
+import { RegisterComponent } from './routes/register/register.component';
 
 
 @NgModule({
@@ -48,9 +51,12 @@ import { MeteoCovidComponent } from './components/meteo-covid/meteo-covid.compon
     FilterbycountryComponent,
     CountryPipe,
     ApiComponent,
-    ProveApiCoronaComponent,    
-    ApiMeteoComponent, 
-    MeteoCovidComponent
+    ProveApiCoronaComponent,
+    ApiMeteoComponent,
+    MeteoCovidComponent,
+    DocsComponent,
+    LoginComponent,
+    RegisterComponent,
   ],
   imports: [
     BrowserModule,
