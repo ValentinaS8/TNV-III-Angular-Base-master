@@ -48,14 +48,14 @@ export class MeteoCovidComponent implements OnInit {
   getAllData() {
     for (let i = 0; i < (this.europeCountries).length; i++) {
       this.getCountryCovidDataFromArray(this.europeCountries[i])
-      this.getAllMeteoApiData(this.europeCountries[i])
+     // this.getAllMeteoApiData(this.europeCountries[i])
     }
   }
 
   getAllMeteoApiData(nation) {
     this.dataCity = nation
     console.log(this.dataCity);
-    this.apimeteoService.getMeteoApiData(this.dataCity).subscribe((meteoData: ApiMeteo) => {
+    this.apimeteoService.getMeteoPromiseData(this.dataCity).then((meteoData: ApiMeteo) => {
       this.meteoCountries = meteoData
       this.meteoDataArray.push(this.meteoCountries)
       console.log(this.meteoCountries.data.current.temperatureMin)
@@ -66,14 +66,30 @@ export class MeteoCovidComponent implements OnInit {
       )
     },
       err => console.log(err),
-      () => console.log("Loading completed", this.meteoCountries)
+     
 
     );
   } 
 
   getCountryCovidDataFromArray(countryName: string) {
-    this.apiCovidService.getCountryCovidData(countryName).subscribe((data: ApiCoronaData) => {
+    this.apiCovidService.getCovidPromiseData(countryName).then((data: ApiCoronaData) => {
       this.covidCountriesData = data;
+      this.dataCity = countryName
+      console.log(this.dataCity);
+      this.apimeteoService.getMeteoPromiseData(this.dataCity).then((meteoData: ApiMeteo) => {
+        this.meteoCountries = meteoData
+        this.meteoDataArray.push(this.meteoCountries)
+        console.log(this.meteoCountries.data.current.temperatureMin)
+        this.meteoService.addMeteoPromiseEntry(this.meteoCountries).then(response => {
+          console.log(response);       
+        },
+          err => console.log("Errore")
+        )
+      },
+        err => console.log(err),
+       
+  
+      );
 
       /*il campo che contiene la data all'interno del file json contiene 
        anche l'orario -> estrapolo la data*/
@@ -93,14 +109,14 @@ export class MeteoCovidComponent implements OnInit {
 
       this.covidCountriesDataArray.push(this.covidCountriesData);//questo corrisponde a  this.dataEntry = form.form.value;
       //chiama il servizio del db e gli dà i dati da scrivere            
-      this.covidService.addCovidEntry(this.covidCountriesData).subscribe(response => {
+      this.covidService.addCovidPromiseEntry(this.covidCountriesData).then(response => {
         console.log("Ho inviato i dati al db", response)
         //this.router.navigate(['/dashboard']);
       }
       )
     },
       err => console.log(err),
-      () => console.log("Loading countries data completed", this.covidCountriesData.data.latest_data)
+      
     )
   }
 

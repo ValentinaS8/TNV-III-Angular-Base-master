@@ -60,6 +60,35 @@ export class ApiCovidService {
     return this.http.get(this.baseUrl + "'/" + countryCode + "'"); //url che restituisce i dati di tutte le nazioni
   }*/
 
-
+  getCovidPromiseData(countryName: any) {
+    if (countryName === "Italia") return this.http.get<ApiCoronaData>(this.baseUrl + '/countries' + '/IT').toPromise();
+    if (countryName === "Svizzera") return this.http.get<ApiCoronaData>(this.baseUrl + '/countries' + '/CH').toPromise();
+    if (countryName === "Portogallo") return this.http.get<ApiCoronaData>(this.baseUrl + '/countries' + '/PT').toPromise();
+    if (countryName === "Spagna") return this.http.get<ApiCoronaData>(this.baseUrl + '/countries' + '/ES').toPromise();
+    if (countryName === "Francia") return this.http.get<ApiCoronaData>(this.baseUrl + '/countries' + '/FR').toPromise();
+    if (countryName === "Belgio") return this.http.get<ApiCoronaData>(this.baseUrl + '/countries' + '/BE').toPromise();
+    if (countryName === "Paesi Bassi") return this.http.get<ApiCoronaData>(this.baseUrl + '/countries' + '/NL').toPromise();
+    if (countryName === "Lussemburgo") return this.http.get<ApiCoronaData>(this.baseUrl + '/countries' + '/LU').toPromise();
+    if (countryName === "Cipro") return this.http.get<ApiCoronaData>(this.baseUrl + '/countries' + '/CY').toPromise();
+    if (countryName === "Malta") return this.http.get<ApiCoronaData>(this.baseUrl + '/countries' + '/MT').toPromise();
+    if (countryName === "Austria") return this.http.get<ApiCoronaData>(this.baseUrl + '/countries' + '/AT').toPromise();
+    if (countryName === "Germania") return this.http.get<ApiCoronaData>(this.baseUrl + '/countries' + '/DE').toPromise();
+    if (countryName === "Polonia") return this.http.get<ApiCoronaData>(this.baseUrl + '/countries' + '/PL').toPromise();
+    if (countryName === "Danimarca") return this.http.get<ApiCoronaData>(this.baseUrl + '/countries' + '/DK').toPromise();
+    if (countryName === "Svezia") return this.http.get<ApiCoronaData>(this.baseUrl + '/countries' + '/SE').toPromise();
+    if (countryName === "Lettonia") return this.http.get<ApiCoronaData>(this.baseUrl + '/countries' + '/LV').toPromise();
+    if (countryName === "Lituania") return this.http.get<ApiCoronaData>(this.baseUrl + '/countries' + '/LT').toPromise();
+    if (countryName === "Estonia") return this.http.get<ApiCoronaData>(this.baseUrl + '/countries' + '/EE').toPromise();
+    if (countryName === "Regno Unito") return this.http.get<ApiCoronaData>(this.baseUrl + '/countries' + '/GB').toPromise();
+    if (countryName === "Irlanda") return this.http.get<ApiCoronaData>(this.baseUrl + '/countries' + '/IE').toPromise();
+    if (countryName === "Romania") return this.http.get<ApiCoronaData>(this.baseUrl + '/countries' + '/RO').toPromise();
+    if (countryName === "Grecia") return this.http.get<ApiCoronaData>(this.baseUrl + '/countries' + '/GR').toPromise();
+    if (countryName === "Croazia") return this.http.get<ApiCoronaData>(this.baseUrl + '/countries' + '/HR').toPromise();
+    if (countryName === "Slovenia") return this.http.get<ApiCoronaData>(this.baseUrl + '/countries' + '/SI').toPromise();
+    if (countryName === "Ungheria") return this.http.get<ApiCoronaData>(this.baseUrl + '/countries' + '/HU').toPromise();
+    if (countryName === "Repubblica Ceca") return this.http.get<ApiCoronaData>(this.baseUrl + '/countries' + '/CZ').toPromise();
+    if (countryName === "Slovacchia") return this.http.get<ApiCoronaData>(this.baseUrl + '/countries' + '/SK').toPromise();
+    if (countryName === "Finlandia") return this.http.get<ApiCoronaData>(this.baseUrl + '/countries' + '/FI').toPromise();
+  }
 
 }

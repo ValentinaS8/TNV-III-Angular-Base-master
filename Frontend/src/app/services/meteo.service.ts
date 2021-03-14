@@ -34,6 +34,20 @@ export class MeteoService {
     });
   };
 
+  addMeteoPromiseEntry = (meteoCountries: ApiMeteo) => {
+    console.log("sono in addEntry", meteoCountries.data.current.relHumidity)
+    return this.http.post<ApiMeteo>(this.baseURL, {     
+      
+      "timezone": meteoCountries.data.timezone,      
+      "temperature": meteoCountries.data.current.temperature,
+      "temperatureMax": meteoCountries.data.current.temperatureMax,
+      "temperatureMin": meteoCountries.data.current.temperatureMin,
+      "relHumidity": meteoCountries.data.current.relHumidity,
+      "airQualityIndex": meteoCountries.data.current.airQualityIndex,     
+      
+    }).toPromise();
+  };
+
   deleteEntry(id) {
     return this.http.delete(this.baseURL + "/" + id)
   }
