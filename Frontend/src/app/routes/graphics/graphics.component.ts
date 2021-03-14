@@ -2,6 +2,10 @@ import { FormatWidth } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ApiMeteo } from 'src/app/models/apimeteo.model';
 import { ApiMeteoService } from 'src/app/services/api-meteo.service';
+import { ApiCovidService } from '../../services/api-covid.service';
+import { Observable } from 'rxjs';
+import { Data } from '@angular/router';
+import { analyzeAndValidateNgModules } from '@angular/compiler';
 
 
 
@@ -11,46 +15,25 @@ import { ApiMeteoService } from 'src/app/services/api-meteo.service';
   styleUrls: ['./graphics.component.css']
 })
 export class GraphicsComponent implements OnInit {
-
+  dataCity: any;
+  meteoCountries: ApiMeteo;
+  meteoDataArray: any;
 
   constructor(private apimeteoService: ApiMeteoService) { }
-  europe = ["Amsterdam", "Atene", "Berlino", "Bratislava", "Bruxelles", "Bucarest", "Budapest", "Copenaghen", "Dublino", "Helsinki", "La Valletta", "Lisbona", "Londra", "Lubiana", "Lussemburgo", "Madrid", "Nicosia", "Parigi", "Praga", "Riga", "Roma", "Stoccolma", "Tallinn", "Varsavia", "Vienna", "Vilnius", "Zagabria",];
-  romeTemperature: number;
 
-  /* europeCountries: Array<string> = ["Austria","Belgio","Cipro","Croazia","Danimarca","Estonia",
-  "Finlandia","Francia","Germania","Grecia","Irlanda","Italia","Lettonia","Lituania","Lussemburgo",
-  "Malta","Paesi Bassi","Polonia","Portogallo","Regno Unito","Repubblica Ceca","Romania",
-  "Slovacchia","Slovenia","Spagna","Svezia","Svizzera","Ungheria",];*/ 
+  europe = ["Austria", "Belgio", "Cipro", "Croazia", "Danimarca", "Estonia",
+    "Finlandia", "Francia", "Germania", "Grecia", "Irlanda", "Italia", "Lettonia", "Lituania", "Lussemburgo",
+    "Malta", "Paesi Bassi", "Polonia", "Portogallo", "Regno Unito", "Repubblica Ceca", "Romania",
+    "Slovacchia", "Slovenia", "Spagna", "Svezia", "Svizzera", "Ungheria"];
+
   ngOnInit(): void {
-    /*
-    this.getMeteoApiData();
-    this.getCovidApiData();
-    */
-  }
-/*
-  getMeteoApiData() {
-    this.apimeteoService.getMeteoApiData().subscribe((meteoData: ApiMeteo) => {
-      this.romeTemperature = meteoData.data.current.temperature;
-      this.createMeteoGraph();
-    },
-      err => console.log(err),
-      () => console.log("Dato ottenuto: (C°)", this.romeTemperature)
-
-    );
+    this.dataCity = "Austria";
+    console.log(this.apimeteoService.getMeteoApiData(this.dataCity));
   }
 
-  getCovidApiData() {
-    //TODO: Sviluppare GET in base al Service di Valentina (Covid Data)
-    this.apimeteoService.getMeteoApiData().subscribe((meteoData: ApiMeteo) => {
-      this.romeTemperature = meteoData.data.current.temperature;
-      this.createCovidGraph();
-    },
-      err => console.log(err),
-      () => console.log("", this.romeTemperature)
 
-    );
-  }
-*/
+
+  //Crea il grafico
   createMeteoGraph() {
     let myCanvas = document.getElementById("meteo-grafico1");
     let myLabels = this.europe;
@@ -74,19 +57,19 @@ export class GraphicsComponent implements OnInit {
     });
   }
 
-  createCovidGraph(){
+  createCovidGraph() {
     let myCanvas1 = document.getElementById("covid-grafico1");
     let myLabels = this.europe;
     const data = this.putDataCovid();
     console.log(data);
-    
+
     let chart1 = new Chart(myCanvas1, {
       type: 'bar',
       data: {
         labels: myLabels,
         datasets: [{
           label: "Casi di Covid registrati",
-          data: this.putDataCovid,
+          data: data,
           backgroundColor: 'red',
           fill: false
         }]
@@ -97,19 +80,20 @@ export class GraphicsComponent implements OnInit {
     });
   }
 
-  putDataMeteo(){
-    //TODO: Ciclare ALL GET temperature di tutte le città
+  //Prende l'array di dati dal Servizio Meteo e lo pusha nell'array del grafico
+  putDataMeteo() {
     const dataMeteo = [];
-    dataMeteo.push(this.romeTemperature);
+    dataMeteo.push();
     console.log(dataMeteo);
     return dataMeteo;
   }
 
-  putDataCovid(){
-    //TODO: Ciclare ALL GET casi di tutte le città
+  //Prende l'array di dati dal Servizio Covid e lo pusha nell'array del grafico
+  putDataCovid() {
+
     const dataCovid = [];
     dataCovid.push();
     console.log(dataCovid);
-    return {dataCovid};
+    return dataCovid;
   }
 }
