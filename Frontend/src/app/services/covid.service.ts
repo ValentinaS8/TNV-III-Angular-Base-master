@@ -35,7 +35,7 @@ export class CovidService {
       "cases_per_million_people": data.data.latest_data.calculated.cases_per_million_population
     });
   };
- 
+
   deleteEntry(id) {
     return this.http.delete(this.baseURL + "/" + id)
   }
