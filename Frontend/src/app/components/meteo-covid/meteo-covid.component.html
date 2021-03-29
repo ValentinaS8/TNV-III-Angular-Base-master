@@ -1,24 +1,25 @@
-<div style='margin:15px; padding:100px;'><h1>Dashboard</h1></div>
+<!-- 
+<div style='margin:15px; padding:100px;'><h1>Dashboard</h1></div> -->
   <!-- Bottone che restituisce i dati di tutta europa -->
-  <button style='margin-left: 170px;' class="btn btn-secondary" (click)="getAllData()">Scarica i dati di tutta
-    Europa</button>
+ <!-- <button style='margin-left: 170px;' class="btn btn-secondary" (click)="getAllData()">Scarica i dati di tutta
+    Europa</button> -->
   <!-- getCountryCovidData(form : NgForm) -->
-  <div style='margin-left: 290px;' class="btn-group" role="group" aria-label="Button group with nested dropdown">
+ <!-- <div style='margin-left: 290px;' class="btn-group" role="group" aria-label="Button group with nested dropdown">
     <form class="btn-group" (ngSubmit)=" getCovidMeteoApiData(form)" #form="ngForm">
-      <div class="btn-group" role="group" style="width: 450px;">
+      <div class="btn-group" role="group" style="width: 450px;"> -->
         <!-- Menù a tendina che seleziona i dati di una città -->
-        <select class="form-control" id="country" ngModel required name="country">
+     <!--   <select class="form-control" id="country" ngModel required name="country">
           <option *ngFor="let country of europeCountries"> {{country}} </option>
         </select>
-      </div>
+      </div> -->
       <!-- Bottone che restituisce i dati di una città-->
-      <button class="btn btn-secondary btn-success" type="submit" [disabled]="!form.valid">Submit
+     <!-- <button class="btn btn-secondary btn-success" type="submit" [disabled]="!form.valid">Submit
         Country</button>     
     </form>
   </div>
-<br><br><br>
+<br><br><br> -->
 
-<table width="100%">
+<!-- <table width="100%">
   <tr>
     <td>
       <table class="table" width="75%">
@@ -71,4 +72,75 @@
       </table>
     </td>
   </tr>
-</table>
+</table> -->
+
+
+<br><br>
+<div>
+    <div class="container">
+
+    </div>
+    <!-- getCountryCovidData(form : NgForm) -->
+    <div class="container p-5">
+        <!-- Bottone per avere i dati covid/meteo di tutte le nazioni -->
+        <button class="btn btn-success" (click)="getAllData()">Scarifca i dati di tutta Europa</button>
+        <!-- Selettore per scegliere la nazione di cui si vogliono avere i dati covid/meteo -->
+        <div class="text-right">
+            <form class="pt-3" (ngSubmit)=" getCovidMeteoApiData(form)" #form="ngForm">
+                <div class="form-group row">
+                    <label for="country" class="col-sm-2 col-form-label"></label>
+                    <div class="col-sm-10">
+                        <select class="form-control" id="country" ngModel required name="country">
+                            <option *ngFor="let country of europeCountries"> {{country}} </option>
+                        </select>
+                    </div>
+                </div>
+                <!-- La chiamata alla funzione parte alla pressione del tasto submit -->
+                <button type="submit" [disabled]="!form.valid" class="btn btn-success">Ricerca per singola
+                    Nazione</button>
+            </form>
+        </div>
+    </div>
+
+
+    <table width="100%">
+        <tr>
+            <td>
+                <table class="table" width="75%">
+                    <thead class="thead-dark" width="75%">
+                        <tr width="75%">
+                            <th scope="col">Nazione</th>
+                            <th scope="col">Capitale</th>
+                            <th scope="col">Data</th>
+                            <th scope="col">Popolazione</th>
+                            <th scope="col">Casi di oggi</th>
+                            <th scope="col">Morti di oggi</th>
+                            <th scope="col">Storico morti</th>
+                            <th scope="col">Storico casi</th>
+                            <th scope="col">Temperatura</th>
+                            <th scope="col">Umidità</th>
+                            <th scope="col">Qualità dell'aria</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="pointer" *ngFor="let entry of  meteoCovidDataArray">
+                            <th scope="row"> {{entry.state}}</th>
+                            <td>{{entry.city}}</td>
+                            <td>{{entry.data}}</td>
+                            <td>{{entry.population}}</td>
+                            <td>{{entry.today_deaths}}</td>
+                            <td>{{entry.today_confirmed}}</td>
+                            <td>{{entry.total_deaths}}</td>
+                            <td>{{entry.total_confirmed}}</td>
+                            <td>{{entry.temperature}}</td>
+                            <td>{{entry.humidity}}</td>
+                            <td>{{entry.aqi}}</td>
+
+                        </tr>
+                    </tbody>
+                </table>
+            </td>
+            
+        </tr>
+    </table>
+

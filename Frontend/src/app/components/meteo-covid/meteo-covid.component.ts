@@ -6,8 +6,10 @@ import { ApiCovidService } from 'src/app/services/api-covid.service';
 import { CovidService } from 'src/app/services/covid.service';
 import { ApiMeteoService } from '../../services/api-meteo.service';
 import { MeteoService } from '../../services/meteo.service';
+
 import { ApiMeteo } from '../../models/apimeteo.model';
 
+import { MeteoCovidData } from 'src/app/models/meteoCovidData.model';
 
 @Component({
   selector: 'app-meteo-covid',
@@ -39,6 +41,9 @@ export class MeteoCovidComponent implements OnInit {
 
   meteoDataArray: Array<ApiMeteo> = [];
 
+  objmeteocovi: MeteoCovidData;
+  meteoCovidDataArray: Array<MeteoCovidData>;
+
 
   /********************parte covid************************************/
   //funzione per il recupero dei dati METEO + COVID di tutte le nazioni
@@ -46,6 +51,9 @@ export class MeteoCovidComponent implements OnInit {
   getAllData() {
     for (let i = 0; i < (this.europeCountries).length; i++) {
       this.getCountryCovidDataFromArray(this.europeCountries[i])
+
+      // this.getAllMeteoApiData(this.europeCountries[i])
+
     }
   }
 
@@ -117,6 +125,7 @@ export class MeteoCovidComponent implements OnInit {
   getCovidMeteoApiData(form: NgForm) {
     this.getCountryMeteoCovidDataFromForm(form);
     this.getMeteoApiData(form);
+    //this.meteocovidArrayadd(this.covidCountriesData, this.meteoCountries)
 
   }
 
@@ -176,5 +185,28 @@ export class MeteoCovidComponent implements OnInit {
 
     );
 
+  }
+  meteocovidArrayadd(covidCountriesData: ApiCoronaData, meteoCountries: ApiMeteo) {
+
+  console.log("proviamo con le preghiere", this.meteoCountries.data.timezone);
+console.log(this.objmeteocovi);
+
+    this.objmeteocovi.state = this.covidCountriesData.data.name;
+    this.objmeteocovi.city =this.meteoCountries.data.timezone;
+    this.objmeteocovi.data = this.covidCountriesData.data.updated_at;
+    this.objmeteocovi.population = this.covidCountriesData.data.population;
+    this.objmeteocovi.today_deaths = this.covidCountriesData.data.today.deaths;
+    this.objmeteocovi.today_confirmed = this.covidCountriesData.data.today.confirmed;
+    this.objmeteocovi.total_deaths = this.covidCountriesData.data.latest_data.confirmed;
+    this.objmeteocovi.total_confirmed = this.covidCountriesData.data.latest_data.confirmed;
+    this.objmeteocovi.temperature = this.meteoCountries.data.current.temperature;
+    this.objmeteocovi.humidity = this.meteoCountries.data.current.relHumidity;
+    this.objmeteocovi.aqi = this.meteoCountries.data.current.airQualityIndex;
+
+    
+console.log("cosa trovo dentro obj?", this.objmeteocovi.city);
+    this.meteoCovidDataArray.push(this.objmeteocovi);
+   // this.meteoCovidDataArray.push(this.meteoCountries);
+    console.log(this.meteoCovidDataArray);
   }
 }
