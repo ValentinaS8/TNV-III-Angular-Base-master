@@ -7,6 +7,9 @@ import { CovidService } from 'src/app/services/covid.service';
 import { ApiMeteoService } from '../../services/api-meteo.service';
 import { MeteoService } from '../../services/meteo.service';
 import { ApiMeteo } from '../../models/apimeteo.model';
+import { MeteoCovid } from '../../models/meteoCovid.model';
+import { Person } from '../../models/person.model';
+import { Job } from 'src/app/models/job.model';
 
 @Component({
   selector: 'app-meteo-covid',
@@ -62,8 +65,6 @@ export class MeteoCovidComponent implements OnInit {
       )
     },
       err => console.log(err),
-
-
     );
   }
 
@@ -83,8 +84,6 @@ export class MeteoCovidComponent implements OnInit {
         )
       },
         err => console.log(err),
-
-
       );
 
       /*Estrapolazione del valore "Data" dal file .json*/
@@ -175,5 +174,102 @@ export class MeteoCovidComponent implements OnInit {
 
     );
 
+  }
+
+  //funzione che fa il merge dei 2 array
+  mergeArrays() {
+    let i = 0;
+    let newArray: Array<any> = [];
+    //let arrayLength = this.covidCountriesDataArray.length;
+    console.log("SONO ENTRATO NELLA MERGE");
+    console.log("Nome stato:", this.covidCountriesDataArray[i].data.name);
+   
+    for (let item in this.covidCountriesDataArray) {
+      console.log("SONO ENTRATO NEL FOR");
+      //newArray[i] = Object.assign(this.covidCountriesDataArray[i],this.meteoDataArray[i]);  
+      let newObject = Object.assign(this.covidCountriesDataArray[i],this.meteoDataArray[i])
+      newArray[i].push(newObject);  
+      console.log("HO SCRITTO QUESTO:");
+      console.log("Merge", newArray[i]);
+      i++;
+    }
+
+
+    /*  let solution: ApiCoronaData;
+      let obj;
+      for (let item in this.covidCountriesDataArray)    
+      {
+        //Object.assign(target, ...sources)
+        solution = Object.assign(obj, this.meteoDataArray[i]);
+        this.covidCountriesDataArray.concat(obj);
+        i++;
+        console.log("Merge", this.covidCountriesDataArray[i]);
+
+         covidCountriesDataArray: Array<ApiCoronaData> = [];
+  
+  meteoDataArray: Array<ApiMeteo> = [];
+      }*/
+   
+  }
+
+  merge2() {
+    
+    let person : Array<Person> = [{
+      firstName: 'John',
+      lastName: 'Doe',
+      age: 25,
+      ssn: '123-456-2356',
+      contact: {
+        phone: '408-989-8745',
+        email: 'john.doe@example.com'
+      }
+    },
+    {
+      firstName: 'John',
+      lastName: 'Doe',
+      age: 25,
+      ssn: '123-456-2356',
+      contact: {
+        phone: '408-989-8745',
+        email: 'john.doe@example.com'
+      }
+    }
+  ]   
+
+  let job : Array <Job> = [{
+    jobTitle: 'JavaScript Developer',
+    location: 'USA'
+  },
+  {
+    jobTitle: 'prova',
+    location: 'prova'
+  }];
+
+  let employee : Array<any> = [];
+
+  let i=0;
+
+  for(let p in person)
+  {
+    employee [i] = Object.assign(person[i], job[i]);
+    console.log("Risultato:", employee);
+    i++;
+  }  
+
+    employee = Object.assign(person, job);
+    //let employee = { ...person, ...job };
+
+    //console.log(employee.contact === person.contact);
+    console.log("Risultato:", employee);
+
+    /*{
+      firstName: 'John',
+      lastName: 'Doe',
+      age: 25,
+      ssn: '123-456-2356',
+      contact: {
+        phone: '408-989-8745',
+        email: 'john.doe@example.com'
+      } */
   }
 }
