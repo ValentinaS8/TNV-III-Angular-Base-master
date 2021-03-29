@@ -1,3 +1,4 @@
+import { ApiMeteo } from 'src/app/models/apimeteo.model';
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -6,7 +7,7 @@ import { ApiCovidService } from 'src/app/services/api-covid.service';
 import { CovidService } from 'src/app/services/covid.service';
 import { ApiMeteoService } from '../../services/api-meteo.service';
 import { MeteoService } from '../../services/meteo.service';
-import { ApiMeteo } from '../../models/apimeteo.model';
+
 import { MeteoCovidData } from 'src/app/models/meteoCovidData.model';
 
 @Component({
@@ -38,8 +39,8 @@ export class MeteoCovidComponent implements OnInit {
   meteoCountries: ApiMeteo;
 
   meteoDataArray: Array<ApiMeteo> = [];
-
-  meteoCovidDataArray: Array<MeteoCovidData> = [];
+  objmeteocovi: MeteoCovidData;
+  meteoCovidDataArray: Array<MeteoCovidData>;
 
 
   /********************parte covid************************************/
@@ -48,7 +49,7 @@ export class MeteoCovidComponent implements OnInit {
   getAllData() {
     for (let i = 0; i < (this.europeCountries).length; i++) {
       this.getCountryCovidDataFromArray(this.europeCountries[i])
-     // this.getAllMeteoApiData(this.europeCountries[i])
+      // this.getAllMeteoApiData(this.europeCountries[i])
     }
   }
 
@@ -60,16 +61,16 @@ export class MeteoCovidComponent implements OnInit {
       this.meteoDataArray.push(this.meteoCountries)
       console.log(this.meteoCountries.data.current.temperatureMin)
       this.meteoService.addMeteoEntry(this.meteoCountries).subscribe(response => {
-        console.log(response);       
+        console.log(response);
       },
         err => console.log("Errore")
       )
     },
       err => console.log(err),
-     
+
 
     );
-  } 
+  }
 
   getCountryCovidDataFromArray(countryName: string) {
     this.apiCovidService.getCovidPromiseData(countryName).then((data: ApiCoronaData) => {
@@ -81,14 +82,14 @@ export class MeteoCovidComponent implements OnInit {
         this.meteoDataArray.push(this.meteoCountries)
         console.log(this.meteoCountries.data.current.temperatureMin)
         this.meteoService.addMeteoPromiseEntry(this.meteoCountries).then(response => {
-          console.log(response);       
+          console.log(response);
         },
           err => console.log("Errore")
         )
       },
         err => console.log(err),
-       
-  
+
+
       );
 
       /*il campo che contiene la data all'interno del file json contiene 
@@ -116,7 +117,7 @@ export class MeteoCovidComponent implements OnInit {
       )
     },
       err => console.log(err),
-      
+
     )
   }
 
@@ -124,6 +125,7 @@ export class MeteoCovidComponent implements OnInit {
   getCovidMeteoApiData(form: NgForm) {
     this.getCountryMeteoCovidDataFromForm(form);
     this.getMeteoApiData(form);
+    this.meteocovidArrayadd(this.covidCountriesData, this.meteoCountries)
 
   }
 
@@ -167,7 +169,7 @@ export class MeteoCovidComponent implements OnInit {
 
 
   //funzione per il recupero dei dati METEO deolla nazione scelta attraverso il form 
-  getMeteoApiData(form :NgForm) {
+  getMeteoApiData(form: NgForm) {
 
     this.dataCity = form.form.value.country
     console.log(this.dataCity);
@@ -177,7 +179,7 @@ export class MeteoCovidComponent implements OnInit {
       console.log(this.meteoCountries.data.current.temperatureMin)
       //scrittura a db
       this.meteoService.addMeteoEntry(this.meteoCountries).subscribe(response => {
-        console.log(response);        
+        console.log(response);
       },
         err => console.log("Errore")
       )
@@ -190,49 +192,28 @@ export class MeteoCovidComponent implements OnInit {
   }
 
 
-  // funzione da inserire all'interno della getMeteo al fine di fare tutto in un unico passo
-  /* postMeteoApiData(meteoCountries: ApiMeteo) {
-     this.meteoCountries;
-     console.log(meteoCountries.data.current.airQualityIndex)
- 
-     this.meteoService.addMeteoEntry(this.meteoCountries).subscribe(response => {
-       console.log(response);
-     },
- 
-       err => console.log("Errore")
- 
-     )
-   }*/
+  meteocovidArrayadd(covidCountriesData: ApiCoronaData, meteoCountries: ApiMeteo) {
 
-  //Funzione che crea un terzo array a partire dall'array di dati covid e meteo
-  /* createArray()
-   {
-     //cicla per l'array covid
-     for (let i = 0; i < (this.covidCountriesDataArray).length; i++) {
-       //console.log(this.europeCountries[i]);
-       this.meteoCovidDataArray[i].population = this.covidCountriesDataArray[i].data.population;
-     }
- 
-     //cicla per l'array meteo
-   }*/
+  console.log("proviamo con le preghiere", this.meteoCountries.data.timezone);
+console.log(this.objmeteocovi);
 
-}
-/*
-export interface ApiMeteo{
-    data: current 
-}
+    this.objmeteocovi.state = this.covidCountriesData.data.name;
+    this.objmeteocovi.city =this.meteoCountries.data.timezone;
+    this.objmeteocovi.data = this.covidCountriesData.data.updated_at;
+    this.objmeteocovi.population = this.covidCountriesData.data.population;
+    this.objmeteocovi.today_deaths = this.covidCountriesData.data.today.deaths;
+    this.objmeteocovi.today_confirmed = this.covidCountriesData.data.today.confirmed;
+    this.objmeteocovi.total_deaths = this.covidCountriesData.data.latest_data.confirmed;
+    this.objmeteocovi.total_confirmed = this.covidCountriesData.data.latest_data.confirmed;
+    this.objmeteocovi.temperature = this.meteoCountries.data.current.temperature;
+    this.objmeteocovi.humidity = this.meteoCountries.data.current.relHumidity;
+    this.objmeteocovi.aqi = this.meteoCountries.data.current.airQualityIndex;
 
-export interface current{
-    timezone : string;
-    current : ApiMeteoData
-}
-export interface ApiMeteoData{
     
-       
-    temperature : number,
-    temperatureMax : number,
-    temperatureMin : number,
-    relHumidity : number,
-    airQualityIndex: number,
+console.log("cosa trovo dentro obj?", this.objmeteocovi.city);
+    this.meteoCovidDataArray.push(this.objmeteocovi);
+   // this.meteoCovidDataArray.push(this.meteoCountries);
+    console.log(this.meteoCovidDataArray);
+  }
+
 }
-*/
