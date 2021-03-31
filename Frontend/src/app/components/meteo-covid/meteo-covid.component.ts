@@ -8,6 +8,7 @@ import { ApiMeteoService } from '../../services/api-meteo.service';
 import { MeteoService } from '../../services/meteo.service';
 import { ApiMeteo } from '../../models/apimeteo.model';
 import { MeteoCovid } from '../../models/meteoCovid.model';
+import { splitClasses } from '@angular/compiler';
 
 @Component({
   selector: 'app-meteo-covid',
@@ -38,6 +39,14 @@ export class MeteoCovidComponent implements OnInit {
   meteoCountries: ApiMeteo;
 
   meteoDataArray: Array<ApiMeteo> = [];
+
+  meteoCovidArray: Array<any> = [];
+
+  //array di appoggio per effettuare il sort degli array ricavati dalle api
+  sortedCovidCountriesDataArray: Array<ApiCoronaData> = [];
+  sortedMeteoDataArray: Array<ApiMeteo> = [];
+
+
 
 
   /********************parte covid************************************/
@@ -174,679 +183,82 @@ export class MeteoCovidComponent implements OnInit {
 
   }
 
+  sortArrays() {
+    console.log("ENTRO NELLA SORT");
+
+    let arrayRiferimentoStati: string[] = ["Croatia", "Austria", "Slovenia", "Netherlands", "Germany", "Greece",
+      "Malta", "Romania", "Estonia", "UK", "Cyprus", "Denmark", "Slovakia", "Luxembourg", "Lithuania", "Latvia",
+      "Czechia", "Hungary", "France", "Switzerland", "Spain", "Finland", "Ireland", "Italy", "Sweden", "Belgium",
+      "Portugal", "Poland"];
+
+    let arrayRiferimentoMeteo: string[] = ["Europe/Zagreb", "Europe/Vienna", "Europe/Ljubljana",
+      "Europe/Amsterdam", "Europe/Berlin", "Europe/Athens", "Europe/Malta", "Europe/Bucharest", "Europe/Tallinn",
+      "Europe/London", "Asia/Nicosia", "Europe/Copenhagen", "Europe/Bratislava", "Europe/Luxembourg", "Europe/Vilnius",
+      "Europe/Riga", "Europe/Prague", "Europe/Budapest", "Europe/Paris", "Europe/Zurich", "Europe/Madrid", "Europe/Helsinki",
+      "Europe/Dublin", "Europe/Rome", "Europe/Stockholm", "Europe/Brussels", "Europe/Lisbon", "Europe/Warsaw"];
+
+
+    let i, j;
+
+    //console.log("Array prima del sort:", this.covidCountriesDataArray);
+
+    //sort array dati covid
+    for (i = 0; i < arrayRiferimentoStati.length; i++) {
+
+      for (j = 0; j < this.covidCountriesDataArray.length; j++) {
+        if (arrayRiferimentoStati[i] === this.covidCountriesDataArray[j].data.name) {
+          this.sortedCovidCountriesDataArray[i] = this.covidCountriesDataArray[j];
+        }
+      }
+
+      j = 0;
+    }
+
+    console.log("Array covid dopo il sort:", this.sortedCovidCountriesDataArray);
+
+    //sort array dati meteo
+    for (i = 0; i < arrayRiferimentoMeteo.length; i++) {
+
+      for (j = 0; j < this.meteoDataArray.length; j++) {
+        if (arrayRiferimentoMeteo[i] === this.meteoDataArray[j].data.timezone) {
+          this.sortedMeteoDataArray[i] = this.meteoDataArray[j];
+        }
+      }
+
+      j = 0;
+    }
+
+    console.log("Array meteo dopo il sort:", this.sortedMeteoDataArray);
+  }
+
   mergeArrays() {
 
-    let matcher = 0;
-    let i = 0;
-    let mergedArray: Array<any> = [];
-    //let arrayLength = this.covidCountriesDataArray.length;
+    //affinchè si possa fare correttamente la merge tra i due array, è necessario riordinarli
+    this.sortArrays();
+
     console.log("SONO ENTRATO NELLA MERGE");
-    // console.log("Nome stato covid:", this.covidCountriesDataArray[0].data.name);
-    //console.log("Nome stato meteo:", this.meteoDataArray[0].data.timezone);
 
-    //.length restituisce il numero degli elementi (non l'indice) quindi uso <=
-    while (matcher <= this.covidCountriesDataArray.length) {
-      //switch
-        //fai le tue cose
-        //match++
-      //if i === this.covidCountriesDataArray.length -> i=0
+    for (let i = 0; i < this.sortedCovidCountriesDataArray.length; i++) {
+      console.log("Stato: ", this.sortedCovidCountriesDataArray[i].data.name);
+      console.log("Fuso orario: ", this.sortedMeteoDataArray[i].data.timezone);
 
-      if (this.covidCountriesDataArray[i].data.name === "Croatia" && this.meteoDataArray[i].data.timezone === "Europe/Zagreb") {
-        let meteoCovidObject = {
-          country: this.covidCountriesDataArray[i].data.name,
-          population: this.covidCountriesDataArray[i].data.population,
-          date: this.covidCountriesDataArray[i].data.updated_at,
-          today_cases: this.covidCountriesDataArray[i].data.today.confirmed,
-          today_deaths: this.covidCountriesDataArray[i].data.today.deaths,
-          total_deaths: this.covidCountriesDataArray[i].data.latest_data.deaths,
-          total_cases: this.covidCountriesDataArray[i].data.latest_data.confirmed,
-          death_range: this.covidCountriesDataArray[i].data.latest_data.calculated.death_rate,
-          temperature: this.meteoDataArray[i].data.current.temperature,
-          humidity: this.meteoDataArray[i].data.current.relHumidity,
-          aqi: this.meteoDataArray[i].data.current.airQualityIndex,
-        }
-        console.log("Nome stato covid:", this.covidCountriesDataArray[i].data.name);
-        console.log("Nome stato meteo:", this.meteoDataArray[i].data.timezone);
-        mergedArray.push(meteoCovidObject);
-        console.log("New Data:", meteoCovidObject);
-
-        matcher++;
+      let newData = {
+        country: this.sortedCovidCountriesDataArray[i].data.name,
+        population: this.sortedCovidCountriesDataArray[i].data.population,
+        date: this.sortedCovidCountriesDataArray[i].data.updated_at,
+        today_cases: this.sortedCovidCountriesDataArray[i].data.today.confirmed,
+        today_deaths: this.sortedCovidCountriesDataArray[i].data.today.deaths,
+        total_deaths: this.sortedCovidCountriesDataArray[i].data.latest_data.deaths,
+        total_cases: this.sortedCovidCountriesDataArray[i].data.latest_data.confirmed,
+        death_range: this.sortedCovidCountriesDataArray[i].data.latest_data.calculated.death_rate,
+        temperature: this.sortedMeteoDataArray[i].data.current.temperature,
+        humidity: this.meteoDataArray[i].data.current.relHumidity,
+        aqi: this.sortedMeteoDataArray[i].data.current.airQualityIndex,
       }
-
-      if (this.covidCountriesDataArray[i].data.name === "Austria" && this.meteoDataArray[i].data.timezone === "Europe/Vienna") {
-        let meteoCovidObject = {
-          country: this.covidCountriesDataArray[i].data.name,
-          population: this.covidCountriesDataArray[i].data.population,
-          date: this.covidCountriesDataArray[i].data.updated_at,
-          today_cases: this.covidCountriesDataArray[i].data.today.confirmed,
-          today_deaths: this.covidCountriesDataArray[i].data.today.deaths,
-          total_deaths: this.covidCountriesDataArray[i].data.latest_data.deaths,
-          total_cases: this.covidCountriesDataArray[i].data.latest_data.confirmed,
-          death_range: this.covidCountriesDataArray[i].data.latest_data.calculated.death_rate,
-          temperature: this.meteoDataArray[i].data.current.temperature,
-          humidity: this.meteoDataArray[i].data.current.relHumidity,
-          aqi: this.meteoDataArray[i].data.current.airQualityIndex,
-        }
-        console.log("Nome stato covid:", this.covidCountriesDataArray[i].data.name);
-        console.log("Nome stato meteo:", this.meteoDataArray[i].data.timezone);
-        mergedArray.push(meteoCovidObject);
-        console.log("New Data:", meteoCovidObject);
-
-        matcher++;
-      }
-
-      if (this.covidCountriesDataArray[i].data.name === "Slovenia" && this.meteoDataArray[i].data.timezone === "Europe/Ljubljana") {
-        let meteoCovidObject = {
-          country: this.covidCountriesDataArray[i].data.name,
-          population: this.covidCountriesDataArray[i].data.population,
-          date: this.covidCountriesDataArray[i].data.updated_at,
-          today_cases: this.covidCountriesDataArray[i].data.today.confirmed,
-          today_deaths: this.covidCountriesDataArray[i].data.today.deaths,
-          total_deaths: this.covidCountriesDataArray[i].data.latest_data.deaths,
-          total_cases: this.covidCountriesDataArray[i].data.latest_data.confirmed,
-          death_range: this.covidCountriesDataArray[i].data.latest_data.calculated.death_rate,
-          temperature: this.meteoDataArray[i].data.current.temperature,
-          humidity: this.meteoDataArray[i].data.current.relHumidity,
-          aqi: this.meteoDataArray[i].data.current.airQualityIndex,
-        }
-        console.log("Nome stato covid:", this.covidCountriesDataArray[i].data.name);
-        console.log("Nome stato meteo:", this.meteoDataArray[i].data.timezone);
-        mergedArray.push(meteoCovidObject);
-        console.log("New Data:", meteoCovidObject);
-
-        matcher++;        
-      }
-
-      if (this.covidCountriesDataArray[i].data.name === "Netherlands" && this.meteoDataArray[i].data.timezone === "Europe/Amsterdam") {
-        let meteoCovidObject = {
-          country: this.covidCountriesDataArray[i].data.name,
-          population: this.covidCountriesDataArray[i].data.population,
-          date: this.covidCountriesDataArray[i].data.updated_at,
-          today_cases: this.covidCountriesDataArray[i].data.today.confirmed,
-          today_deaths: this.covidCountriesDataArray[i].data.today.deaths,
-          total_deaths: this.covidCountriesDataArray[i].data.latest_data.deaths,
-          total_cases: this.covidCountriesDataArray[i].data.latest_data.confirmed,
-          death_range: this.covidCountriesDataArray[i].data.latest_data.calculated.death_rate,
-          temperature: this.meteoDataArray[i].data.current.temperature,
-          humidity: this.meteoDataArray[i].data.current.relHumidity,
-          aqi: this.meteoDataArray[i].data.current.airQualityIndex,
-        }
-        console.log("Nome stato covid:", this.covidCountriesDataArray[i].data.name);
-        console.log("Nome stato meteo:", this.meteoDataArray[i].data.timezone);
-        mergedArray.push(meteoCovidObject);
-        console.log("New Data:", meteoCovidObject);
-
-        matcher++;        
-      }
-
-      if (this.covidCountriesDataArray[i].data.name === "Germany" && this.meteoDataArray[i].data.timezone === "Europe/Berlin") {
-        let meteoCovidObject = {
-          country: this.covidCountriesDataArray[i].data.name,
-          population: this.covidCountriesDataArray[i].data.population,
-          date: this.covidCountriesDataArray[i].data.updated_at,
-          today_cases: this.covidCountriesDataArray[i].data.today.confirmed,
-          today_deaths: this.covidCountriesDataArray[i].data.today.deaths,
-          total_deaths: this.covidCountriesDataArray[i].data.latest_data.deaths,
-          total_cases: this.covidCountriesDataArray[i].data.latest_data.confirmed,
-          death_range: this.covidCountriesDataArray[i].data.latest_data.calculated.death_rate,
-          temperature: this.meteoDataArray[i].data.current.temperature,
-          humidity: this.meteoDataArray[i].data.current.relHumidity,
-          aqi: this.meteoDataArray[i].data.current.airQualityIndex,
-        }
-        console.log("Nome stato covid:", this.covidCountriesDataArray[i].data.name);
-        console.log("Nome stato meteo:", this.meteoDataArray[i].data.timezone);
-        mergedArray.push(meteoCovidObject);
-        console.log("New Data:", meteoCovidObject);
-
-        matcher++;        
-      }
-
-      if (this.covidCountriesDataArray[i].data.name === "Greece" && this.meteoDataArray[i].data.timezone === "Europe/Athens") {
-        let meteoCovidObject = {
-          country: this.covidCountriesDataArray[i].data.name,
-          population: this.covidCountriesDataArray[i].data.population,
-          date: this.covidCountriesDataArray[i].data.updated_at,
-          today_cases: this.covidCountriesDataArray[i].data.today.confirmed,
-          today_deaths: this.covidCountriesDataArray[i].data.today.deaths,
-          total_deaths: this.covidCountriesDataArray[i].data.latest_data.deaths,
-          total_cases: this.covidCountriesDataArray[i].data.latest_data.confirmed,
-          death_range: this.covidCountriesDataArray[i].data.latest_data.calculated.death_rate,
-          temperature: this.meteoDataArray[i].data.current.temperature,
-          humidity: this.meteoDataArray[i].data.current.relHumidity,
-          aqi: this.meteoDataArray[i].data.current.airQualityIndex,
-        }
-        console.log("Nome stato covid:", this.covidCountriesDataArray[i].data.name);
-        console.log("Nome stato meteo:", this.meteoDataArray[i].data.timezone);
-        mergedArray.push(meteoCovidObject);
-        console.log("New Data:", meteoCovidObject);
-
-        matcher++;        
-      }
-
-      if (this.covidCountriesDataArray[i].data.name === "Malta" && this.meteoDataArray[i].data.timezone === "Europe/Malta") {
-        let meteoCovidObject = {
-          country: this.covidCountriesDataArray[i].data.name,
-          population: this.covidCountriesDataArray[i].data.population,
-          date: this.covidCountriesDataArray[i].data.updated_at,
-          today_cases: this.covidCountriesDataArray[i].data.today.confirmed,
-          today_deaths: this.covidCountriesDataArray[i].data.today.deaths,
-          total_deaths: this.covidCountriesDataArray[i].data.latest_data.deaths,
-          total_cases: this.covidCountriesDataArray[i].data.latest_data.confirmed,
-          death_range: this.covidCountriesDataArray[i].data.latest_data.calculated.death_rate,
-          temperature: this.meteoDataArray[i].data.current.temperature,
-          humidity: this.meteoDataArray[i].data.current.relHumidity,
-          aqi: this.meteoDataArray[i].data.current.airQualityIndex,
-        }
-        console.log("Nome stato covid:", this.covidCountriesDataArray[i].data.name);
-        console.log("Nome stato meteo:", this.meteoDataArray[i].data.timezone);
-        mergedArray.push(meteoCovidObject);
-        console.log("New Data:", meteoCovidObject);
-
-        matcher++;        
-      }
-
-      if (this.covidCountriesDataArray[i].data.name === "Romania" && this.meteoDataArray[i].data.timezone === "Europe/Bucharest") {
-        let meteoCovidObject = {
-          country: this.covidCountriesDataArray[i].data.name,
-          population: this.covidCountriesDataArray[i].data.population,
-          date: this.covidCountriesDataArray[i].data.updated_at,
-          today_cases: this.covidCountriesDataArray[i].data.today.confirmed,
-          today_deaths: this.covidCountriesDataArray[i].data.today.deaths,
-          total_deaths: this.covidCountriesDataArray[i].data.latest_data.deaths,
-          total_cases: this.covidCountriesDataArray[i].data.latest_data.confirmed,
-          death_range: this.covidCountriesDataArray[i].data.latest_data.calculated.death_rate,
-          temperature: this.meteoDataArray[i].data.current.temperature,
-          humidity: this.meteoDataArray[i].data.current.relHumidity,
-          aqi: this.meteoDataArray[i].data.current.airQualityIndex,
-        }
-        console.log("Nome stato covid:", this.covidCountriesDataArray[i].data.name);
-        console.log("Nome stato meteo:", this.meteoDataArray[i].data.timezone);
-        mergedArray.push(meteoCovidObject);
-        console.log("New Data:", meteoCovidObject);
-
-        matcher++;        
-      }
-
-      if (this.covidCountriesDataArray[i].data.name === "Estonia" && this.meteoDataArray[i].data.timezone === "Europe/Tallinn") {
-        let meteoCovidObject = {
-          country: this.covidCountriesDataArray[i].data.name,
-          population: this.covidCountriesDataArray[i].data.population,
-          date: this.covidCountriesDataArray[i].data.updated_at,
-          today_cases: this.covidCountriesDataArray[i].data.today.confirmed,
-          today_deaths: this.covidCountriesDataArray[i].data.today.deaths,
-          total_deaths: this.covidCountriesDataArray[i].data.latest_data.deaths,
-          total_cases: this.covidCountriesDataArray[i].data.latest_data.confirmed,
-          death_range: this.covidCountriesDataArray[i].data.latest_data.calculated.death_rate,
-          temperature: this.meteoDataArray[i].data.current.temperature,
-          humidity: this.meteoDataArray[i].data.current.relHumidity,
-          aqi: this.meteoDataArray[i].data.current.airQualityIndex,
-        }
-        console.log("Nome stato covid:", this.covidCountriesDataArray[i].data.name);
-        console.log("Nome stato meteo:", this.meteoDataArray[i].data.timezone);
-        mergedArray.push(meteoCovidObject);
-        console.log("New Data:", meteoCovidObject);
-
-        matcher++;        
-      }
-
-      if (this.covidCountriesDataArray[i].data.name === "UK" && this.meteoDataArray[i].data.timezone === "Europe/London") {
-        let meteoCovidObject = {
-          country: this.covidCountriesDataArray[i].data.name,
-          population: this.covidCountriesDataArray[i].data.population,
-          date: this.covidCountriesDataArray[i].data.updated_at,
-          today_cases: this.covidCountriesDataArray[i].data.today.confirmed,
-          today_deaths: this.covidCountriesDataArray[i].data.today.deaths,
-          total_deaths: this.covidCountriesDataArray[i].data.latest_data.deaths,
-          total_cases: this.covidCountriesDataArray[i].data.latest_data.confirmed,
-          death_range: this.covidCountriesDataArray[i].data.latest_data.calculated.death_rate,
-          temperature: this.meteoDataArray[i].data.current.temperature,
-          humidity: this.meteoDataArray[i].data.current.relHumidity,
-          aqi: this.meteoDataArray[i].data.current.airQualityIndex,
-        }
-        console.log("Nome stato covid:", this.covidCountriesDataArray[i].data.name);
-        console.log("Nome stato meteo:", this.meteoDataArray[i].data.timezone);
-        mergedArray.push(meteoCovidObject);
-        console.log("New Data:", meteoCovidObject);
-
-        matcher++;        
-      }
-
-      if (this.covidCountriesDataArray[i].data.name === "Cyprus" && this.meteoDataArray[i].data.timezone === "Asia/Nicosia") {
-        let meteoCovidObject = {
-          country: this.covidCountriesDataArray[i].data.name,
-          population: this.covidCountriesDataArray[i].data.population,
-          date: this.covidCountriesDataArray[i].data.updated_at,
-          today_cases: this.covidCountriesDataArray[i].data.today.confirmed,
-          today_deaths: this.covidCountriesDataArray[i].data.today.deaths,
-          total_deaths: this.covidCountriesDataArray[i].data.latest_data.deaths,
-          total_cases: this.covidCountriesDataArray[i].data.latest_data.confirmed,
-          death_range: this.covidCountriesDataArray[i].data.latest_data.calculated.death_rate,
-          temperature: this.meteoDataArray[i].data.current.temperature,
-          humidity: this.meteoDataArray[i].data.current.relHumidity,
-          aqi: this.meteoDataArray[i].data.current.airQualityIndex,
-        }
-        console.log("Nome stato covid:", this.covidCountriesDataArray[i].data.name);
-        console.log("Nome stato meteo:", this.meteoDataArray[i].data.timezone);
-        mergedArray.push(meteoCovidObject);
-        console.log("New Data:", meteoCovidObject);
-
-        matcher++;        
-      }
-
-      if (this.covidCountriesDataArray[i].data.name === "Denmark" && this.meteoDataArray[i].data.timezone === "Europe/Copenhagen") {
-        let meteoCovidObject = {
-          country: this.covidCountriesDataArray[i].data.name,
-          population: this.covidCountriesDataArray[i].data.population,
-          date: this.covidCountriesDataArray[i].data.updated_at,
-          today_cases: this.covidCountriesDataArray[i].data.today.confirmed,
-          today_deaths: this.covidCountriesDataArray[i].data.today.deaths,
-          total_deaths: this.covidCountriesDataArray[i].data.latest_data.deaths,
-          total_cases: this.covidCountriesDataArray[i].data.latest_data.confirmed,
-          death_range: this.covidCountriesDataArray[i].data.latest_data.calculated.death_rate,
-          temperature: this.meteoDataArray[i].data.current.temperature,
-          humidity: this.meteoDataArray[i].data.current.relHumidity,
-          aqi: this.meteoDataArray[i].data.current.airQualityIndex,
-        }
-        console.log("Nome stato covid:", this.covidCountriesDataArray[i].data.name);
-        console.log("Nome stato meteo:", this.meteoDataArray[i].data.timezone);
-        mergedArray.push(meteoCovidObject);
-        console.log("New Data:", meteoCovidObject);
-
-        matcher++;        
-      }
-
-      if (this.covidCountriesDataArray[i].data.name === "Slovakia" && this.meteoDataArray[i].data.timezone === "Europe/Bratislava") {
-        let meteoCovidObject = {
-          country: this.covidCountriesDataArray[i].data.name,
-          population: this.covidCountriesDataArray[i].data.population,
-          date: this.covidCountriesDataArray[i].data.updated_at,
-          today_cases: this.covidCountriesDataArray[i].data.today.confirmed,
-          today_deaths: this.covidCountriesDataArray[i].data.today.deaths,
-          total_deaths: this.covidCountriesDataArray[i].data.latest_data.deaths,
-          total_cases: this.covidCountriesDataArray[i].data.latest_data.confirmed,
-          death_range: this.covidCountriesDataArray[i].data.latest_data.calculated.death_rate,
-          temperature: this.meteoDataArray[i].data.current.temperature,
-          humidity: this.meteoDataArray[i].data.current.relHumidity,
-          aqi: this.meteoDataArray[i].data.current.airQualityIndex,
-        }
-        console.log("Nome stato covid:", this.covidCountriesDataArray[i].data.name);
-        console.log("Nome stato meteo:", this.meteoDataArray[i].data.timezone);
-        mergedArray.push(meteoCovidObject);
-        console.log("New Data:", meteoCovidObject);
-
-        matcher++;        
-      }
-
-      if (this.covidCountriesDataArray[i].data.name === "Luxembourg" && this.meteoDataArray[i].data.timezone === "Europe/Luxembourg") {
-        let meteoCovidObject = {
-          country: this.covidCountriesDataArray[i].data.name,
-          population: this.covidCountriesDataArray[i].data.population,
-          date: this.covidCountriesDataArray[i].data.updated_at,
-          today_cases: this.covidCountriesDataArray[i].data.today.confirmed,
-          today_deaths: this.covidCountriesDataArray[i].data.today.deaths,
-          total_deaths: this.covidCountriesDataArray[i].data.latest_data.deaths,
-          total_cases: this.covidCountriesDataArray[i].data.latest_data.confirmed,
-          death_range: this.covidCountriesDataArray[i].data.latest_data.calculated.death_rate,
-          temperature: this.meteoDataArray[i].data.current.temperature,
-          humidity: this.meteoDataArray[i].data.current.relHumidity,
-          aqi: this.meteoDataArray[i].data.current.airQualityIndex,
-        }
-        console.log("Nome stato covid:", this.covidCountriesDataArray[i].data.name);
-        console.log("Nome stato meteo:", this.meteoDataArray[i].data.timezone);
-        mergedArray.push(meteoCovidObject);
-        console.log("New Data:", meteoCovidObject);
-
-        matcher++;        
-      }
-
-      if (this.covidCountriesDataArray[i].data.name === "Lithuania" && this.meteoDataArray[i].data.timezone === "Europe/Vilnius") {
-        let meteoCovidObject = {
-          country: this.covidCountriesDataArray[i].data.name,
-          population: this.covidCountriesDataArray[i].data.population,
-          date: this.covidCountriesDataArray[i].data.updated_at,
-          today_cases: this.covidCountriesDataArray[i].data.today.confirmed,
-          today_deaths: this.covidCountriesDataArray[i].data.today.deaths,
-          total_deaths: this.covidCountriesDataArray[i].data.latest_data.deaths,
-          total_cases: this.covidCountriesDataArray[i].data.latest_data.confirmed,
-          death_range: this.covidCountriesDataArray[i].data.latest_data.calculated.death_rate,
-          temperature: this.meteoDataArray[i].data.current.temperature,
-          humidity: this.meteoDataArray[i].data.current.relHumidity,
-          aqi: this.meteoDataArray[i].data.current.airQualityIndex,
-        }
-        console.log("Nome stato covid:", this.covidCountriesDataArray[i].data.name);
-        console.log("Nome stato meteo:", this.meteoDataArray[i].data.timezone);
-        mergedArray.push(meteoCovidObject);
-        console.log("New Data:", meteoCovidObject);
-
-        matcher++;        
-      }
-
-      if (this.covidCountriesDataArray[i].data.name === "Latvia" && this.meteoDataArray[i].data.timezone === "Europe/Riga") {
-        let meteoCovidObject = {
-          country: this.covidCountriesDataArray[i].data.name,
-          population: this.covidCountriesDataArray[i].data.population,
-          date: this.covidCountriesDataArray[i].data.updated_at,
-          today_cases: this.covidCountriesDataArray[i].data.today.confirmed,
-          today_deaths: this.covidCountriesDataArray[i].data.today.deaths,
-          total_deaths: this.covidCountriesDataArray[i].data.latest_data.deaths,
-          total_cases: this.covidCountriesDataArray[i].data.latest_data.confirmed,
-          death_range: this.covidCountriesDataArray[i].data.latest_data.calculated.death_rate,
-          temperature: this.meteoDataArray[i].data.current.temperature,
-          humidity: this.meteoDataArray[i].data.current.relHumidity,
-          aqi: this.meteoDataArray[i].data.current.airQualityIndex,
-        }
-        console.log("Nome stato covid:", this.covidCountriesDataArray[i].data.name);
-        console.log("Nome stato meteo:", this.meteoDataArray[i].data.timezone);
-        mergedArray.push(meteoCovidObject);
-        console.log("New Data:", meteoCovidObject);
-
-        matcher++;        
-      }
-
-      if (this.covidCountriesDataArray[i].data.name === "Czechia" && this.meteoDataArray[i].data.timezone === "Europe/Prague") {
-        let meteoCovidObject = {
-          country: this.covidCountriesDataArray[i].data.name,
-          population: this.covidCountriesDataArray[i].data.population,
-          date: this.covidCountriesDataArray[i].data.updated_at,
-          today_cases: this.covidCountriesDataArray[i].data.today.confirmed,
-          today_deaths: this.covidCountriesDataArray[i].data.today.deaths,
-          total_deaths: this.covidCountriesDataArray[i].data.latest_data.deaths,
-          total_cases: this.covidCountriesDataArray[i].data.latest_data.confirmed,
-          death_range: this.covidCountriesDataArray[i].data.latest_data.calculated.death_rate,
-          temperature: this.meteoDataArray[i].data.current.temperature,
-          humidity: this.meteoDataArray[i].data.current.relHumidity,
-          aqi: this.meteoDataArray[i].data.current.airQualityIndex,
-        }
-        console.log("Nome stato covid:", this.covidCountriesDataArray[i].data.name);
-        console.log("Nome stato meteo:", this.meteoDataArray[i].data.timezone);
-        mergedArray.push(meteoCovidObject);
-        console.log("New Data:", meteoCovidObject);
-
-        matcher++;        
-      }
-
-      if (this.covidCountriesDataArray[i].data.name === "Hungary" && this.meteoDataArray[i].data.timezone === "Europe/Budapest") {
-        let meteoCovidObject = {
-          country: this.covidCountriesDataArray[i].data.name,
-          population: this.covidCountriesDataArray[i].data.population,
-          date: this.covidCountriesDataArray[i].data.updated_at,
-          today_cases: this.covidCountriesDataArray[i].data.today.confirmed,
-          today_deaths: this.covidCountriesDataArray[i].data.today.deaths,
-          total_deaths: this.covidCountriesDataArray[i].data.latest_data.deaths,
-          total_cases: this.covidCountriesDataArray[i].data.latest_data.confirmed,
-          death_range: this.covidCountriesDataArray[i].data.latest_data.calculated.death_rate,
-          temperature: this.meteoDataArray[i].data.current.temperature,
-          humidity: this.meteoDataArray[i].data.current.relHumidity,
-          aqi: this.meteoDataArray[i].data.current.airQualityIndex,
-        }
-        console.log("Nome stato covid:", this.covidCountriesDataArray[i].data.name);
-        console.log("Nome stato meteo:", this.meteoDataArray[i].data.timezone);
-        mergedArray.push(meteoCovidObject);
-        console.log("New Data:", meteoCovidObject);
-
-        matcher++;        
-      }
-
-      if (this.covidCountriesDataArray[i].data.name === "France" && this.meteoDataArray[i].data.timezone === "Europe/Paris") {
-        let meteoCovidObject = {
-          country: this.covidCountriesDataArray[i].data.name,
-          population: this.covidCountriesDataArray[i].data.population,
-          date: this.covidCountriesDataArray[i].data.updated_at,
-          today_cases: this.covidCountriesDataArray[i].data.today.confirmed,
-          today_deaths: this.covidCountriesDataArray[i].data.today.deaths,
-          total_deaths: this.covidCountriesDataArray[i].data.latest_data.deaths,
-          total_cases: this.covidCountriesDataArray[i].data.latest_data.confirmed,
-          death_range: this.covidCountriesDataArray[i].data.latest_data.calculated.death_rate,
-          temperature: this.meteoDataArray[i].data.current.temperature,
-          humidity: this.meteoDataArray[i].data.current.relHumidity,
-          aqi: this.meteoDataArray[i].data.current.airQualityIndex,
-        }
-        console.log("Nome stato covid:", this.covidCountriesDataArray[i].data.name);
-        console.log("Nome stato meteo:", this.meteoDataArray[i].data.timezone);
-        mergedArray.push(meteoCovidObject);
-        console.log("New Data:", meteoCovidObject);
-
-        matcher++;        
-      }
-
-      if (this.covidCountriesDataArray[i].data.name === "Switzerland" && this.meteoDataArray[i].data.timezone === "Europe/Zurich") {
-        let meteoCovidObject = {
-          country: this.covidCountriesDataArray[i].data.name,
-          population: this.covidCountriesDataArray[i].data.population,
-          date: this.covidCountriesDataArray[i].data.updated_at,
-          today_cases: this.covidCountriesDataArray[i].data.today.confirmed,
-          today_deaths: this.covidCountriesDataArray[i].data.today.deaths,
-          total_deaths: this.covidCountriesDataArray[i].data.latest_data.deaths,
-          total_cases: this.covidCountriesDataArray[i].data.latest_data.confirmed,
-          death_range: this.covidCountriesDataArray[i].data.latest_data.calculated.death_rate,
-          temperature: this.meteoDataArray[i].data.current.temperature,
-          humidity: this.meteoDataArray[i].data.current.relHumidity,
-          aqi: this.meteoDataArray[i].data.current.airQualityIndex,
-        }
-        console.log("Nome stato covid:", this.covidCountriesDataArray[i].data.name);
-        console.log("Nome stato meteo:", this.meteoDataArray[i].data.timezone);
-        mergedArray.push(meteoCovidObject);
-        console.log("New Data:", meteoCovidObject);
-
-        matcher++;        
-      }
-
-      if (this.covidCountriesDataArray[i].data.name === "Spain" && this.meteoDataArray[i].data.timezone === "Europe/Madrid") {
-        let meteoCovidObject = {
-          country: this.covidCountriesDataArray[i].data.name,
-          population: this.covidCountriesDataArray[i].data.population,
-          date: this.covidCountriesDataArray[i].data.updated_at,
-          today_cases: this.covidCountriesDataArray[i].data.today.confirmed,
-          today_deaths: this.covidCountriesDataArray[i].data.today.deaths,
-          total_deaths: this.covidCountriesDataArray[i].data.latest_data.deaths,
-          total_cases: this.covidCountriesDataArray[i].data.latest_data.confirmed,
-          death_range: this.covidCountriesDataArray[i].data.latest_data.calculated.death_rate,
-          temperature: this.meteoDataArray[i].data.current.temperature,
-          humidity: this.meteoDataArray[i].data.current.relHumidity,
-          aqi: this.meteoDataArray[i].data.current.airQualityIndex,
-        }
-        console.log("Nome stato covid:", this.covidCountriesDataArray[i].data.name);
-        console.log("Nome stato meteo:", this.meteoDataArray[i].data.timezone);
-        mergedArray.push(meteoCovidObject);
-        console.log("New Data:", meteoCovidObject);
-
-        matcher++;        
-      }
-
-      if (this.covidCountriesDataArray[i].data.name === "Finland" && this.meteoDataArray[i].data.timezone === "Europe/Helsinki") {
-        let meteoCovidObject = {
-          country: this.covidCountriesDataArray[i].data.name,
-          population: this.covidCountriesDataArray[i].data.population,
-          date: this.covidCountriesDataArray[i].data.updated_at,
-          today_cases: this.covidCountriesDataArray[i].data.today.confirmed,
-          today_deaths: this.covidCountriesDataArray[i].data.today.deaths,
-          total_deaths: this.covidCountriesDataArray[i].data.latest_data.deaths,
-          total_cases: this.covidCountriesDataArray[i].data.latest_data.confirmed,
-          death_range: this.covidCountriesDataArray[i].data.latest_data.calculated.death_rate,
-          temperature: this.meteoDataArray[i].data.current.temperature,
-          humidity: this.meteoDataArray[i].data.current.relHumidity,
-          aqi: this.meteoDataArray[i].data.current.airQualityIndex,
-        }
-        console.log("Nome stato covid:", this.covidCountriesDataArray[i].data.name);
-        console.log("Nome stato meteo:", this.meteoDataArray[i].data.timezone);
-        mergedArray.push(meteoCovidObject);
-        console.log("New Data:", meteoCovidObject);
-
-        matcher++;        
-      }
-
-      
-      if (this.covidCountriesDataArray[i].data.name === "Ireland" && this.meteoDataArray[i].data.timezone === "Europe/Dublin") {
-        let meteoCovidObject = {
-          country: this.covidCountriesDataArray[i].data.name,
-          population: this.covidCountriesDataArray[i].data.population,
-          date: this.covidCountriesDataArray[i].data.updated_at,
-          today_cases: this.covidCountriesDataArray[i].data.today.confirmed,
-          today_deaths: this.covidCountriesDataArray[i].data.today.deaths,
-          total_deaths: this.covidCountriesDataArray[i].data.latest_data.deaths,
-          total_cases: this.covidCountriesDataArray[i].data.latest_data.confirmed,
-          death_range: this.covidCountriesDataArray[i].data.latest_data.calculated.death_rate,
-          temperature: this.meteoDataArray[i].data.current.temperature,
-          humidity: this.meteoDataArray[i].data.current.relHumidity,
-          aqi: this.meteoDataArray[i].data.current.airQualityIndex,
-        }
-        console.log("Nome stato covid:", this.covidCountriesDataArray[i].data.name);
-        console.log("Nome stato meteo:", this.meteoDataArray[i].data.timezone);
-        mergedArray.push(meteoCovidObject);
-        console.log("New Data:", meteoCovidObject);
-
-        matcher++;        
-      }
-
-      if (this.covidCountriesDataArray[i].data.name === "Italy" && this.meteoDataArray[i].data.timezone === "Europe/Rome") {
-        let meteoCovidObject = {
-          country: this.covidCountriesDataArray[i].data.name,
-          population: this.covidCountriesDataArray[i].data.population,
-          date: this.covidCountriesDataArray[i].data.updated_at,
-          today_cases: this.covidCountriesDataArray[i].data.today.confirmed,
-          today_deaths: this.covidCountriesDataArray[i].data.today.deaths,
-          total_deaths: this.covidCountriesDataArray[i].data.latest_data.deaths,
-          total_cases: this.covidCountriesDataArray[i].data.latest_data.confirmed,
-          death_range: this.covidCountriesDataArray[i].data.latest_data.calculated.death_rate,
-          temperature: this.meteoDataArray[i].data.current.temperature,
-          humidity: this.meteoDataArray[i].data.current.relHumidity,
-          aqi: this.meteoDataArray[i].data.current.airQualityIndex,
-        }
-        console.log("Nome stato covid:", this.covidCountriesDataArray[i].data.name);
-        console.log("Nome stato meteo:", this.meteoDataArray[i].data.timezone);
-        mergedArray.push(meteoCovidObject);
-        console.log("New Data:", meteoCovidObject);
-
-        matcher++;        
-      }
-
-      if (this.covidCountriesDataArray[i].data.name === "Sweden" && this.meteoDataArray[i].data.timezone === "Europe/Stockholm") {
-        let meteoCovidObject = {
-          country: this.covidCountriesDataArray[i].data.name,
-          population: this.covidCountriesDataArray[i].data.population,
-          date: this.covidCountriesDataArray[i].data.updated_at,
-          today_cases: this.covidCountriesDataArray[i].data.today.confirmed,
-          today_deaths: this.covidCountriesDataArray[i].data.today.deaths,
-          total_deaths: this.covidCountriesDataArray[i].data.latest_data.deaths,
-          total_cases: this.covidCountriesDataArray[i].data.latest_data.confirmed,
-          death_range: this.covidCountriesDataArray[i].data.latest_data.calculated.death_rate,
-          temperature: this.meteoDataArray[i].data.current.temperature,
-          humidity: this.meteoDataArray[i].data.current.relHumidity,
-          aqi: this.meteoDataArray[i].data.current.airQualityIndex,
-        }
-        console.log("Nome stato covid:", this.covidCountriesDataArray[i].data.name);
-        console.log("Nome stato meteo:", this.meteoDataArray[i].data.timezone);
-        mergedArray.push(meteoCovidObject);
-        console.log("New Data:", meteoCovidObject);
-
-        matcher++;        
-      }
-
-      if (this.covidCountriesDataArray[i].data.name === "Belgium" && this.meteoDataArray[i].data.timezone === "Europe/Brussels") {
-        let meteoCovidObject = {
-          country: this.covidCountriesDataArray[i].data.name,
-          population: this.covidCountriesDataArray[i].data.population,
-          date: this.covidCountriesDataArray[i].data.updated_at,
-          today_cases: this.covidCountriesDataArray[i].data.today.confirmed,
-          today_deaths: this.covidCountriesDataArray[i].data.today.deaths,
-          total_deaths: this.covidCountriesDataArray[i].data.latest_data.deaths,
-          total_cases: this.covidCountriesDataArray[i].data.latest_data.confirmed,
-          death_range: this.covidCountriesDataArray[i].data.latest_data.calculated.death_rate,
-          temperature: this.meteoDataArray[i].data.current.temperature,
-          humidity: this.meteoDataArray[i].data.current.relHumidity,
-          aqi: this.meteoDataArray[i].data.current.airQualityIndex,
-        }
-        console.log("Nome stato covid:", this.covidCountriesDataArray[i].data.name);
-        console.log("Nome stato meteo:", this.meteoDataArray[i].data.timezone);
-        mergedArray.push(meteoCovidObject);
-        console.log("New Data:", meteoCovidObject);
-
-        matcher++;        
-      }
-
-      if (this.covidCountriesDataArray[i].data.name === "Portugal" && this.meteoDataArray[i].data.timezone === "Europe/Lisbon") {
-        let meteoCovidObject = {
-          country: this.covidCountriesDataArray[i].data.name,
-          population: this.covidCountriesDataArray[i].data.population,
-          date: this.covidCountriesDataArray[i].data.updated_at,
-          today_cases: this.covidCountriesDataArray[i].data.today.confirmed,
-          today_deaths: this.covidCountriesDataArray[i].data.today.deaths,
-          total_deaths: this.covidCountriesDataArray[i].data.latest_data.deaths,
-          total_cases: this.covidCountriesDataArray[i].data.latest_data.confirmed,
-          death_range: this.covidCountriesDataArray[i].data.latest_data.calculated.death_rate,
-          temperature: this.meteoDataArray[i].data.current.temperature,
-          humidity: this.meteoDataArray[i].data.current.relHumidity,
-          aqi: this.meteoDataArray[i].data.current.airQualityIndex,
-        }
-        console.log("Nome stato covid:", this.covidCountriesDataArray[i].data.name);
-        console.log("Nome stato meteo:", this.meteoDataArray[i].data.timezone);
-        mergedArray.push(meteoCovidObject);
-        console.log("New Data:", meteoCovidObject);
-
-        matcher++;        
-      }
-
-      if (this.covidCountriesDataArray[i].data.name === "Poland" && this.meteoDataArray[i].data.timezone === "Europe/Warsaw") {
-        let meteoCovidObject = {
-          country: this.covidCountriesDataArray[i].data.name,
-          population: this.covidCountriesDataArray[i].data.population,
-          date: this.covidCountriesDataArray[i].data.updated_at,
-          today_cases: this.covidCountriesDataArray[i].data.today.confirmed,
-          today_deaths: this.covidCountriesDataArray[i].data.today.deaths,
-          total_deaths: this.covidCountriesDataArray[i].data.latest_data.deaths,
-          total_cases: this.covidCountriesDataArray[i].data.latest_data.confirmed,
-          death_range: this.covidCountriesDataArray[i].data.latest_data.calculated.death_rate,
-          temperature: this.meteoDataArray[i].data.current.temperature,
-          humidity: this.meteoDataArray[i].data.current.relHumidity,
-          aqi: this.meteoDataArray[i].data.current.airQualityIndex,
-        }
-        console.log("Nome stato covid:", this.covidCountriesDataArray[i].data.name);
-        console.log("Nome stato meteo:", this.meteoDataArray[i].data.timezone);
-        mergedArray.push(meteoCovidObject);
-        console.log("New Data:", meteoCovidObject);
-
-        matcher++;        
-      }
-
-      i++;
-      if (i > this.covidCountriesDataArray.length) {
-        i = 0;
-      }      
+      this.meteoCovidArray.push(newData);
+      console.log("New Data:", newData);
     }
-    console.log(mergedArray)
+    console.log(this.meteoCovidArray)
   }
-
 }
 
-/*
-mergeArrays() {
-
-    let mergedArray: Array<any> = [];
-    //let arrayLength = this.covidCountriesDataArray.length;
-    console.log("SONO ENTRATO NELLA MERGE");
-   // console.log("Nome stato covid:", this.covidCountriesDataArray[0].data.name);
-    //console.log("Nome stato meteo:", this.meteoDataArray[0].data.timezone);
-
-    for (let i = 0; i < this.covidCountriesDataArray.length; i++) {
-
-      let meteoCovidObject = {
-        country: this.covidCountriesDataArray[i].data.name,
-        population: this.covidCountriesDataArray[i].data.population,
-        date: this.covidCountriesDataArray[i].data.updated_at,
-        today_cases: this.covidCountriesDataArray[i].data.today.confirmed,
-        today_deaths: this.covidCountriesDataArray[i].data.today.deaths,
-        total_deaths: this.covidCountriesDataArray[i].data.latest_data.deaths,
-        total_cases: this.covidCountriesDataArray[i].data.latest_data.confirmed,
-        death_range: this.covidCountriesDataArray[i].data.latest_data.calculated.death_rate,
-        temperature: this.meteoDataArray[i].data.current.temperature,
-        humidity: this.meteoDataArray[i].data.current.relHumidity,
-        aqi: this.meteoDataArray[i].data.current.airQualityIndex,
-      }
-      console.log("Nome stato covid:", this.covidCountriesDataArray[i].data.name);
-      console.log("Nome stato meteo:", this.meteoDataArray[i].data.timezone);
-      mergedArray.push(meteoCovidObject);
-      console.log("New Data:", meteoCovidObject);
-    }
-    console.log(mergedArray)
-  }
-*/
