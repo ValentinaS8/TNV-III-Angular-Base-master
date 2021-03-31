@@ -8,7 +8,7 @@ import { ApiMeteoService } from '../../services/api-meteo.service';
 import { MeteoService } from '../../services/meteo.service';
 import { ApiMeteo } from '../../models/apimeteo.model';
 import { MeteoCovid } from '../../models/meteoCovid.model';
-import { splitClasses } from '@angular/compiler';
+
 
 @Component({
   selector: 'app-meteo-covid',
@@ -40,7 +40,7 @@ export class MeteoCovidComponent implements OnInit {
 
   meteoDataArray: Array<ApiMeteo> = [];
 
-  meteoCovidArray: Array<any> = [];
+  meteoCovidArray: Array<MeteoCovid> = [];
 
   //array di appoggio per effettuare il sort degli array ricavati dalle api
   sortedCovidCountriesDataArray: Array<ApiCoronaData> = [];
@@ -56,6 +56,9 @@ export class MeteoCovidComponent implements OnInit {
     for (let i = 0; i < (this.europeCountries).length; i++) {
       this.getCountryCovidDataFromArray(this.europeCountries[i])
     }
+
+    //funzione di merge dei dati covid e meteo per la corretta visualizzazione attraverso il file html
+    this.mergeArrays();
   }
 
   getAllMeteoApiData(nation) {
@@ -123,6 +126,8 @@ export class MeteoCovidComponent implements OnInit {
     this.getCountryMeteoCovidDataFromForm(form);
     this.getMeteoApiData(form);
 
+    //funzione di merge dei dati covid e meteo per la corretta visualizzazione attraverso il file html
+    this.mergeSingleObjects();
   }
 
   // dati covid per ogni singola nazione
@@ -160,7 +165,7 @@ export class MeteoCovidComponent implements OnInit {
   /********************parte meteo************************************/
 
 
-  //funzione per il recupero dei dati METEO deolla nazione scelta attraverso il form 
+  //funzione per il recupero dei dati METEO della nazione scelta attraverso il form 
   getMeteoApiData(form: NgForm) {
 
     this.dataCity = form.form.value.country
@@ -180,11 +185,11 @@ export class MeteoCovidComponent implements OnInit {
       () => console.log("Loading completed", this.meteoCountries)
 
     );
-
   }
 
   sortArrays() {
-    console.log("ENTRO NELLA SORT");
+
+    let i, j;
 
     let arrayRiferimentoStati: string[] = ["Croatia", "Austria", "Slovenia", "Netherlands", "Germany", "Greece",
       "Malta", "Romania", "Estonia", "UK", "Cyprus", "Denmark", "Slovakia", "Luxembourg", "Lithuania", "Latvia",
@@ -196,11 +201,6 @@ export class MeteoCovidComponent implements OnInit {
       "Europe/London", "Asia/Nicosia", "Europe/Copenhagen", "Europe/Bratislava", "Europe/Luxembourg", "Europe/Vilnius",
       "Europe/Riga", "Europe/Prague", "Europe/Budapest", "Europe/Paris", "Europe/Zurich", "Europe/Madrid", "Europe/Helsinki",
       "Europe/Dublin", "Europe/Rome", "Europe/Stockholm", "Europe/Brussels", "Europe/Lisbon", "Europe/Warsaw"];
-
-
-    let i, j;
-
-    //console.log("Array prima del sort:", this.covidCountriesDataArray);
 
     //sort array dati covid
     for (i = 0; i < arrayRiferimentoStati.length; i++) {
@@ -231,20 +231,41 @@ export class MeteoCovidComponent implements OnInit {
     console.log("Array meteo dopo il sort:", this.sortedMeteoDataArray);
   }
 
+  mergeSingleObjects() {
+
+    let newData: MeteoCovid = {
+      country: this.covidCountriesData.data.name,
+      population: (this.covidCountriesData.data.population).toString(),
+      date: this.covidCountriesData.data.updated_at,
+      today_cases: this.covidCountriesData.data.today.confirmed,
+      today_deaths: this.covidCountriesData.data.today.deaths,
+      total_deaths: this.covidCountriesData.data.latest_data.deaths,
+      total_cases: this.covidCountriesData.data.latest_data.confirmed,
+      death_range: this.covidCountriesData.data.latest_data.calculated.death_rate,
+      temperature: this.meteoCountries.data.current.temperature,
+      humidity: this.meteoCountries.data.current.relHumidity,
+      aqi: this.meteoCountries.data.current.airQualityIndex,
+    }
+    this.meteoCovidArray.push(newData);
+    console.log("New Data:", newData);
+
+    console.log(this.meteoCovidArray)
+  }
+
   mergeArrays() {
 
     //affinchè si possa fare correttamente la merge tra i due array, è necessario riordinarli
     this.sortArrays();
 
-    console.log("SONO ENTRATO NELLA MERGE");
+    //console.log("SONO ENTRATO NELLA MERGE");
 
     for (let i = 0; i < this.sortedCovidCountriesDataArray.length; i++) {
-      console.log("Stato: ", this.sortedCovidCountriesDataArray[i].data.name);
-      console.log("Fuso orario: ", this.sortedMeteoDataArray[i].data.timezone);
+      //console.log("Stato: ", this.sortedCovidCountriesDataArray[i].data.name);
+      //console.log("Fuso orario: ", this.sortedMeteoDataArray[i].data.timezone);
 
-      let newData = {
+      let newData: MeteoCovid = {
         country: this.sortedCovidCountriesDataArray[i].data.name,
-        population: this.sortedCovidCountriesDataArray[i].data.population,
+        population: (this.sortedCovidCountriesDataArray[i].data.population).toString(),
         date: this.sortedCovidCountriesDataArray[i].data.updated_at,
         today_cases: this.sortedCovidCountriesDataArray[i].data.today.confirmed,
         today_deaths: this.sortedCovidCountriesDataArray[i].data.today.deaths,
@@ -252,7 +273,7 @@ export class MeteoCovidComponent implements OnInit {
         total_cases: this.sortedCovidCountriesDataArray[i].data.latest_data.confirmed,
         death_range: this.sortedCovidCountriesDataArray[i].data.latest_data.calculated.death_rate,
         temperature: this.sortedMeteoDataArray[i].data.current.temperature,
-        humidity: this.meteoDataArray[i].data.current.relHumidity,
+        humidity: this.sortedMeteoDataArray[i].data.current.relHumidity,
         aqi: this.sortedMeteoDataArray[i].data.current.airQualityIndex,
       }
       this.meteoCovidArray.push(newData);
@@ -260,5 +281,6 @@ export class MeteoCovidComponent implements OnInit {
     }
     console.log(this.meteoCovidArray)
   }
+
 }
 

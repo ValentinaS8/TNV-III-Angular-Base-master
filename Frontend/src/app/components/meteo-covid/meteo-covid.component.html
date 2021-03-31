@@ -37,43 +37,25 @@
             <th scope="col">Storico morti</th>
             <th scope="col">Storico casi</th>
             <th scope="col">Morti %</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr class="pointer" *ngFor="let entry of covidCountriesDataArray">
-            <th scope="row"> {{entry.data.name}}</th>
-            <td>{{entry.data.population}}</td>
-            <td>{{entry.data.updated_at}}</td>
-            <td>{{entry.data.today.confirmed}}</td>
-            <td>{{entry.data.today.deaths}}</td>
-            <td>{{entry.data.latest_data.deaths}}</td>
-            <td>{{entry.data.latest_data.confirmed}}</td>
-            <td>{{entry.data.latest_data.calculated.death_rate}}</td>
-
-          </tr>
-        </tbody>
-      </table>
-    </td>
-    <td>
-      <table class="table" width="25%">
-        <thead class="thead-dark" width="25%">
-          <tr width="25%">
-            <th scope="col">Capitale</th>
             <th scope="col">Temp. °C</th>
             <th scope="col">Umidità</th>
             <th scope="col">AQI</th>
           </tr>
         </thead>
         <tbody>
-          <tr class="pointer" *ngFor="let entry of meteoDataArray">
-            <th scope="row"> {{entry.data.timezone}}</th>
-            <td>{{entry.data.current.temperature}}</td>
-            <td>{{entry.data.current.relHumidity}}</td>
-            <td alt="Air Quality Index">{{entry.data.current.airQualityIndex}}</td>
-
+          <tr class="pointer" *ngFor="let entry of meteoCovidArray">
+            <th scope="row"> {{entry.country}}</th>
+            <td>{{entry.population}}</td>
+            <td>{{entry.date}}</td>
+            <td>{{entry.today_cases}}</td>
+            <td>{{entry.today_deaths}}</td>
+            <td>{{entry.total_deaths}}</td>
+            <td>{{entry.total_cases}}</td>
+            <td>{{entry.death_range}}</td>
+            <td>{{entry.temperature}}</td>
+            <td>{{entry.humidity}}</td>
+            <td>{{entry.aqi}}</td>
           </tr>
         </tbody>
       </table>
-    </td>
-  </tr>
-</table>
+    </td>   
