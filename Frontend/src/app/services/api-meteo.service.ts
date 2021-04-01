@@ -41,7 +41,7 @@ export class ApiMeteoService {
 
 
   //private apiKey = '?token=03bcfda393d445d854a42f7291a59d6a82cf438b68713a46da';
-  private apiKey = '?token=7f87e2bb73e547381cd602186a2f3f9f86606c60bf520758a2';
+  private apiKey = '?token=c94fb708a03f84b7698bb420ba870d36f05f0a8d4a803c6d83';
   constructor(private http: HttpClient) {
 
   }

@@ -53,12 +53,28 @@ export class MeteoCovidComponent implements OnInit {
   //funzione per il recupero dei dati METEO + COVID di tutte le nazioni
 
   getAllData() {
+    let dataAreArrived = false;
     for (let i = 0; i < (this.europeCountries).length; i++) {
       this.getCountryCovidDataFromArray(this.europeCountries[i])
     }
+    console.log("HO FINITO IL FOR")
 
-    //funzione di merge dei dati covid e meteo per la corretta visualizzazione attraverso il file html
-    this.mergeArrays();
+    while (dataAreArrived === false) {
+      console.log("SONO ENTRATO NEL WHILE")
+
+      if (this.meteoDataArray.length > 0 && 
+        this.covidCountriesDataArray.length >0) {
+        //funzione di merge dei dati covid e meteo per la corretta visualizzazione attraverso il file html
+        this.mergeArrays();
+        dataAreArrived = true;
+      }
+      else {
+        //aspetta
+      }
+    }
+    console.log("SONO USCITO DAL WHILE")
+
+    console.log("HO FINITO LA GET ALL DATA")
   }
 
   getAllMeteoApiData(nation) {
@@ -233,6 +249,8 @@ export class MeteoCovidComponent implements OnInit {
 
   mergeSingleObjects() {
 
+    console.log("SONO ENTRATO NELLA MERGE SINGLE OBJECTS");
+
     let newData: MeteoCovid = {
       country: this.covidCountriesData.data.name,
       population: (this.covidCountriesData.data.population).toString(),
@@ -257,7 +275,7 @@ export class MeteoCovidComponent implements OnInit {
     //affinchè si possa fare correttamente la merge tra i due array, è necessario riordinarli
     this.sortArrays();
 
-    //console.log("SONO ENTRATO NELLA MERGE");
+    console.log("SONO ENTRATO NELLA MERGE ARRAYS");
 
     for (let i = 0; i < this.sortedCovidCountriesDataArray.length; i++) {
       //console.log("Stato: ", this.sortedCovidCountriesDataArray[i].data.name);
