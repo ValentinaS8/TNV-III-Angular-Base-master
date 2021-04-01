@@ -1,14 +1,47 @@
-<div style='margin:15px; padding:100px;'>
-  <div class="container"><br>
+<div style='padding:50px;'></div>
   <div>
-    <h1 class="title-2">Analisi tra temperature e casi di Covid in Europa</h1>
+    <h1 class="title-2">I dati in tempo reale in Europa</h1>
   </div>
   <br>
-      <h1 class="title">Temperature</h1>
-      <canvas id="meteo-grafico1"></canvas>
-      <h1 class="title">Casi</h1>
-      <canvas id="covid-grafico1" class="canvas chart-area"></canvas>
-      <h1 class="title">Umidità</h1>
-      <canvas id="meteo-grafico2" class="canvas chart-area"></canvas>
+      <div class="container">
+        <div class="row">
+          <div class="col">
+    <h1 class="title">Temperature</h1>
+    <p class="ua-font">Ultimo aggiornamento: {{ updateTemperature }}</p>
+    <canvas id="temperature-rt"></canvas>
+  </div>
+  <div class="col">
+    <h1 class="title">Casi</h1>
+    <p class="ua-font">Ultimo aggiornamento: {{ updateCovid }}</p>
+    <canvas id="covid-rt"></canvas>
+  </div>
+</div>
+<div class="row">
+  <div class="col">
+    <h1 class="title">Umidità</h1>
+    <p class="ua-font">Ultimo aggiornamento: {{ updateTemperature }}</p>
+    <canvas id="humidity-rt"></canvas>
+  </div>
+  <div class="col">
+    <h1 class="title">Velocità del vento</h1>
+    <p class="ua-font">Ultimo aggiornamento: {{ updateTemperature }}</p>
+    <canvas id="wind-rt"></canvas>
+  </div>
+</div>
+</div>
+<br>
+<div>
+  <h1 class="title-2">Le analisi sui dati in Europa</h1>
+</div>
+<br><br>
+    <div class="container">
+      <div class="row">
+        <div class="col">
+  <p class="ua-font">Ultimo aggiornamento: {{ updateTemperature }}</p>
+<canvas id="wind-covid1"></canvas>
       </div>
-      </div>
+<div class="col">
+  <h6 id="col-padding-3">Le seguenti analisi mostrano il rapporto tra velocità del vento (m/s) definendoli come una media nazionale e il totale di contagi inerenti al paese studiato.</h6>
+</div>
+</div>
+

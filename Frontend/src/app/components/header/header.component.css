@@ -49,3 +49,12 @@
     border-top: 1px solid red;
     border-bottom: 1px solid red;
   }
+
+  .btn-success{
+    background-color: #3C6E71;
+    border: 0;
+  }
+  .btn-success:hover{
+    background-color: #284B63;
+    border: 0;
+  }

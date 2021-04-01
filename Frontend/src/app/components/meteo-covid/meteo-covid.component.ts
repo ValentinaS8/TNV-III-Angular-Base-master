@@ -14,7 +14,8 @@ import { ApiMeteo } from '../../models/apimeteo.model';
   styleUrls: ['./meteo-covid.component.css']
 })
 export class MeteoCovidComponent implements OnInit {
-
+  isFetchStarted = false;
+  isDataReady = false;
   constructor(private router: Router, private covidService: CovidService, private apiCovidService: ApiCovidService,
     private apimeteoService: ApiMeteoService, private meteoService: MeteoService) { }
 
@@ -49,6 +50,7 @@ export class MeteoCovidComponent implements OnInit {
   }
 
   getAllMeteoApiData(nation) {
+    this.isFetchStarted = true;
     this.dataCity = nation
     console.log(this.dataCity);
     this.apimeteoService.getMeteoPromiseData(this.dataCity).then((meteoData: ApiMeteo) => {
@@ -57,6 +59,8 @@ export class MeteoCovidComponent implements OnInit {
       console.log(this.meteoCountries.data.current.temperatureMin)
       this.meteoService.addMeteoEntry(this.meteoCountries).subscribe(response => {
         console.log(response);
+        this.isFetchStarted = false;
+        this.isDataReady = true;
       },
         err => console.log("Errore")
       )
@@ -68,6 +72,7 @@ export class MeteoCovidComponent implements OnInit {
   }
 
   getCountryCovidDataFromArray(countryName: string) {
+    this.isFetchStarted = true;
     this.apiCovidService.getCovidPromiseData(countryName).then((data: ApiCoronaData) => {
       this.covidCountriesData = data;
       this.dataCity = countryName
@@ -78,6 +83,8 @@ export class MeteoCovidComponent implements OnInit {
         console.log(this.meteoCountries.data.current.temperatureMin)
         this.meteoService.addMeteoPromiseEntry(this.meteoCountries).then(response => {
           console.log(response);
+          this.isFetchStarted = false;
+          this.isDataReady = true;
         },
           err => console.log("Errore")
         )
@@ -121,10 +128,13 @@ export class MeteoCovidComponent implements OnInit {
 
   // dati covid per ogni singola nazione
   getCountryMeteoCovidDataFromForm(form: NgForm) {
+    this.isFetchStarted = true;
     this.countryName = form.form.value.country;
     console.log(this.countryName);
     this.apiCovidService.getCountryCovidData(this.countryName).subscribe((data: ApiCoronaData) => {
       this.covidCountriesData = data;
+      this.isFetchStarted = false;
+      this.isDataReady = true;
 
       /*Estrapolazione del valore "Data" dal file .json*/
       for (let item in this.covidCountriesData) {
@@ -166,6 +176,7 @@ export class MeteoCovidComponent implements OnInit {
       //scrittura a db
       this.meteoService.addMeteoEntry(this.meteoCountries).subscribe(response => {
         console.log(response);
+        this.isDataReady = true;
       },
         err => console.log("Errore")
       )
