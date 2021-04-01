@@ -1,2 +1,31 @@
+.box div[type="btn-group"] {
+    margin: 100;
+    padding: 20;
+    font-family: sans-serif;
+    background:  #D9D9D9;
+    text-align: center;
+    
+}
+body {
+    margin: 100;
+    padding: 100;
+    font-family: sans-serif;
+    background:  #353535;
+    text-align: center;
+    opacity: 90%;
+    
+}
+table{
+    background-color: #D9D9D9;
+}
+table td{
+    color:#3c6e71;
+  }
+  table th{
+    
+    color:#284B63;
+  }
 
+  table th[type="nations"]{
+    color:#353535;  }
 td {text-align: center;}

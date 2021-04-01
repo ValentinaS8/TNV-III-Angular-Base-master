@@ -1,3 +1,11 @@
+.navbar-custom {
+    background-color: #353535;
+
+}
+.navbar-custom .navbar-brand,
+.navbar-custom .navbar-text {
+    color: white;
+}
 .masthead {
     height: 50vh;
     min-height: 50%;

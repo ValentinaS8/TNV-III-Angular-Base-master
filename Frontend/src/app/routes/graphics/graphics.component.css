@@ -1,11 +1,35 @@
 *{
     box-sizing: border-box;
 }
+body {
+    margin: 100;
+    padding: 100;
+    font-family: sans-serif;
+    background:  #284B63;
+    text-align: center;
+    margin-top: 50px;
+    position: relative;
+    opacity: 90%;
 
-.container {
-    width: 90%;
-    margin: auto;
+    
 }
+#contenitore {width: 90%; height: 100%; margin-left: auto;
+    margin-right: auto;}
+#contenitore .box {
+    width: 50%;
+    float: left;
+    background-color: #D9D9D9;
+    
+  }
+  #contenitorei {width: 50%; height: 100%; align-items: center;  }
+  #contenitore .boxi {
+    width: 50%;
+    align-items: center;
+    background-color: #D9D9D9;
+  }
+ 
+  h1{color: #ffffff;}
+
 
 .main_wrapper{
     display: flex;
@@ -13,17 +37,20 @@
     justify-content: center;
     align-items: center;
     height: 300px;
+    color: thistle;
 }
 .canvas_wrapper{
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    width: 100%;
+    width: 90%;
+    color: thistle;
 }
 .canvas{
-    width: 100%;
+    width: 90%;
     height: auto;
+    color: thistle;
 }
 .title{
     font-size: 2vw;

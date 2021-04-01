@@ -8,6 +8,7 @@ import { ApiMeteoService } from '../../services/api-meteo.service';
 import { MeteoService } from '../../services/meteo.service';
 import { ApiMeteo } from '../../models/apimeteo.model';
 import { MeteoCovid } from '../../models/meteoCovid.model';
+import { clear } from 'console';
 
 @Component({
   selector: 'app-meteo-covid',
@@ -47,6 +48,9 @@ export class MeteoCovidComponent implements OnInit {
     for (let i = 0; i < (this.europeCountries).length; i++) {
       this.getCountryCovidDataFromArray(this.europeCountries[i])
     }
+  }
+  clearAllData() {
+    this.covidCountriesDataArray.length = 0;
   }
 
   getAllMeteoApiData(nation) {

@@ -1,24 +1,18 @@
-<div style='margin:15px; padding:100px;'>
-
-  <body class="col-md-7 mt-5 mx-auto">
-    <main class="form-signin">
-      <form (ngSubmit)="addUsers()" #form="ngForm">
-        <div class="container" style="background-color:#bcc4e4">
-          <div class="col py-2 mt-10 align-items-center">
-            <h1>Registrati</h1>
-            <div class="row">
-              <label for="uname"><b>Username</b></label>
-              <input type="text" placeholder="Enter Username" id="name" required [(ngModel)]="userName" name="userName"
-                class="form-control bg-white border-md">
-              <label for="psw"><b>Password</b></label>
-              <input type="password" placeholder="Enter Password" id="pwd" required [(ngModel)]="pwd" name="pwd"
-                class="form-control bg-white border-md">
-              <button style="background-color:#3f55af" class="btn btn-primary btn-block py-2" type="submit"
-                [disabled]="!form.valid">Register</button>
+<body>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-7 mt-5 mx-auto">
+      <form (ngSubmit)="addUsers()" class="box" #form="ngForm">
+            <h1>Sign Up</h1>
+            <p class="text-muted"> Please enter your login and password!</p>
+              
+              <input type="text" placeholder="Username" id="name" required [(ngModel)]="userName" name="userName">
+              <input type="password" placeholder="Enter Password" id="pwd" required [(ngModel)]="pwd" name="pwd">
+              <input type="submit" name="" value="Join"
+                [disabled]="!form.valid">
+              </form>        
             </div>
-          </div>
+            
+          </div><br><br>
         </div>
-      </form>
-    </main>
-  </body>
-</div>
+      </body>
