@@ -26,8 +26,6 @@ export class MeteoCovidComponent implements OnInit {
 
   covidCountriesData: ApiCoronaData;
   covidCountriesDataArray: Array<ApiCoronaData> = [];
-  afghanistanData: ApiCoronaData;
-  afghanistanDataArray: Array<ApiCoronaData> = [];
   countryName: string;
   europeCountries: Array<string> = ["Austria", "Belgio", "Cipro", "Croazia", "Danimarca", "Estonia",
     "Finlandia", "Francia", "Germania", "Grecia", "Irlanda", "Italia", "Lettonia", "Lituania", "Lussemburgo",
@@ -51,99 +49,96 @@ export class MeteoCovidComponent implements OnInit {
 
   /********************parte covid************************************/
   //funzione per il recupero dei dati METEO + COVID di tutte le nazioni
-
   getAllData() {
-    let dataAreArrived = false;
+
+    //console.log("array meteoCovidArray prima dell'if ", this.meteoCovidArray.length);
+
+    if((this.meteoCovidArray.length) > 0)
+    {
+      //console.log("sono nell'if");
+      this.meteoCovidArray = [];     
+    }
+
+    //console.log("array meteoCovidArray dopo l'if ", this.meteoCovidArray.length);
+    
     for (let i = 0; i < (this.europeCountries).length; i++) {
       this.getCountryCovidDataFromArray(this.europeCountries[i])
     }
-    console.log("HO FINITO IL FOR")
+    //console.log("ho finito il for e aspetto 7 secondi")
 
-    while (dataAreArrived === false) {
-      console.log("SONO ENTRATO NEL WHILE")
+    //imposto un timer in modo che la merge venga chiamata solo dopo il fetch dei dati delle api
+    setTimeout(() => {this.mergeArrays();}, 7000);
+    
+  }  
 
-      if (this.meteoDataArray.length > 0 && 
-        this.covidCountriesDataArray.length >0) {
-        //funzione di merge dei dati covid e meteo per la corretta visualizzazione attraverso il file html
-        this.mergeArrays();
-        dataAreArrived = true;
+   getCountryCovidDataFromArray(countryName: string) {
+     this.apiCovidService.getCovidPromiseData(countryName).then((data: ApiCoronaData) => {
+       this.covidCountriesData = data;
+       this.dataCity = countryName
+       console.log(this.dataCity);
+       this.apimeteoService.getMeteoPromiseData(this.dataCity).then((meteoData: ApiMeteo) => {
+         this.meteoCountries = meteoData
+         this.meteoDataArray.push(this.meteoCountries)
+         console.log(this.meteoCountries.data.current.temperatureMin)
+         this.meteoService.addMeteoPromiseEntry(this.meteoCountries).then(response => {
+           console.log(response);
+         },
+           err => console.log("Errore")
+         )
+       },
+         err => console.log(err),
+       );
+
+  /*Estrapolazione del valore "Data" dal file .json*/
+    for (let item in this.covidCountriesData) {
+      if (this.covidCountriesData.data.updated_at.includes("T")) {
+        let correctedData = this.covidCountriesData.data.updated_at.substring(0, 10);
+        this.covidCountriesData.data.updated_at = correctedData;
       }
-      else {
-        //aspetta
-      }
+  
+      //riduzione del numero delle cifre decimali del death_rate
+      let deathrateString = (this.covidCountriesData.data.latest_data.calculated.death_rate).toString();
+      deathrateString = deathrateString.substring(0, 4);
+      let deathrateCorrectedNumber = parseFloat(deathrateString);
+      this.covidCountriesData.data.latest_data.calculated.death_rate = deathrateCorrectedNumber;
     }
-    console.log("SONO USCITO DAL WHILE")
-
-    console.log("HO FINITO LA GET ALL DATA")
-  }
-
-  getAllMeteoApiData(nation) {
-    this.dataCity = nation
-    console.log(this.dataCity);
-    this.apimeteoService.getMeteoPromiseData(this.dataCity).then((meteoData: ApiMeteo) => {
-      this.meteoCountries = meteoData
-      this.meteoDataArray.push(this.meteoCountries)
-      console.log(this.meteoCountries.data.current.temperatureMin)
-      this.meteoService.addMeteoEntry(this.meteoCountries).subscribe(response => {
-        console.log(response);
-      },
-        err => console.log("Errore")
-      )
-    },
-      err => console.log(err),
-    );
-  }
-
-  getCountryCovidDataFromArray(countryName: string) {
-    this.apiCovidService.getCovidPromiseData(countryName).then((data: ApiCoronaData) => {
-      this.covidCountriesData = data;
-      this.dataCity = countryName
-      console.log(this.dataCity);
-      this.apimeteoService.getMeteoPromiseData(this.dataCity).then((meteoData: ApiMeteo) => {
-        this.meteoCountries = meteoData
-        this.meteoDataArray.push(this.meteoCountries)
-        console.log(this.meteoCountries.data.current.temperatureMin)
-        this.meteoService.addMeteoPromiseEntry(this.meteoCountries).then(response => {
-          console.log(response);
-        },
-          err => console.log("Errore")
-        )
-      },
-        err => console.log(err),
-      );
-
-      /*Estrapolazione del valore "Data" dal file .json*/
-      for (let item in this.covidCountriesData) {
-        if (this.covidCountriesData.data.updated_at.includes("T")) {
-          let correctedData = this.covidCountriesData.data.updated_at.substring(0, 10);
-          this.covidCountriesData.data.updated_at = correctedData;
-        }
-
-        //riduzione del numero delle cifre decimali del death_rate
-        let deathrateString = (this.covidCountriesData.data.latest_data.calculated.death_rate).toString();
-        deathrateString = deathrateString.substring(0, 4);
-        let deathrateCorrectedNumber = parseFloat(deathrateString);
-        this.covidCountriesData.data.latest_data.calculated.death_rate = deathrateCorrectedNumber;
-      }
-
-      this.covidCountriesDataArray.push(this.covidCountriesData);
-      this.covidService.addCovidPromiseEntry(this.covidCountriesData).then(response => {
-        console.log("Ho inviato i dati al db", response)
-      }
-      )
-    },
-      err => console.log(err),
-
+  
+    this.covidCountriesDataArray.push(this.covidCountriesData);
+    this.covidService.addCovidPromiseEntry(this.covidCountriesData).then(response => {
+      console.log("Ho inviato i dati al db", response)
+    }
     )
+  },
+    err => console.log(err),
+  
+  )
   }
 
   // chiamata sincronizzata dei dati covid e dei dati meteo per ogni singola nazione
   getCovidMeteoApiData(form: NgForm) {
+
+    //console.log("sono dentro getCovidMeteoApiData");
+
+    //console.log("array meteoCovidArray prima dell'if ", this.meteoCovidArray.length);
+
+    if((this.meteoCovidArray.length) > 0)
+    {
+      //console.log("sono nell'if");
+      this.meteoCovidArray = [];     
+    }
+
+    //console.log("array meteoCovidArray dopo if ", this.meteoCovidArray.length);
+        
     this.getCountryMeteoCovidDataFromForm(form);
     this.getMeteoApiData(form);
 
+    //console.log("ho finito il fetch e aspetto 7 secondi")
+
+    //imposto un timer in modo che la merge venga chiamata solo dopo il fetch dei dati delle api
     //funzione di merge dei dati covid e meteo per la corretta visualizzazione attraverso il file html
-    this.mergeSingleObjects();
+    setTimeout(() => {this.mergeSingleObjects();}, 7000);
+    /*console.log("array covid ", this.covidCountriesDataArray.length);
+    console.log("array meteo ", this.meteoDataArray.length);  */
   }
 
   // dati covid per ogni singola nazione
@@ -180,7 +175,6 @@ export class MeteoCovidComponent implements OnInit {
 
   /********************parte meteo************************************/
 
-
   //funzione per il recupero dei dati METEO della nazione scelta attraverso il form 
   getMeteoApiData(form: NgForm) {
 
@@ -203,6 +197,7 @@ export class MeteoCovidComponent implements OnInit {
     );
   }
 
+  
   sortArrays() {
 
     let i, j;
@@ -249,7 +244,7 @@ export class MeteoCovidComponent implements OnInit {
 
   mergeSingleObjects() {
 
-    console.log("SONO ENTRATO NELLA MERGE SINGLE OBJECTS");
+    //console.log("SONO ENTRATO NELLA MERGE SINGLE OBJECTS");
 
     let newData: MeteoCovid = {
       country: this.covidCountriesData.data.name,
@@ -275,12 +270,10 @@ export class MeteoCovidComponent implements OnInit {
     //affinchè si possa fare correttamente la merge tra i due array, è necessario riordinarli
     this.sortArrays();
 
-    console.log("SONO ENTRATO NELLA MERGE ARRAYS");
+    //console.log("SONO ENTRATO NELLA MERGE ARRAYS");
 
     for (let i = 0; i < this.sortedCovidCountriesDataArray.length; i++) {
-      //console.log("Stato: ", this.sortedCovidCountriesDataArray[i].data.name);
-      //console.log("Fuso orario: ", this.sortedMeteoDataArray[i].data.timezone);
-
+      
       let newData: MeteoCovid = {
         country: this.sortedCovidCountriesDataArray[i].data.name,
         population: (this.sortedCovidCountriesDataArray[i].data.population).toString(),
@@ -299,6 +292,5 @@ export class MeteoCovidComponent implements OnInit {
     }
     console.log(this.meteoCovidArray)
   }
-
 }
 
