@@ -34,6 +34,7 @@ import { LoginComponent } from './routes/login/login.component';
 import { RegisterComponent } from './routes/register/register.component';
 import { GraphicsComponent } from './routes/graphics/graphics.component';
 
+ 
 
 @NgModule({
   declarations: [

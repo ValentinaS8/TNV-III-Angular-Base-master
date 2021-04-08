@@ -1,28 +1,41 @@
-<div style='margin:15px; padding:100px;'><h1>Dashboard</h1></div>
-  <!-- Bottone che restituisce i dati di tutta europa -->
-  <button style='margin-left: 170px;' class="btn btn-secondary" (click)="getAllData()">Scarica i dati di tutta
-    Europa</button>
-  <!-- getCountryCovidData(form : NgForm) -->
-  <div style='margin-left: 290px;' class="btn-group" role="group" aria-label="Button group with nested dropdown">
-    <form class="btn-group" (ngSubmit)=" getCovidMeteoApiData(form)" #form="ngForm">
-      <div class="btn-group" role="group" style="width: 450px;">
-        <!-- Menù a tendina che seleziona i dati di una città -->
-        <select class="form-control" id="country" ngModel required name="country">
-          <option *ngFor="let country of europeCountries"> {{country}} </option>
-        </select>
-      </div>
-      <!-- Bottone che restituisce i dati di una città-->
-      <button class="btn btn-secondary btn-success" type="submit" [disabled]="!form.valid">Submit
-        Country</button>     
-    </form>
-  </div>
-<br><br><br>
+<body>
+  <br><br>
 
-<table width="100%">
+<div class="header_section col mt-4 mx-auto" >
+  <div class="container" >
+    <div class="container_main ">
+      <!-- Bottone che restituisce i dati di tutta europa -->
+      <div class="btn">
+      <button class="btn btn-outline-dark" (click)="getAllData()">All Europe</button>
+      </div>
+      <!--Bottone di prova-->
+      <div class="btn">
+      <button class="btn btn-outline-dark" (click)="clearAllData()">Clear</button>
+    </div>
+          <!-- getCountryCovidData(form : NgForm) -->
+      <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+        <form class="btn-group" (ngSubmit)=" getCovidMeteoApiData(form)" #form="ngForm">
+          <div class="btn-group" role="group" style="width: 450px;">
+            <!-- Menù a tendina che seleziona i dati di una città -->
+            <select class="form-control" id="country" ngModel required name="country" style="background-color: 3c6e71;">
+              <option *ngFor="let country of europeCountries"> {{country}} </option>
+            </select>
+          </div>
+          <!-- Bottone che restituisce i dati di una città-->
+          <button class="btn btn-outline-dark" type="submit" [disabled]="!form.valid">Submit Country</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="header_section col-10 mx-auto " >
+  
+<table width="100%" >
   <tr>
     <td>
-      <table class="table" width="75%">
-        <thead class="thead-dark" width="75%">
+      <table class="table table-striped" width="75%">
+        <thead class="thead-light " width="75%">
           <tr width="75%">
             <th scope="col">Nazione</th>
             <th scope="col">Popolazione</th>
@@ -32,39 +45,24 @@
             <th scope="col">Storico morti</th>
             <th scope="col">Storico casi</th>
             <th scope="col">Morti %</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr class="pointer" *ngFor="let entry of covidCountriesDataArray">
-            <th scope="row"> {{entry.data.name}}</th>
-            <td>{{entry.data.population}}</td>
-            <td>{{entry.data.updated_at}}</td>
-            <td>{{entry.data.today.confirmed}}</td>
-            <td>{{entry.data.today.deaths}}</td>
-            <td>{{entry.data.latest_data.deaths}}</td>
-            <td>{{entry.data.latest_data.confirmed}}</td>
-            <td>{{entry.data.latest_data.calculated.death_rate}}</td>
-
-          </tr>
-        </tbody>
-      </table>
-    </td>
-    <td>
-      <table class="table" width="25%">
-        <thead class="thead-dark" width="25%">
-          <tr width="25%">
-            <th scope="col">Capitale</th>
             <th scope="col">Temp. °C</th>
             <th scope="col">Umidità</th>
             <th scope="col">AQI</th>
           </tr>
         </thead>
         <tbody>
-          <tr class="pointer" *ngFor="let entry of meteoDataArray">
-            <th scope="row"> {{entry.data.timezone}}</th>
-            <td>{{entry.data.current.temperature}}</td>
-            <td>{{entry.data.current.relHumidity}}</td>
-            <td alt="Air Quality Index">{{entry.data.current.airQualityIndex}}</td>
+          <tr class="pointer" *ngFor="let entry of meteoCovidArray">
+            <th scope="row" type="nations"> {{entry.country}}</th>
+            <td>{{entry.population}}</td>
+            <td>{{entry.date| date :'dd / MM / yyyy'}}</td>
+            <td>{{entry.today_cases}}</td>
+            <td>{{entry.today_deaths}}</td>
+            <td>{{entry.total_deaths}}</td>
+            <td>{{entry.total_cases}}</td>
+            <td>{{entry.death_range}}</td>
+            <td>{{entry.temperature}}</td>
+            <td>{{entry.humidity}}</td>
+            <td>{{entry.aqi}}</td>
 
           </tr>
         </tbody>
@@ -72,8 +70,15 @@
     </td>
   </tr>
 </table>
+<<<<<<< HEAD
 <!-- Da integrare con il nuovo metodo "Unico Array" | Visualizzerà solo se è partita la fetch (per non far partire il loading all'apertura della rotta) e se l'array è pieno
 <div *ngIf="!isDataReady">
   <app-loadingpage></app-loadingpage>
 </div>
 -->
+=======
+</div>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+</body>
+
+>>>>>>> origin/proveGrafiche
