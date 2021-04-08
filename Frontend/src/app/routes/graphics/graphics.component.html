@@ -1,116 +1,109 @@
 <div style='padding:50px;'></div>
-  <div>
-    <h1 class="title-2">I dati in tempo reale in Europa</h1>
-  </div>
-  <br>
-      <div class="container">
-        <div class="row">
-          <div class="col">
-    <h1 class="title">Temperature</h1>
-    <p class="ua-font">Ultimo aggiornamento: {{ updateMeteoData }}</p>
-    <canvas id="temperature-rt"></canvas>    
-  </div>
-  <div class="col">
-    <h1 class="title">Umidità</h1>
-    <p class="ua-font">Ultimo aggiornamento: {{ updateMeteoData }}</p>
-    <canvas id="humidity-rt"></canvas>
-  </div>
-  <div class="col">
-  <h1 class="title">Velocità del vento</h1>
-  <p class="ua-font">Ultimo aggiornamento: {{ updateMeteoData }}</p>
-  <canvas id="wind-rt"></canvas>
-  </div>
+<div>
+  <h1 class="title-2">I dati in tempo reale in Europa</h1>
 </div>
-<div class="row">
-  <div class="col">
-    <h1 class="title">Casi</h1>
-    <p class="ua-font">Ultimo aggiornamento: {{ updateCovidData }}</p>
-    <canvas id="covid-total-cases-rt"></canvas>
-  </div>
-  <div class="col">
-    <h1 class="title">Morti</h1>
-    <p class="ua-font">Ultimo aggiornamento: {{ updateCovidData }}</p>
-    <canvas id="covid-total-deaths-rt"></canvas>
-  </div>
-</div>
-</div>
-<br><br>
+<br>
 <div class="container">
   <div class="row">
     <div class="col">
-  <h1 class="title-2">Le analisi sui dati in Europa</h1>
-</div>
-<div class="col"><form class="btn-group" (ngSubmit)="selectAnalizedCountry(form)" #form="ngForm">
-  <div class="btn-group" role="group" style="width: 450px;">
-    <!-- Menù a tendina che seleziona i dati di una città -->
-    <select class="form-control" id="country" ngModel required name="country">
-      <option *ngFor="let country of europe"> {{country}} </option>
-    </select>
+      <h1 class="title">Temperature</h1>
+      <p class="ua-font">Ultimo aggiornamento: {{ updateMeteoData }}</p>
+      <canvas id="temperature-rt"></canvas>
+    </div>
+    <div class="col">
+      <h1 class="title">Umidità</h1>
+      <p class="ua-font">Ultimo aggiornamento: {{ updateMeteoData }}</p>
+      <canvas id="humidity-rt"></canvas>
+    </div>
+    <div class="col">
+      <h1 class="title">Velocità del vento</h1>
+      <p class="ua-font">Ultimo aggiornamento: {{ updateMeteoData }}</p>
+      <canvas id="wind-rt"></canvas>
+    </div>
   </div>
-  <!-- Bottone che restituisce i dati di una città-->
-  <button class="btn btn-secondary btn-success" type="submit" [disabled]="!form.valid">Submit
-    Country</button>     
-</form></div>
+  <div class="row">
+    <div class="col">
+      <h1 class="title">Casi</h1>
+      <p class="ua-font">Ultimo aggiornamento: {{ updateCovidData }}</p>
+      <canvas id="covid-total-cases-rt"></canvas>
+    </div>
+    <div class="col">
+      <h1 class="title">Morti</h1>
+      <p class="ua-font">Ultimo aggiornamento: {{ updateCovidData }}</p>
+      <canvas id="covid-total-deaths-rt"></canvas>
+    </div>
+  </div>
 </div>
+<br><br>
+<h1 class="title-2">Le analisi sui dati in Europa</h1>
+<br>
+<h1 class="title">Dati meteorologici</h1>
+<br>
+<p class="ua-font">Ultimo aggiornamento: {{ updateMeteoData }}</p>
+<br>
+<br>
+<div class="container" id="national-panoramic">
+  <div class="row">
+    <div class="col">
+      <canvas id="country-chart-temperature"></canvas>
+    </div>
+    <div class="col">
+      <canvas id="country-chart-temperature-max"></canvas>
+    </div>
+    <div class="col">
+      <canvas id="country-chart-temperature-min"></canvas>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <canvas id="country-chart-air-quality"></canvas>
+    </div>
+    <div class="col">
+      <canvas id="country-chart-humidity"></canvas>
+    </div>
+    <div class="col">
+      <canvas id="country-chart-wind"></canvas>
+    </div>
+  </div>
 </div>
 <br>
-<h1 style="text-align: center" class="title">Dati meteorologici</h1>
+<h1 class="title">Dati relativi al Covid-19</h1>
 <br>
-  <p style="text-align: center" class="ua-font">Ultimo aggiornamento: {{ updateMeteoData }}</p>
-  <br>
+<p class="ua-font">Ultimo aggiornamento: {{ updateMeteoData }}</p>
 <br>
-    <div class="container" id="national-panoramic">
-      <div class="row">
-          <div class="col">
-            <canvas id="country-chart-temperature"></canvas>
-            </div> <div class="col">
-            <canvas id="country-chart-temperature-max"></canvas>
-          </div> <div class="col">
-            <canvas id="country-chart-temperature-min"></canvas>
-          </div> </div> <div class="row">
-            <div class="col">
-            <canvas id="country-chart-air-quality"></canvas>
-          </div> <div class="col">
-            <canvas id="country-chart-humidity"></canvas>
-          </div> <div class="col">
-            <canvas id="country-chart-wind"></canvas>
-          </div>
-</div>
-</div>
 <br>
-<h1 style="text-align: center" class="title">Dati relativi al Covid-19</h1>
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <ng-template [ngIf]="isAnibodyInjured">
+        <p style="font-size: 8pt; text-align: center;"><br><br>Non sono stati registrati contagi odierni a causa
+          Covid.<br><br> Il dato potrebbe variare nel corso della giornata odierna.</p>
+      </ng-template>
+      <canvas id="country-chart-today-cases"></canvas>
+    </div>
+    <div class="col">
+      <canvas id="country-chart-total-cases"></canvas>
+    </div>
+    <div class="col">
+      <canvas id="country-chart-cases-per-million"></canvas>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <ng-template [ngIf]="!isAnibodyDead">
+        <p style="font-size: 8pt; text-align: center;"><br><br>Non sono stati registrati decessi odierni a causa
+          Covid.<br><br> Il dato potrebbe variare nel corso della giornata odierna.</p>
+      </ng-template>
+      <canvas id="country-chart-today-deaths"></canvas>
+    </div>
+    <div class="col">
+      <canvas id="country-chart-total-deaths"></canvas>
+    </div>
+    <div class="col">
+      <canvas id="country-chart-death-rate"></canvas>
+    </div>
+  </div>
+</div>
+<h1 class="title-2">Analisi e rapporti</h1>
 <br>
-    <div class="container">
-      <div class="row">
-          <div class="col">
-            <ng-template [ngIf]="!isAnibodyInjured"><p style="font-size: 8pt; text-align: center;"><br><br>Non sono stati registate registrati contagi odierni a causa Covid.<br><br> Il dato potrebbe variare nel corso della giornata odierna.</p></ng-template>
-            <canvas id="country-chart-today-cases"></canvas>
-            </div> <div class="col">
-            <canvas id="country-chart-total-cases"></canvas>
-          </div> <div class="col">
-            <canvas id="country-chart-cases-per-million"></canvas>
-          </div> </div> <div class="row">
-            <div class="col">
-              <ng-template [ngIf]="!isAnibodyDead"><p style="font-size: 8pt; text-align: center;"><br><br>Non sono stati registate registrati decessi odierni a causa Covid.<br><br> Il dato potrebbe variare nel corso della giornata odierna.</p></ng-template>
-            <canvas id="country-chart-today-deaths"></canvas>
-          </div> <div class="col">
-            <canvas id="country-chart-total-deaths"></canvas>
-          </div> <div class="col">
-            <canvas id="country-chart-death-rate"></canvas>
-          </div>
-</div>
-</div>
-<h1 style="text-align: center" class="title">Analisi e rapporti</h1>
-<br>
-    <div class="container">
-      <div class="row">
-          <div class="col">
-            </div> <div class="col">
-          </div> <div class="col">
-          </div> </div> <div class="row">
-            <div class="col">
-          </div> <div class="col">
-          </div> <div class="col">
-          </div>
-</div>
-</div>
+<h1 class="title">Confronto sul rapporto "contagi/decessi" e sulla velocità del vento</h1>

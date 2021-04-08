@@ -3,7 +3,6 @@ import { ApiMeteo } from 'src/app/models/apimeteo.model';
 import { ApiMeteoService } from 'src/app/services/api-meteo.service';
 import { ApiCovidService } from '../../services/api-covid.service';
 import { ApiCoronaData } from '../../models/apiCorona.model';
-import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-graphics',
@@ -67,13 +66,13 @@ export class GraphicsComponent implements OnInit {
     "Malta", "Paesi Bassi", "Polonia", "Portogallo", "Regno Unito", "Repubblica Ceca", "Romania",
     "Slovacchia", "Slovenia", "Spagna", "Svezia", "Svizzera", "Ungheria"];
     //Valore per la creazione dei grafici nazionali
-    analizedCountry = "Austria";
+    analizedCountry = "Italia";
     //Verifica che sia morto qualcuno di Covid nel paese selezionato
     isAnibodyDead: boolean;
     //Verifica che sia contagiato qualcuno di Covid nel paese selezionato
     isAnibodyInjured: boolean;
 
-  constructor(private apimeteoService: ApiMeteoService, private apiCovidService: ApiCovidService, ngForm: NgForm) { }
+  constructor(private apimeteoService: ApiMeteoService, private apiCovidService: ApiCovidService) { }
 
   ngOnInit(): void {
 
@@ -522,9 +521,7 @@ export class GraphicsComponent implements OnInit {
   /*************************CREAZIONE GRAFICI PANORAMICI************************/
 
   /*************************GESTIONE DEL SELETTORE PAESE************************/
-  selectAnalizedCountry(form : NgForm){
-    this.analizedCountry = form.form.value;
-  }
+
   /*************************GESTIONE DEL SELETTORE PAESE************************/
 
   /*************************SELEZIONE DELLA NAZIONE DA ANALIZZARE***************/
@@ -810,7 +807,7 @@ createCasesPerMillionCountryChart(countryName: string){
     type: 'bar',
     data: {
       datasets: [{
-        label: "% di casi per 1mln di abitanti in " + countryName,
+        label: "N. di casi per 1mln di abitanti in " + countryName,
         data: [data],
         backgroundColor: "#3C6E71",
         fill: false
@@ -846,3 +843,7 @@ createDeathRateCountryChart(countryName: string){
 }
 }
     /*************************CREAZIONE GRAFICI NAZIONALI*************************/
+
+    /*************************CREAZIONE ANALISI NAZIONALI*************************/
+
+    /*************************CREAZIONE ANALISI NAZIONALI*************************/

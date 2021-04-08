@@ -40,7 +40,7 @@ export class ApiMeteoService {
   private ZagabriaMeteoUrl = '45.81444,15.9798';
 
   private token = '?token=';
-  private apiKey = 'efe6aed370ae59f7974d69768ec0a095ff10eddc94f02aa0c3';
+  private apiKey = '4c7b3c249850e6b3e632dcdbe12831690d8bbc4541b19607f3';
 
   constructor(private http: HttpClient) {
 
