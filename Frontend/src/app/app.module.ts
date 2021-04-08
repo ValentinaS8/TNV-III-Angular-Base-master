@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
@@ -31,6 +32,7 @@ import { MeteoCovidComponent } from './components/meteo-covid/meteo-covid.compon
 import { DocsComponent } from './routes/docs/docs.component';
 import { LoginComponent } from './routes/login/login.component';
 import { RegisterComponent } from './routes/register/register.component';
+import { GraphicsComponent } from './routes/graphics/graphics.component';
 
 
 @NgModule({
@@ -57,13 +59,15 @@ import { RegisterComponent } from './routes/register/register.component';
     DocsComponent,
     LoginComponent,
     RegisterComponent,
+    GraphicsComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     NgbModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    CommonModule
   ],
   providers: [DataService, ApiserviceService, ApiCovidService, ApiMeteoService],
   bootstrap: [AppComponent]

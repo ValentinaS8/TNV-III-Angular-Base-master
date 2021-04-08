@@ -32,6 +32,9 @@
     font-size: 25pt;
     text-align: center;
 }
+.graphic-overlap{
+  margin-top: -50px;
+}
 p {
 
     color: #353535;
@@ -54,3 +57,27 @@ p {
   #col-padding-5{
       padding-top: 3;
   }
+  .counter {
+  width: 100px;
+  font: 800 40px system-ui;
+  overflow: hidden;
+}
+.numbers {
+  width: auto;
+  display: flex;
+  animation: countNumber 4s infinite;
+  animation-timing-function: steps(10);
+}
+.numbers div {
+  text-align: center;
+  flex: 0 0 100px;
+}
+
+@keyframes countNumber {
+  0% {
+    margin-left: 0px;
+  }
+  100% {
+    margin-left: -1000px;
+  }
+}
