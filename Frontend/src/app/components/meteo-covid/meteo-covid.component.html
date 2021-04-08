@@ -29,6 +29,7 @@
   </div>
 </div>
 
+
 <div class="header_section col-10 mx-auto " >
   
 <table width="100%" >
@@ -37,6 +38,7 @@
       <table class="table table-striped" width="75%">
         <thead class="thead-light " width="75%">
           <tr width="75%">
+
             <th scope="col">Nation</th>
             <th scope="col">Population</th>
             <th scope="col">Updated to</th>
@@ -68,18 +70,25 @@
         <thead class="thead-light" width="25%">
           <tr width="25%">
             <th scope="col">Capital</th>
+
             <th scope="col">Temp. °C</th>
             <th scope="col">Humidity</th>
             <th scope="col">AQI</th>
           </tr>
         </thead>
         <tbody>
-          <tr class="pointer" *ngFor="let entry of meteoDataArray">
-            <th scope="row"> {{entry.data.timezone}}</th>
-            <td>{{entry.data.current.temperature}}</td>
-            <td>{{entry.data.current.relHumidity}}</td>
-            <td alt="Air Quality Index">{{entry.data.current.airQualityIndex}}</td>
-
+          <tr class="pointer" *ngFor="let entry of meteoCovidArray">
+            <th scope="row"> {{entry.country}}</th>
+            <td>{{entry.population}}</td>
+            <td>{{entry.date}}</td>
+            <td>{{entry.today_cases}}</td>
+            <td>{{entry.today_deaths}}</td>
+            <td>{{entry.total_deaths}}</td>
+            <td>{{entry.total_cases}}</td>
+            <td>{{entry.death_range}}</td>
+            <td>{{entry.temperature}}</td>
+            <td>{{entry.humidity}}</td>
+            <td>{{entry.aqi}}</td>
           </tr>
         </tbody>
       </table>
@@ -89,4 +98,5 @@
 </div>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 </body>
+
 
