@@ -32,6 +32,7 @@ import { DocsComponent } from './routes/docs/docs.component';
 import { LoginComponent } from './routes/login/login.component';
 import { RegisterComponent } from './routes/register/register.component';
 
+ 
 
 @NgModule({
   declarations: [
@@ -57,6 +58,7 @@ import { RegisterComponent } from './routes/register/register.component';
     DocsComponent,
     LoginComponent,
     RegisterComponent,
+    
   ],
   imports: [
     BrowserModule,

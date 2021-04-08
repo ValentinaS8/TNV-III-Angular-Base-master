@@ -1,4 +1,8 @@
+
+<body>
+
 <div class="container">
+  <div class="box">
   <h1>Documentazione ufficiale</h1>
 
   <p>Per la realizzazione del progetto, abbiamo usufruito delle seguenti API:
@@ -29,13 +33,14 @@
   <p>Il Login e Register sono due funzioni che non prevedono di salvare dati sul DB, in rispetto alle norme sulla privacy. <br> A ogni accesso, è possibile che il sistema controlli se effettivamente siete loggati: Registratevi ogni volta e utilizzate le credenziali che avete inserito in fase di registrazione. </p>
   <h5>La Dashboard</h5>
   <p>La Dashboard ci permette di visualizzare in tempo reale l'andamento meteo/covid su una panoramica europea. </p>
-  <div> Selezionando il bottone "Scarica i dati di tutta Europa", verranno selezionati tutti i seguenti paesi:
-    <div><br>
+  <div> Selezionando il bottone "Scarica i dati di tutta Europa", verranno selezionati tutti i seguenti paesi:   
       <ul *ngFor="let country of europe">
         <li>{{country}}</li>
       </ul>
-    </div>
+    
+  
   </div>
+
   <div>Inoltre, si può visualizzare in dettaglio ognuno di questi stati selezionando lo Stato nella droplist di destra,
     e premendo "Submit Country".</div>
   <br>
@@ -43,6 +48,7 @@
   <div>I Grafici rappresentano l'andamento generale di rapporti statistici come le temperature e l'andamento dei casi di
     Covid, oltre alla qualità dell'aria, tutto in tempo reale.</div>
   <br>
+</div>
   <h5>Accortezze</h5>
   <div>Tutti i file utilizzati sono stati indentati tramite la funzione "Format Document".</div>
 
@@ -75,8 +81,9 @@
     <a href="https://trello.com/b/aSDtw41t/it-project-workflow">Trello</a>.</p>
 
 
-  <div class="text-right"><button class="btn btn-success" [routerLink]="['/meteocovid']">Vai alla Dashboard <i
-        class="fa fa-arrow-right" aria-hidden="true"></i></button></div>
+  <div class="text-right"><button class="btn btn-outline-dark" [routerLink]="['/meteocovid']">Vai alla Dashboard </button></div>
   <br>
 
 </div>
+  
+</body>

@@ -6,11 +6,11 @@
     <div class="container_main ">
       <!-- Bottone che restituisce i dati di tutta europa -->
       <div class="btn">
-      <button class="btn btn-outline-light" (click)="getAllData()">All Europe</button>
+      <button class="btn btn-outline-dark" (click)="getAllData()">All Europe</button>
       </div>
       <!--Bottone di prova-->
       <div class="btn">
-      <button class="btn btn-outline-light" (click)="clearAllData()">Clear</button>
+      <button class="btn btn-outline-dark" (click)="clearAllData()">Clear</button>
     </div>
           <!-- getCountryCovidData(form : NgForm) -->
       <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
@@ -22,7 +22,7 @@
             </select>
           </div>
           <!-- Bottone che restituisce i dati di una città-->
-          <button class="btn btn-outline-light" type="submit" [disabled]="!form.valid">Submit Country</button>
+          <button class="btn btn-outline-dark" type="submit" [disabled]="!form.valid">Submit Country</button>
         </form>
       </div>
     </div>
