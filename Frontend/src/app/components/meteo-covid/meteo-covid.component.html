@@ -17,7 +17,7 @@
         <form class="btn-group" (ngSubmit)=" getCovidMeteoApiData(form)" #form="ngForm">
           <div class="btn-group" role="group" style="width: 450px;">
             <!-- Menù a tendina che seleziona i dati di una città -->
-            <select class="form-control" id="country" ngModel required name="country">
+            <select class="form-control" id="country" ngModel required name="country" style="background-color: 3c6e71;">
               <option *ngFor="let country of europeCountries"> {{country}} </option>
             </select>
           </div>
@@ -29,7 +29,6 @@
   </div>
 </div>
 
-
 <div class="header_section col-10 mx-auto " >
   
 <table width="100%" >
@@ -38,49 +37,24 @@
       <table class="table table-striped" width="75%">
         <thead class="thead-light " width="75%">
           <tr width="75%">
-
-            <th scope="col">Nation</th>
-            <th scope="col">Population</th>
-            <th scope="col">Updated to</th>
-            <th scope="col">Cases of today</th>
-            <th scope="col">Dead today</th>
-            <th scope="col">All deaths</th>
-            <th scope="col">All cases</th>
-            <th scope="col">Deaths %</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr class="pointer" *ngFor="let entry of covidCountriesDataArray">
-            <th scope="row" type="nations"> {{entry.data.name}}</th>
-            <td>{{entry.data.population}}</td>
-            <td>{{entry.data.updated_at}}</td>
-            <td>{{entry.data.today.confirmed}}</td>
-            <td>{{entry.data.today.deaths}}</td>
-            <td>{{entry.data.latest_data.deaths}}</td>
-            <td>{{entry.data.latest_data.confirmed}}</td>
-            <td>{{entry.data.latest_data.calculated.death_rate}}</td>
-
-          </tr>
-        </tbody>
-      </table>
-    </td>
-  
-    <td>
-      <table class="table" width="25%">
-        <thead class="thead-light" width="25%">
-          <tr width="25%">
-            <th scope="col">Capital</th>
-
+            <th scope="col">Nazione</th>
+            <th scope="col">Popolazione</th>
+            <th scope="col">Data di riferimento</th>
+            <th scope="col">Casi di oggi</th>
+            <th scope="col">Morti di oggi</th>
+            <th scope="col">Storico morti</th>
+            <th scope="col">Storico casi</th>
+            <th scope="col">Morti %</th>
             <th scope="col">Temp. °C</th>
-            <th scope="col">Humidity</th>
+            <th scope="col">Umidità</th>
             <th scope="col">AQI</th>
           </tr>
         </thead>
         <tbody>
           <tr class="pointer" *ngFor="let entry of meteoCovidArray">
-            <th scope="row"> {{entry.country}}</th>
+            <th scope="row" type="nations"> {{entry.country}}</th>
             <td>{{entry.population}}</td>
-            <td>{{entry.date}}</td>
+            <td>{{entry.date| date :'dd / MM / yyyy'}}</td>
             <td>{{entry.today_cases}}</td>
             <td>{{entry.today_deaths}}</td>
             <td>{{entry.total_deaths}}</td>
@@ -89,6 +63,7 @@
             <td>{{entry.temperature}}</td>
             <td>{{entry.humidity}}</td>
             <td>{{entry.aqi}}</td>
+
           </tr>
         </tbody>
       </table>
@@ -98,5 +73,4 @@
 </div>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 </body>
-
 

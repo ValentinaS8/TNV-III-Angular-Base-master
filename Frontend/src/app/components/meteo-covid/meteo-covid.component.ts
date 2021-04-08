@@ -63,7 +63,7 @@ export class MeteoCovidComponent implements OnInit {
   setTimeout(() => { this.mergeArrays(); }, 7000);
   }
   clearAllData() {
-    this.covidCountriesDataArray.length = 0;
+    this.meteoCovidArray.length = 0;
   }
 
 
