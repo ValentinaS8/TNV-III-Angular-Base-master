@@ -67,17 +67,11 @@ export class MeteoCovidComponent implements OnInit {
     this.meteoCovidArray.length = 0;
   }
 
-<<<<<<< HEAD
-  getAllMeteoApiData(nation) {
-    this.isFetchStarted = true;
-    this.dataCity = nation
-=======
 
 getCountryCovidDataFromArray(countryName: string) {
   this.apiCovidService.getCovidPromiseData(countryName).then((data: ApiCoronaData) => {
     this.covidCountriesData = data;
     this.dataCity = countryName
->>>>>>> origin/proveGrafiche
     console.log(this.dataCity);
     this.apimeteoService.getMeteoPromiseData(this.dataCity).then((meteoData: ApiMeteo) => {
       this.meteoCountries = meteoData
@@ -108,27 +102,6 @@ getCountryCovidDataFromArray(countryName: string) {
       this.covidCountriesData.data.latest_data.calculated.death_rate = deathrateCorrectedNumber;
     }
 
-<<<<<<< HEAD
-  getCountryCovidDataFromArray(countryName: string) {
-    this.isFetchStarted = true;
-    this.apiCovidService.getCovidPromiseData(countryName).then((data: ApiCoronaData) => {
-      this.covidCountriesData = data;
-      this.dataCity = countryName
-      console.log(this.dataCity);
-      this.apimeteoService.getMeteoPromiseData(this.dataCity).then((meteoData: ApiMeteo) => {
-        this.meteoCountries = meteoData
-        this.meteoDataArray.push(this.meteoCountries)
-        console.log(this.meteoCountries.data.current.temperatureMin)
-        this.meteoService.addMeteoPromiseEntry(this.meteoCountries).then(response => {
-          console.log(response);
-          this.isFetchStarted = false;
-          this.isDataReady = true;
-        },
-          err => console.log("Errore")
-        )
-      },
-        err => console.log(err),
-=======
     this.covidCountriesDataArray.push(this.covidCountriesData);
     this.covidService.addCovidPromiseEntry(this.covidCountriesData).then(response => {
       console.log("Ho inviato i dati al db", response)
@@ -136,7 +109,6 @@ getCountryCovidDataFromArray(countryName: string) {
     )
   },
     err => console.log(err),
->>>>>>> origin/proveGrafiche
 
   )
 }
@@ -213,33 +185,7 @@ getMeteoApiData(form: NgForm) {
 }
 
 
-<<<<<<< HEAD
-  // dati covid per ogni singola nazione
-  getCountryMeteoCovidDataFromForm(form: NgForm) {
-    this.isFetchStarted = true;
-    this.countryName = form.form.value.country;
-    console.log(this.countryName);
-    this.apiCovidService.getCountryCovidData(this.countryName).subscribe((data: ApiCoronaData) => {
-      this.covidCountriesData = data;
-      this.isFetchStarted = false;
-      this.isDataReady = true;
-
-      /*Estrapolazione del valore "Data" dal file .json*/
-      for (let item in this.covidCountriesData) {
-        if (this.covidCountriesData.data.updated_at.includes("T")) {
-          let correctedData = this.covidCountriesData.data.updated_at.substring(0, 10);
-          this.covidCountriesData.data.updated_at = correctedData;
-        }
-
-        //riduzione del numero delle cifre decimali del death_rate
-        let deathrateString = (this.covidCountriesData.data.latest_data.calculated.death_rate).toString();
-        deathrateString = deathrateString.substring(0, 4);
-        let deathrateCorrectedNumber = parseFloat(deathrateString);
-        this.covidCountriesData.data.latest_data.calculated.death_rate = deathrateCorrectedNumber;
-      }
-=======
 sortArrays() {
->>>>>>> origin/proveGrafiche
 
   let i, j;
 
@@ -257,30 +203,11 @@ sortArrays() {
   //sort array dati covid
   for (i = 0; i < arrayRiferimentoStati.length; i++) {
 
-<<<<<<< HEAD
-    this.dataCity = form.form.value.country
-    console.log(this.dataCity);
-    this.apimeteoService.getMeteoApiData(this.dataCity).subscribe((meteoData: ApiMeteo) => {
-      this.meteoCountries = meteoData
-      this.meteoDataArray.push(this.meteoCountries)
-      console.log(this.meteoCountries.data.current.temperatureMin)
-      //scrittura a db
-      this.meteoService.addMeteoEntry(this.meteoCountries).subscribe(response => {
-        console.log(response);
-        this.isDataReady = true;
-      },
-        err => console.log("Errore")
-      )
-    },
-      err => console.log(err),
-      () => console.log("Loading completed", this.meteoCountries)
-=======
     for (j = 0; j < this.covidCountriesDataArray.length; j++) {
       if (arrayRiferimentoStati[i] === this.covidCountriesDataArray[j].data.name) {
         this.sortedCovidCountriesDataArray[i] = this.covidCountriesDataArray[j];
       }
     }
->>>>>>> origin/proveGrafiche
 
     j = 0;
   }

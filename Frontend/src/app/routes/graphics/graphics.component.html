@@ -1,45 +1,60 @@
 <div style='padding:50px;'></div>
 <div>
-  <h1 class="title-2">I dati in tempo reale in Europa</h1>
+  <h1 class="title-2">European real-time data</h1>
 </div>
 <br>
 <div class="container">
   <div class="row">
     <div class="col">
-      <h1 class="title">Temperature</h1>
-      <p class="ua-font">Ultimo aggiornamento: {{ updateMeteoData }}</p>
+      <h1 class="title"><b>Temperature</b></h1>
+      <p class="ua-font">Updated at: {{ updateMeteoData }}</p>
       <canvas id="temperature-rt"></canvas>
     </div>
     <div class="col">
-      <h1 class="title">Umidità</h1>
-      <p class="ua-font">Ultimo aggiornamento: {{ updateMeteoData }}</p>
+      <h1 class="title"><b>Humidity</b></h1>
+      <p class="ua-font">Updated at: {{ updateMeteoData }}</p>
       <canvas id="humidity-rt"></canvas>
     </div>
     <div class="col">
-      <h1 class="title">Velocità del vento</h1>
-      <p class="ua-font">Ultimo aggiornamento: {{ updateMeteoData }}</p>
+      <h1 class="title"><b>Wind speed</b></h1>
+      <p class="ua-font">Updated at: {{ updateMeteoData }}</p>
       <canvas id="wind-rt"></canvas>
     </div>
   </div>
   <div class="row">
     <div class="col">
-      <h1 class="title">Casi</h1>
-      <p class="ua-font">Ultimo aggiornamento: {{ updateCovidData }}</p>
+      <h1 class="title"><b>Cases</b></h1>
+      <p class="ua-font">Updated at: {{ updateCovidData }}</p>
       <canvas id="covid-total-cases-rt"></canvas>
     </div>
     <div class="col">
-      <h1 class="title">Morti</h1>
-      <p class="ua-font">Ultimo aggiornamento: {{ updateCovidData }}</p>
+      <h1 class="title"><b>Deaths</b></h1>
+      <p class="ua-font">Updated at: {{ updateCovidData }}</p>
       <canvas id="covid-total-deaths-rt"></canvas>
     </div>
   </div>
 </div>
 <br><br>
-<h1 class="title-2">Le analisi sui dati in Europa</h1>
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <h1 class="title-2">European data analysis</h1>
+    </div>
+    <div class="col"><div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+      <form class="btn-group" (change)="selectCountryToAnalize(form)" #form="ngForm">
+        <div class="btn-group" role="group" style="width: 450px;">
+          <!-- Menù a tendina che seleziona i dati di una città -->
+          <select class="form-control" id="country" ngModel required name="country" style="background-color: 3c6e71;">
+            <option *ngFor="let country of europeTranslate"> {{country}} </option>
+          </select>
+        </div>
+      </form></div>
+  </div>
+</div>
 <br>
-<h1 class="title">Dati meteorologici</h1>
+<h1 class="title"><b>Meteorological data</b></h1>
 <br>
-<p class="ua-font">Ultimo aggiornamento: {{ updateMeteoData }}</p>
+<p class="ua-font">Updated at: {{ updateMeteoData }}</p>
 <br>
 <br>
 <div class="container" id="national-panoramic">
@@ -67,18 +82,14 @@
   </div>
 </div>
 <br>
-<h1 class="title">Dati relativi al Covid-19</h1>
+<h1 class="title">Covid-19 data</h1>
 <br>
-<p class="ua-font">Ultimo aggiornamento: {{ updateMeteoData }}</p>
+<p class="ua-font">Updated at: {{ updateMeteoData }}</p>
 <br>
 <br>
 <div class="container">
   <div class="row">
     <div class="col">
-      <ng-template [ngIf]="isAnibodyInjured">
-        <p style="font-size: 8pt; text-align: center;"><br><br>Non sono stati registrati contagi odierni a causa
-          Covid.<br><br> Il dato potrebbe variare nel corso della giornata odierna.</p>
-      </ng-template>
       <canvas id="country-chart-today-cases"></canvas>
     </div>
     <div class="col">
@@ -90,9 +101,9 @@
   </div>
   <div class="row">
     <div class="col">
-      <ng-template [ngIf]="!isAnibodyDead">
-        <p style="font-size: 8pt; text-align: center;"><br><br>Non sono stati registrati decessi odierni a causa
-          Covid.<br><br> Il dato potrebbe variare nel corso della giornata odierna.</p>
+      <ng-template [ngIf]="!isAnibodyDead && isDeadFetching">
+        <p style="font-size: 8pt; text-align: center;"><br><br>No deaths have been recorded today due to
+          Covid.<br><br> The figure may vary over the course of the day today.</p>
       </ng-template>
       <canvas id="country-chart-today-deaths"></canvas>
     </div>
@@ -104,6 +115,49 @@
     </div>
   </div>
 </div>
-<h1 class="title-2">Analisi e rapporti</h1>
+<h1 class="title-2">Reports and analysis</h1>
 <br>
-<h1 class="title">Confronto sul rapporto "contagi/decessi" e sulla velocità del vento</h1>
+<h1 class="title">Comparison between <b>Death Rate</b> and <b>Wind Speed</b></h1>
+<div class="container">
+  <div class="row">
+    <div class="col"><canvas id="death-race-wind-speed-ratio-1"></canvas></div>
+    <div class="col"><canvas id="death-race-wind-speed-ratio-2"></canvas></div>
+  </div>
+</div>
+<br>
+<h1 class="title">Comparison between <b>Death Rate</b> and <b>Humidity</b></h1>
+<div class="container">
+  <div class="row">
+    <div class="col"><canvas id="death-race-humidity-ratio-1"></canvas></div>
+    <div class="col"><canvas id="death-race-humidity-ratio-2"></canvas></div>
+  </div>
+</div>
+<br>
+    <h1 class="title">Comparison between <b>(Cases / Population)</b> and <b>(Deaths / Cases)</b></h1>
+<div class="container">
+  <div class="row">
+    <div class="col"><canvas id="cases-population-death-race-ratio-1"></canvas></div>
+    <div class="col"><canvas id="cases-population-death-race-ratio-2"></canvas></div>
+  </div>
+</div>
+<br>
+<h1 class="title">Comparison between <b>Temperature</b> and <b>Cases</b></h1>
+<div class="container">
+  <div class="row">
+    <div class="col"><canvas id="temperature-cases-ratio-1"></canvas></div>
+    <div class="col"><canvas id="temperature-cases-ratio-2"></canvas></div>
+  </div>
+</div>
+<br>
+<h1 class="title">Comparison between <b>Min. Temperature</b> and <b>Cases</b> | <b>Max. Temperature</b> and <b>Cases</b>
+</h1>
+<div class="container">
+  <div class="row">
+    <div class="col"><canvas id="min-temperature-cases-ratio-1"></canvas></div>
+    <div class="col"><canvas id="min-temperature-cases-ratio-2"></canvas></div>
+  </div>
+  <div class="row">
+    <div class="col"><canvas id="max-temperature-cases-ratio-1"></canvas></div>
+    <div class="col"><canvas id="max-temperature-cases-ratio-2"></canvas></div>
+  </div>
+</div>

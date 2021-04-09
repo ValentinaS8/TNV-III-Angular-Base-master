@@ -40,14 +40,25 @@ export class ApiMeteoService {
   private ZagabriaMeteoUrl = '45.81444,15.9798';
 
   private token = '?token=';
-  private apiKey = '4c7b3c249850e6b3e632dcdbe12831690d8bbc4541b19607f3';
+  //Gestione API KEY
+  apiKeyArray = [];
+  /*
+  private callsCounter = 0;
+  */
+  private apiKey = "this.generateApiKey";
 
-  constructor(private http: HttpClient) {
-
+  constructor(private http: HttpClient) {}
+/*
+  generateApiKey(){
+    if(this.callsCounter == 1000){
+      this.callsCounter = 0;
+      this.apiKeyArray.shift();
+    }
+    this.callsCounter = this.callsCounter + 1;
+    return this.apiKeyArray[0];
   }
+*/
   getMeteoApiData(dataCity: any) {
-    console.log(dataCity)
-
     if (dataCity === "Paesi Bassi") return this.http.get<ApiMeteo>(this.baseApiUrl + this.AmsterdamMeteoUrl + this.token + this.apiKey);
     if (dataCity === "Grecia") return this.http.get<ApiMeteo>(this.baseApiUrl + this.AteneMeteoUrl + this.token + this.apiKey);
     if (dataCity === "Germania") return this.http.get<ApiMeteo>(this.baseApiUrl + this.BerlinoMeteoUrl + this.token + this.apiKey);

@@ -8,7 +8,7 @@
       <div class="btn">
       <button class="btn btn-outline-dark" (click)="getAllData()">All Europe</button>
       </div>
-      <!--Bottone di prova-->
+      <!--Bottone cancella-->
       <div class="btn">
       <button class="btn btn-outline-dark" (click)="clearAllData()">Clear</button>
     </div>
@@ -37,16 +37,16 @@
       <table class="table table-striped" width="75%">
         <thead class="thead-light " width="75%">
           <tr width="75%">
-            <th scope="col">Nazione</th>
-            <th scope="col">Popolazione</th>
-            <th scope="col">Data di riferimento</th>
-            <th scope="col">Casi di oggi</th>
-            <th scope="col">Morti di oggi</th>
-            <th scope="col">Storico morti</th>
-            <th scope="col">Storico casi</th>
-            <th scope="col">Morti %</th>
+            <th scope="col">Country</th>
+            <th scope="col">Population</th>
+            <th scope="col">Updated at</th>
+            <th scope="col">Infected today</th>
+            <th scope="col">Deaths today</th>
+            <th scope="col">All cases</th>
+            <th scope="col">All deaths</th>
+            <th scope="col">% of deaths</th>
             <th scope="col">Temp. °C</th>
-            <th scope="col">Umidità</th>
+            <th scope="col">Humidity</th>
             <th scope="col">AQI</th>
           </tr>
         </thead>
@@ -57,8 +57,8 @@
             <td>{{entry.date| date :'dd / MM / yyyy'}}</td>
             <td>{{entry.today_cases}}</td>
             <td>{{entry.today_deaths}}</td>
-            <td>{{entry.total_deaths}}</td>
             <td>{{entry.total_cases}}</td>
+            <td>{{entry.total_deaths}}</td>
             <td>{{entry.death_range}}</td>
             <td>{{entry.temperature}}</td>
             <td>{{entry.humidity}}</td>
@@ -70,15 +70,11 @@
     </td>
   </tr>
 </table>
-<<<<<<< HEAD
 <!-- Da integrare con il nuovo metodo "Unico Array" | Visualizzerà solo se è partita la fetch (per non far partire il loading all'apertura della rotta) e se l'array è pieno
 <div *ngIf="!isDataReady">
   <app-loadingpage></app-loadingpage>
 </div>
 -->
-=======
 </div>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 </body>
-
->>>>>>> origin/proveGrafiche

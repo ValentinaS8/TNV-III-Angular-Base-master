@@ -1,3 +1,4 @@
+import { NgForm } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { ApiMeteo } from 'src/app/models/apimeteo.model';
 import { ApiMeteoService } from 'src/app/services/api-meteo.service';
@@ -26,6 +27,7 @@ export class GraphicsComponent implements OnInit {
   airQualityDataArray: number[] = [];
   humidityDataArray: number[] = [];
   windDataArray: number[] = [];
+  populationDataArray: number[] = [];
   totalCasesDataArray: number[] = [];
   todayCasesDataArray: number[] = [];
   totalDeathsDataArray: number[] = [];
@@ -39,12 +41,13 @@ export class GraphicsComponent implements OnInit {
   airQualityDataArraySorted: number[] = [];
   humidityDataArraySorted: number[] = [];
   windDataArraySorted: number[] = [];
+  populationArraySorted: number[] = [];
   totalCasesDataArraySorted: number[] = [];
   todayCasesDataArraySorted: number[] = [];
   totalDeathsDataArraySorted: number[] = [];
   todayDeathsDataArraySorted: number[] = [];
   deathRateDataArraySorted: number[] = [];
-  casesPerMillionDataArraySorted: number [] = [];
+  casesPerMillionDataArraySorted: number[] = [];
   //Array per riordinare i valori in base al paese chiamato
   countriesToShowTemperature: string[] = [];
   countriesToShowTemperatureMin: string[] = [];
@@ -52,6 +55,7 @@ export class GraphicsComponent implements OnInit {
   countriesToShowAirQuality: string[] = [];
   countriesToShowHumidity: string[] = [];
   countriesToShowWind: string[] = [];
+  countriesToShowPopulation: string[] = [];
   countriesToShowTotalCases: string[] = [];
   countriesToShowTodayCases: string[] = [];
   countriesToShowTotalDeaths: string[] = [];
@@ -65,12 +69,15 @@ export class GraphicsComponent implements OnInit {
     "Finlandia", "Francia", "Germania", "Grecia", "Irlanda", "Italia", "Lettonia", "Lituania", "Lussemburgo",
     "Malta", "Paesi Bassi", "Polonia", "Portogallo", "Regno Unito", "Repubblica Ceca", "Romania",
     "Slovacchia", "Slovenia", "Spagna", "Svezia", "Svizzera", "Ungheria"];
-    //Valore per la creazione dei grafici nazionali
-    analizedCountry = "Italia";
-    //Verifica che sia morto qualcuno di Covid nel paese selezionato
-    isAnibodyDead: boolean;
-    //Verifica che sia contagiato qualcuno di Covid nel paese selezionato
-    isAnibodyInjured: boolean;
+  //Array degli stati europei in inglese
+  europeTranslate: Array<string> = ["Austria", "Belgium", "Cyprus", "Croatia", "Denmark", "Estonia", "Finland",
+    "France", "Germany", "Greece", "Ireland", "Italy", "Latvia", "Lithuania", "Luxemburg", "Malta", "Netherlands",
+    "Poland", "Portugal", "UK", "Czech Republic", "Romania", "Slovakia", "Slovenia", "Spain", "Sweden", "Switzerland", "Hungary"];
+  //Verifica che sia morto qualcuno di Covid nel paese selezionato
+  isAnibodyDead: boolean;
+  isDeadFetching = false;
+  //Verifica che sia contagiato qualcuno di Covid nel paese selezionato
+  isAnibodyInjured: boolean;
 
   constructor(private apimeteoService: ApiMeteoService, private apiCovidService: ApiCovidService) { }
 
@@ -106,18 +113,21 @@ export class GraphicsComponent implements OnInit {
       if (this.temperatureDataArray.length == 28) {
         this.sortTemperatureDataArray();
         this.createMeteoGraph("temperature-rt");
+        this.createTemperatureRatioChart();
       }
       //Salvataggio della temperatura massima
       this.temperatureMaxDataArray.push(temperatureMax);
       this.countriesToShowTemperatureMax.push(dataCity);
       if (this.temperatureMaxDataArray.length == 28) {
         this.sortTemperatureMaxDataArray();
+        this.createMaxTemperatureRatioChart();
       }
       //Salvataggio della temperatura minima
       this.temperatureMinDataArray.push(temperatureMin);
       this.countriesToShowTemperatureMin.push(dataCity);
       if (this.temperatureMinDataArray.length == 28) {
         this.sortTemperatureMinDataArray();
+        this.createMinTemperatureRatioChart();
       }
       //Salvataggio della qualità dell'aria
       this.airQualityDataArray.push(airQuality);
@@ -131,6 +141,7 @@ export class GraphicsComponent implements OnInit {
       if (this.humidityDataArray.length == 28) {
         this.sortHumidityDataArray();
         this.createHumidityGraph("humidity-rt");
+        this.createHumidityRatioChart();
       }
       //Salvataggio della velocità del vento
       this.windDataArray.push(windSpeed);
@@ -138,7 +149,7 @@ export class GraphicsComponent implements OnInit {
       if (this.windDataArray.length == 28) {
         this.sortWindDataArray();
         this.createWindGraph("wind-rt");
-        this.generateMeteoCountriesCharts(this.analizedCountry);
+        this.createWindSpeedRatioChart();
       }
     });
   }
@@ -146,6 +157,7 @@ export class GraphicsComponent implements OnInit {
   getCovidApiData(dataCity: any) {
     this.apiCovidService.getCountryCovidData(this.dataCity).subscribe((covidData: ApiCoronaData) => {
       this.covidCountries = covidData;
+      var population = this.covidCountries.data.population;
       var totalCases = this.covidCountries.data.latest_data.confirmed;
       var todayCases = this.covidCountries.data.today.confirmed;
       var totalDeaths = this.covidCountries.data.latest_data.deaths;
@@ -154,12 +166,22 @@ export class GraphicsComponent implements OnInit {
       var casesPerMillion = this.covidCountries.data.latest_data.calculated.cases_per_million_population;
       this.updateCovidData = this.covidCountries.data.updated_at;
       this.createCorrectUpdateTimeCovid();
+      //Salvataggio della popolazione
+      this.populationDataArray.push(population);
+      this.countriesToShowPopulation.push(dataCity);
+      if (this.populationDataArray.length == 28) {
+      this.sortPopulationDataArray();
+      }
       //Salvataggio dei casi totali
       this.totalCasesDataArray.push(totalCases);
       this.countriesToShowTotalCases.push(dataCity);
       if (this.totalCasesDataArray.length == 28) {
         this.sortTotalCasesCovidArray();
         this.createTotalCasesCovidGraph("covid-total-cases-rt");
+        this.createCasesPopulationRatioChart();
+        this.createCasesRatioChart();
+        this.createCasesRatioChart1();
+        this.createCasesRatioChart2();
       }
       //Salvataggio dei casi di oggi
       this.todayCasesDataArray.push(todayCases);
@@ -177,21 +199,23 @@ export class GraphicsComponent implements OnInit {
       //Salvataggio dei morti di oggi
       this.todayDeathsDataArray.push(todayDeaths);
       this.countriesToShowTodayDeaths.push(dataCity);
-      if(this.todayDeathsDataArray.length == 28){
+      if (this.todayDeathsDataArray.length == 28) {
         this.sortTodayDeathsCovidArray();
       }
       //Salvataggio del Death Rate
       this.deathRateDataArray.push(deathRate);
       this.countriesToShowDeathRate.push(dataCity);
-      if(this.deathRateDataArray.length == 28){
+      if (this.deathRateDataArray.length == 28) {
         this.sortDeathRateDataArray();
+        this.createCasesDeathsRatioChart();
+        this.createCasesDeathsRatioChart1();
+        this.createCasesDeathsRatioChart2();
       }
       //Salvataggio del Cases Per Million
       this.casesPerMillionDataArray.push(casesPerMillion);
       this.countriesToShowCasesPerMillion.push(dataCity);
-      if(this.casesPerMillionDataArray.length == 28){
+      if (this.casesPerMillionDataArray.length == 28) {
         this.sortCasesPerMillionDataArray();
-        this.generateCovidCountriesCharts(this.analizedCountry);
       }
     });
   }
@@ -277,6 +301,19 @@ export class GraphicsComponent implements OnInit {
       j = 0;
     }
   }
+  sortPopulationDataArray(){
+    let i, j;
+    for (i = 0; i < this.europe.length; i++) {
+
+      for (j = 0; j < this.countriesToShowPopulation.length; j++) {
+        if (this.europe[i] === this.countriesToShowPopulation[j]) {
+          this.populationArraySorted[i] = this.populationDataArray[j];
+        }
+      }
+
+      j = 0;
+    }
+  }
   sortTotalCasesCovidArray() {
     let i, j;
     for (i = 0; i < this.europe.length; i++) {
@@ -303,7 +340,7 @@ export class GraphicsComponent implements OnInit {
       j = 0;
     }
   }
-  sortTotalDeathsCovidArray(){
+  sortTotalDeathsCovidArray() {
     let i, j;
     for (i = 0; i < this.europe.length; i++) {
 
@@ -316,7 +353,7 @@ export class GraphicsComponent implements OnInit {
       j = 0;
     }
   }
-  sortTodayDeathsCovidArray(){
+  sortTodayDeathsCovidArray() {
     let i, j;
     for (i = 0; i < this.europe.length; i++) {
 
@@ -329,7 +366,7 @@ export class GraphicsComponent implements OnInit {
       j = 0;
     }
   }
-  sortDeathRateDataArray(){
+  sortDeathRateDataArray() {
     let i, j;
     for (i = 0; i < this.europe.length; i++) {
 
@@ -342,7 +379,7 @@ export class GraphicsComponent implements OnInit {
       j = 0;
     }
   }
-  sortCasesPerMillionDataArray(){
+  sortCasesPerMillionDataArray() {
     let i, j;
     for (i = 0; i < this.europe.length; i++) {
 
@@ -416,14 +453,14 @@ export class GraphicsComponent implements OnInit {
 
   createMeteoGraph(elementId: string) {
     let myCanvas = document.getElementById(elementId);
-    let myLabels = this.europe;
+    let myLabels = this.europeTranslate;
     const data = this.putDataTemperature();
     let chart = new Chart(myCanvas, {
       type: 'bar',
       data: {
         labels: myLabels,
         datasets: [{
-          label: "Temperature in tempo reale (in °C)",
+          label: "Real-time temperature (in °C)",
           data: data,
           backgroundColor: "#3C6E71",
           fill: false
@@ -437,14 +474,14 @@ export class GraphicsComponent implements OnInit {
 
   createTotalCasesCovidGraph(elementId: string) {
     let myCanvas1 = document.getElementById(elementId);
-    let myLabels = this.europe;
+    let myLabels = this.europeTranslate;
     const data = this.putTotalCases();
     let chart1 = new Chart(myCanvas1, {
       type: 'bar',
       data: {
         labels: myLabels,
         datasets: [{
-          label: "Contagiati totali",
+          label: "Total cases",
           data: data,
           backgroundColor: "#3C6E71",
           fill: false
@@ -456,16 +493,16 @@ export class GraphicsComponent implements OnInit {
     });
   }
 
-  createTotalDeathsCovidGraph(elementId: string){
+  createTotalDeathsCovidGraph(elementId: string) {
     let myCanvas2 = document.getElementById(elementId);
-    let myLabels = this.europe;
+    let myLabels = this.europeTranslate;
     const data = this.putTotalDeaths();
     let chart2 = new Chart(myCanvas2, {
       type: 'bar',
       data: {
         labels: myLabels,
         datasets: [{
-          label: "Morti totali",
+          label: "Total deaths",
           data: data,
           backgroundColor: "#3C6E71",
           fill: false
@@ -478,14 +515,14 @@ export class GraphicsComponent implements OnInit {
   }
   createHumidityGraph(elementId: string) {
     let myCanvas3 = document.getElementById(elementId);
-    let myLabels = this.europe;
+    let myLabels = this.europeTranslate;
     const data = this.putDataHumidity();
     let chart3 = new Chart(myCanvas3, {
       type: 'bar',
       data: {
         labels: myLabels,
         datasets: [{
-          label: "Umidità in tempo reale (in %)",
+          label: "Real-time humidity (in %)",
           data: data,
           backgroundColor: '#3C6E71',
           fill: false
@@ -499,14 +536,14 @@ export class GraphicsComponent implements OnInit {
 
   createWindGraph(elementId: string) {
     let myCanvas4 = document.getElementById(elementId);
-    let myLabels = this.europe;
+    let myLabels = this.europeTranslate;
     const data = this.putDataWind();
     let chart4 = new Chart(myCanvas4, {
       type: 'bar',
       data: {
         labels: myLabels,
         datasets: [{
-          label: "V. del vento in tempo reale ( in m/s)",
+          label: "Real-time wind speed (in m/s)",
           data: data,
           backgroundColor: '#3C6E71',
           fill: false
@@ -520,11 +557,14 @@ export class GraphicsComponent implements OnInit {
 
   /*************************CREAZIONE GRAFICI PANORAMICI************************/
 
-  /*************************GESTIONE DEL SELETTORE PAESE************************/
-
-  /*************************GESTIONE DEL SELETTORE PAESE************************/
-
   /*************************SELEZIONE DELLA NAZIONE DA ANALIZZARE***************/
+  selectCountryToAnalize(form : NgForm){
+    var countryName = form.form.value.country;
+    this.isDeadFetching = true;
+    this.generateMeteoCountriesCharts(countryName);
+    this.generateCovidCountriesCharts(countryName);
+  }
+
   generateMeteoCountriesCharts(countryName: string) {
     this.createTemperatureCountryChart(countryName);
     this.createTemperatureMinCountryChart(countryName);
@@ -533,7 +573,7 @@ export class GraphicsComponent implements OnInit {
     this.createHumidityCountryChart(countryName);
     this.createAirQualityCountryChart(countryName);
   }
-  generateCovidCountriesCharts(countryName: string){
+  generateCovidCountriesCharts(countryName: string) {
     this.createTotalCasesCountryChart(countryName);
     this.createTodayCasesCountryChart(countryName);
     this.createCasesPerMillionCountryChart(countryName);
@@ -548,8 +588,8 @@ export class GraphicsComponent implements OnInit {
   createTemperatureCountryChart(countryName: string) {
     let myCanvas5 = document.getElementById("country-chart-temperature");
     var data: number;
-    for (var i = 0; i < this.europe.length; i++) {
-      if (countryName == this.europe[i]) {
+    for (var i = 0; i < this.europeTranslate.length; i++) {
+      if (countryName == this.europeTranslate[i]) {
         data = this.temperatureDataArraySorted[i];
       }
     }
@@ -557,7 +597,7 @@ export class GraphicsComponent implements OnInit {
       type: 'bar',
       data: {
         datasets: [{
-          label: "Temperatura in tempo reale (°C) in " + countryName,
+          label: "Real-time temperature (°C) in " + countryName,
           data: [data],
           backgroundColor: "#3C6E71",
           fill: false
@@ -572,8 +612,8 @@ export class GraphicsComponent implements OnInit {
   createTemperatureMinCountryChart(countryName: string) {
     let myCanvas6 = document.getElementById("country-chart-temperature-min");
     var data: number;
-    for (var i = 0; i < this.europe.length; i++) {
-      if (countryName == this.europe[i]) {
+    for (var i = 0; i < this.europeTranslate.length; i++) {
+      if (countryName == this.europeTranslate[i]) {
         data = this.temperatureMinDataArraySorted[i];
       }
     }
@@ -581,7 +621,7 @@ export class GraphicsComponent implements OnInit {
       type: 'bar',
       data: {
         datasets: [{
-          label: "Temperatura minima oggi (°C) in " + countryName,
+          label: "Min. temperature today (°C) in " + countryName,
           data: [data],
           backgroundColor: "#3C6E71",
           fill: false
@@ -596,8 +636,8 @@ export class GraphicsComponent implements OnInit {
   createTemperatureMaxCountryChart(countryName: string) {
     let myCanvas7 = document.getElementById("country-chart-temperature-max");
     var data: number;
-    for (var i = 0; i < this.europe.length; i++) {
-      if (countryName == this.europe[i]) {
+    for (var i = 0; i < this.europeTranslate.length; i++) {
+      if (countryName == this.europeTranslate[i]) {
         data = this.temperatureMaxDataArraySorted[i];
 
       }
@@ -606,7 +646,7 @@ export class GraphicsComponent implements OnInit {
       type: 'bar',
       data: {
         datasets: [{
-          label: "Temperatura massima oggi (°C) in " + countryName,
+          label: "Max. temperature today (°C) in " + countryName,
           data: [data],
           backgroundColor: "#3C6E71",
           fill: false
@@ -621,16 +661,16 @@ export class GraphicsComponent implements OnInit {
   createWindCountryChart(countryName: string) {
     let myCanvas8 = document.getElementById("country-chart-wind");
     var data: number;
-    for (var i = 0; i < this.europe.length; i++) {
-      if (countryName == this.europe[i]) {
+    for (var i = 0; i < this.europeTranslate.length; i++) {
+      if (countryName == this.europeTranslate[i]) {
         data = this.windDataArraySorted[i];
-            }
+      }
     }
     let chart8 = new Chart(myCanvas8, {
       type: 'bar',
       data: {
         datasets: [{
-          label: "Velocità del vento (m/s) in " + countryName,
+          label: "Wind speed today (m/s) in " + countryName,
           data: [data],
           backgroundColor: "#3C6E71",
           fill: false
@@ -645,8 +685,8 @@ export class GraphicsComponent implements OnInit {
   createHumidityCountryChart(countryName: string) {
     let myCanvas9 = document.getElementById("country-chart-humidity");
     var data: number;
-    for (var i = 0; i < this.europe.length; i++) {
-      if (countryName == this.europe[i]) {
+    for (var i = 0; i < this.europeTranslate.length; i++) {
+      if (countryName == this.europeTranslate[i]) {
         data = this.humidityDataArraySorted[i];
 
       }
@@ -655,7 +695,7 @@ export class GraphicsComponent implements OnInit {
       type: 'bar',
       data: {
         datasets: [{
-          label: "Umidità (%) in " + countryName,
+          label: "Humidity (%) in " + countryName,
           data: [data],
           backgroundColor: "#3C6E71",
           fill: false
@@ -670,8 +710,8 @@ export class GraphicsComponent implements OnInit {
   createAirQualityCountryChart(countryName: string) {
     let myCanvas10 = document.getElementById("country-chart-air-quality");
     var data: number;
-    for (var i = 0; i < this.europe.length; i++) {
-      if (countryName == this.europe[i]) {
+    for (var i = 0; i < this.europeTranslate.length; i++) {
+      if (countryName == this.europeTranslate[i]) {
         data = this.airQualityDataArraySorted[i];
 
       }
@@ -680,7 +720,7 @@ export class GraphicsComponent implements OnInit {
       type: 'bar',
       data: {
         datasets: [{
-          label: "Qualità dell'aria (%) in " + countryName,
+          label: "AQI (%) in " + countryName,
           data: [data],
           backgroundColor: "#3C6E71",
           fill: false
@@ -695,8 +735,8 @@ export class GraphicsComponent implements OnInit {
   createTotalCasesCountryChart(countryName: string) {
     let myCanvas11 = document.getElementById("country-chart-total-cases");
     var data: number;
-    for (var i = 0; i < this.europe.length; i++) {
-      if (countryName == this.europe[i]) {
+    for (var i = 0; i < this.europeTranslate.length; i++) {
+      if (countryName == this.europeTranslate[i]) {
         data = this.totalCasesDataArraySorted[i];
       }
     }
@@ -704,7 +744,7 @@ export class GraphicsComponent implements OnInit {
       type: 'bar',
       data: {
         datasets: [{
-          label: "Contagiati totali in " + countryName,
+          label: "Total cases in " + countryName,
           data: [data],
           backgroundColor: "#3C6E71",
           fill: false
@@ -718,10 +758,10 @@ export class GraphicsComponent implements OnInit {
   createTodayCasesCountryChart(countryName: string) {
     let myCanvas11 = document.getElementById("country-chart-today-cases");
     var data: number;
-    for (var i = 0; i < this.europe.length; i++) {
-      if (countryName == this.europe[i]) {
+    for (var i = 0; i < this.europeTranslate.length; i++) {
+      if (countryName == this.europeTranslate[i]) {
         data = this.todayCasesDataArraySorted[i];
-        if(data == 0){
+        if (data == 0) {
           this.isAnibodyInjured = false;
         } else {
           this.isAnibodyInjured = true;
@@ -732,7 +772,7 @@ export class GraphicsComponent implements OnInit {
       type: 'bar',
       data: {
         datasets: [{
-          label: "Contagiati odierni in " + countryName,
+          label: "Cases today in " + countryName,
           data: [data],
           backgroundColor: "#3C6E71",
           fill: false
@@ -744,49 +784,118 @@ export class GraphicsComponent implements OnInit {
     });
   }
 
-  createTotalDeathsCountryChart(countryName: string){
-  let myCanvas12 = document.getElementById("country-chart-total-deaths");
-  var data: number;
-  for (var i = 0; i < this.europe.length; i++) {
-    if (countryName == this.europe[i]) {
-      data = this.totalDeathsDataArraySorted[i];
-    }
-  }
-  let chart12 = new Chart(myCanvas12, {
-    type: 'bar',
-    data: {
-      datasets: [{
-        label: "Morti totali in " + countryName,
-        data: [data],
-        backgroundColor: "#3C6E71",
-        fill: false
-      }]
-    },
-    options: {
-
-    }
-  });
-}
-createTodayDeathsCountryChart(countryName: string){
-  let myCanvas13 = document.getElementById("country-chart-today-deaths");
-  var data: number;
-  for (var i = 0; i < this.europe.length; i++) {
-    if (countryName == this.europe[i]) {
-      data = this.todayDeathsDataArraySorted[i];
-      if (data == 0){
-        this.isAnibodyDead = false;
-      } else {
-        this.isAnibodyDead = true;
+  createTotalDeathsCountryChart(countryName: string) {
+    let myCanvas12 = document.getElementById("country-chart-total-deaths");
+    var data: number;
+    for (var i = 0; i < this.europeTranslate.length; i++) {
+      if (countryName == this.europeTranslate[i]) {
+        data = this.totalDeathsDataArraySorted[i];
       }
     }
+    let chart12 = new Chart(myCanvas12, {
+      type: 'bar',
+      data: {
+        datasets: [{
+          label: "Total deaths in " + countryName,
+          data: [data],
+          backgroundColor: "#3C6E71",
+          fill: false
+        }]
+      },
+      options: {
+
+      }
+    });
   }
-  let chart13 = new Chart(myCanvas13, {
+  createTodayDeathsCountryChart(countryName: string) {
+    let myCanvas13 = document.getElementById("country-chart-today-deaths");
+    var data: number;
+    for (var i = 0; i < this.europeTranslate.length; i++) {
+      if (countryName == this.europeTranslate[i]) {
+        data = this.todayDeathsDataArraySorted[i];
+        if (data == 0) {
+          this.isAnibodyDead = false;
+        } else {
+          this.isAnibodyDead = true;
+        }
+      }
+    }
+    let chart13 = new Chart(myCanvas13, {
+      type: 'bar',
+      data: {
+        datasets: [{
+          label: "Deaths today in " + countryName,
+          data: [data],
+          backgroundColor: "#3C6E71",
+          fill: false
+        }]
+      },
+      options: {
+
+      }
+    });
+  }
+  createCasesPerMillionCountryChart(countryName: string) {
+    let myCanvas14 = document.getElementById("country-chart-cases-per-million");
+    var data: number;
+    for (var i = 0; i < this.europeTranslate.length; i++) {
+      if (countryName == this.europeTranslate[i]) {
+        data = this.casesPerMillionDataArraySorted[i];
+      }
+    }
+    let chart14 = new Chart(myCanvas14, {
+      type: 'bar',
+      data: {
+        datasets: [{
+          label: "Cases per 1mln of population in " + countryName,
+          data: [data],
+          backgroundColor: "#3C6E71",
+          fill: false
+        }]
+      },
+      options: {
+
+      }
+    });
+  }
+  createDeathRateCountryChart(countryName: string) {
+    let myCanvas15 = document.getElementById("country-chart-death-rate");
+    var data: number;
+    for (var i = 0; i < this.europeTranslate.length; i++) {
+      if (countryName == this.europeTranslate[i]) {
+        data = this.deathRateDataArraySorted[i];
+      }
+    }
+    let chart15 = new Chart(myCanvas15, {
+      type: 'bar',
+      data: {
+        datasets: [{
+          label: "Covid deaths' percentage in " + countryName,
+          data: [data],
+          backgroundColor: "#3C6E71",
+          fill: false
+        }]
+      },
+      options: {
+
+      }
+    });
+  }
+/*************************CREAZIONE GRAFICI NAZIONALI*************************/
+
+/*************************CREAZIONE ANALISI NAZIONALI*************************/
+createCasesDeathsRatioChart(){
+  let myCanvas16 = document.getElementById("death-race-wind-speed-ratio-1");
+  let myLabels = this.europeTranslate;
+  const dataDeathRate = this.putDeathRate();
+  let chart16 = new Chart(myCanvas16, {
     type: 'bar',
     data: {
+      labels: myLabels,
       datasets: [{
-        label: "Morti odierni in " + countryName,
-        data: [data],
-        backgroundColor: "#3C6E71",
+        label: "Death Rate (%)",
+        data: dataDeathRate,
+        backgroundColor: '#3C6E71',
         fill: false
       }]
     },
@@ -795,21 +904,18 @@ createTodayDeathsCountryChart(countryName: string){
     }
   });
 }
-createCasesPerMillionCountryChart(countryName: string){
-  let myCanvas14 = document.getElementById("country-chart-cases-per-million");
-  var data: number;
-  for (var i = 0; i < this.europe.length; i++) {
-    if (countryName == this.europe[i]) {
-      data = this.casesPerMillionDataArraySorted[i];
-    }
-  }
-  let chart14 = new Chart(myCanvas14, {
+createWindSpeedRatioChart(){
+  let myCanvas17 = document.getElementById("death-race-wind-speed-ratio-2");
+  let myLabels = this.europeTranslate;
+  const dataWindSpeed = this.putDataWind();
+  let chart17 = new Chart(myCanvas17, {
     type: 'bar',
     data: {
+      labels: myLabels,
       datasets: [{
-        label: "N. di casi per 1mln di abitanti in " + countryName,
-        data: [data],
-        backgroundColor: "#3C6E71",
+        label: "Wind Speed (m/s)",
+        data: dataWindSpeed,
+        backgroundColor: '#3C6E71',
         fill: false
       }]
     },
@@ -818,21 +924,18 @@ createCasesPerMillionCountryChart(countryName: string){
     }
   });
 }
-createDeathRateCountryChart(countryName: string){
-  let myCanvas15 = document.getElementById("country-chart-death-rate");
-  var data: number;
-  for (var i = 0; i < this.europe.length; i++) {
-    if (countryName == this.europe[i]) {
-      data = this.deathRateDataArraySorted[i];
-    }
-  }
-  let chart15 = new Chart(myCanvas15, {
+createCasesDeathsRatioChart1(){
+  let myCanvas18 = document.getElementById("death-race-humidity-ratio-1");
+  let myLabels = this.europeTranslate;
+  const dataDeathRate = this.putDeathRate();
+  let chart18 = new Chart(myCanvas18, {
     type: 'bar',
     data: {
+      labels: myLabels,
       datasets: [{
-        label: "percentuale di morte per Covid in " + countryName,
-        data: [data],
-        backgroundColor: "#3C6E71",
+        label: "Death Rate (%)",
+        data: dataDeathRate,
+        backgroundColor: '#3C6E71',
         fill: false
       }]
     },
@@ -841,9 +944,191 @@ createDeathRateCountryChart(countryName: string){
     }
   });
 }
+createHumidityRatioChart(){
+let myCanvas19 = document.getElementById("death-race-humidity-ratio-2");
+let myLabels = this.europeTranslate;
+const humidity = this.putDataHumidity();
+let chart19 = new Chart(myCanvas19, {
+  type: 'bar',
+  data: {
+    labels: myLabels,
+    datasets: [{
+      label: "Humidity (%)",
+      data: humidity,
+      backgroundColor: '#3C6E71',
+      fill: false
+    }]
+  },
+  options: {
+
+  }
+});
 }
-    /*************************CREAZIONE GRAFICI NAZIONALI*************************/
+createCasesPopulationRatioChart(){
+  let myCanvas20 = document.getElementById("cases-population-death-race-ratio-1");
+  let myLabels = this.europeTranslate;
+  var ratioArray: number[] = [];
+  for (var i = 0; i < this.europeTranslate.length; i++) {
+      var value = (this.totalCasesDataArraySorted[i] / this.populationArraySorted[i]);
+      ratioArray.push(value);
+    }
+    let chart20 = new Chart(myCanvas20, {
+    type: 'bar',
+    data: {
+      labels: myLabels,
+      datasets: [{
+        label: "(Cases / Population)",
+        data: ratioArray,
+        backgroundColor: '#3C6E71',
+        fill: false
+      }]
+    },
+    options: {
+  
+    }
+  });
+  }
+  createCasesDeathsRatioChart2(){
+    let myCanvas21 = document.getElementById("cases-population-death-race-ratio-2");
+    let myLabels = this.europeTranslate;
+    let data = this.putDeathRate();
+    let chart21 = new Chart(myCanvas21, {
+      type: 'bar',
+      data: {
+        labels: myLabels,
+        datasets: [{
+          label: "(Deaths / Cases)",
+          data: data,
+          backgroundColor: '#3C6E71',
+          fill: false
+        }]
+      },
+      options: {
+  
+      }
+    });
+  }
+  createTemperatureRatioChart(){
+    let myCanvas22 = document.getElementById("temperature-cases-ratio-1");
+    let myLabels = this.europeTranslate;
+    const temperature = this.putDataTemperature();
+    let chart22 = new Chart(myCanvas22, {
+      type: 'bar',
+      data: {
+        labels: myLabels,
+        datasets: [{
+          label: "Temperature (in °C)",
+          data: temperature,
+          backgroundColor: '#3C6E71',
+          fill: false
+        }]
+      },
+      options: {
+  
+      }
+    });
+  }
+  createCasesRatioChart(){
+    let myCanvas23 = document.getElementById("temperature-cases-ratio-2");
+    let myLabels = this.europeTranslate;
+    const totalCases = this.putTotalCases();
+    let chart23 = new Chart(myCanvas23, {
+      type: 'bar',
+      data: {
+        labels: myLabels,
+        datasets: [{
+          label: "Total Cases",
+          data: totalCases,
+          backgroundColor: '#3C6E71',
+          fill: false
+        }]
+      },
+      options: {
+  
+      }
+    });
+  }
 
-    /*************************CREAZIONE ANALISI NAZIONALI*************************/
-
-    /*************************CREAZIONE ANALISI NAZIONALI*************************/
+  createMinTemperatureRatioChart(){
+    let myCanvas22 = document.getElementById("min-temperature-cases-ratio-1");
+    let myLabels = this.europeTranslate;
+    const minTemperature = this.temperatureMinDataArraySorted;
+    let chart22 = new Chart(myCanvas22, {
+      type: 'bar',
+      data: {
+        labels: myLabels,
+        datasets: [{
+          label: "Min. Temperature (in °C)",
+          data: minTemperature,
+          backgroundColor: '#3C6E71',
+          fill: false
+        }]
+      },
+      options: {
+  
+      }
+    });
+  }
+  createCasesRatioChart1(){
+    let myCanvas23 = document.getElementById("min-temperature-cases-ratio-2");
+    let myLabels = this.europeTranslate;
+    const totalCases = this.putTotalCases();
+    let chart23 = new Chart(myCanvas23, 
+      {
+      type: 'bar',
+      data: {
+        labels: myLabels,
+        datasets: [{
+          label: "Total Cases",
+          data: totalCases,
+          backgroundColor: '#3C6E71',
+          fill: false
+        }]
+      },
+      options: {
+  
+      }
+    });
+  }
+  createMaxTemperatureRatioChart(){
+    let myCanvas24 = document.getElementById("max-temperature-cases-ratio-1");
+    let myLabels = this.europeTranslate;
+    const maxTemperature = this.temperatureMaxDataArraySorted;
+    let chart23 = new Chart(myCanvas24, {
+      type: 'bar',
+      data: {
+        labels: myLabels,
+        datasets: [{
+          label: "Max. Temperature (in °C)",
+          data: maxTemperature,
+          backgroundColor: '#3C6E71',
+          fill: false
+        }]
+      },
+      options: {
+  
+      }
+    });
+  }
+  createCasesRatioChart2(){
+    let myCanvas25 = document.getElementById("max-temperature-cases-ratio-2");
+    let myLabels = this.europeTranslate;
+    const totalCases = this.putTotalCases();
+    let chart25 = new Chart(myCanvas25, {
+      type: 'bar',
+      data: {
+        labels: myLabels,
+        datasets: [{
+          label: "Total Cases",
+          data: totalCases,
+          backgroundColor: '#3C6E71',
+          fill: false
+        }]
+      },
+      options: {
+  
+      }
+    });
+  }
+/*************************CREAZIONE ANALISI NAZIONALI*************************/
+}
