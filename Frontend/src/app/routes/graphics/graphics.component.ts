@@ -97,6 +97,10 @@ export class GraphicsComponent implements OnInit {
     this.apimeteoService.getMeteoApiData(this.dataCity).subscribe((meteoData: ApiMeteo) => {
       //Salvataggio del file JSON
       this.meteoCountries = meteoData;
+      //Controllo che il JSON sia arrivato, se no richiamo il cambio di chiave API
+      if(!(meteoData.error == "null")){
+        this.apimeteoService.changeApiKey();
+      }
       //Aggiornamento orario di ricezione del file JSON e correzione
       this.updateMeteoData = this.meteoCountries.data.current.time;
       this.createCorrectUpdateTimeTemperature();

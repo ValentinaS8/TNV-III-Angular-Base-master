@@ -1,4 +1,5 @@
 export interface ApiMeteo{
+    error: string;
     data: current 
 }
 
