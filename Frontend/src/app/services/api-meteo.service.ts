@@ -40,7 +40,7 @@ export class ApiMeteoService {
   private ZagabriaMeteoUrl = '45.81444,15.9798';
 
   private token = '?token=';
-  //Gestione API KEY
+  //Gestione API KEY Meccanismo chiavi in p
   apiKeyArray = [];
   /*
   private callsCounter = 0;
