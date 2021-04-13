@@ -44,16 +44,17 @@ export class MeteoCovidComponent implements OnInit {
   sortedCovidCountriesDataArray: Array<ApiCoronaData> = [];
   sortedMeteoDataArray: Array<ApiMeteo> = [];
 
-
-
+  
 
   /********************parte covid************************************/
   //funzione per il recupero dei dati METEO + COVID di tutte le nazioni
-  getAllData() {
+  getAllData(form: NgForm) {
 
     if ((this.meteoCovidArray.length) > 0) {
       this.meteoCovidArray = [];
     }
+
+    form.form.reset("");
 
     for (let i = 0; i < (this.europeCountries).length; i++) {
       this.getCountryCovidDataFromArray(this.europeCountries[i])
@@ -264,6 +265,15 @@ export class MeteoCovidComponent implements OnInit {
       console.log("New Data:", newData);
     }
     console.log(this.meteoCovidArray)
+  }
+
+  clearAllData(form: NgForm){
+
+    if ((this.meteoCovidArray.length) > 0) {
+      this.meteoCovidArray = [];
+    }
+
+    form.form.reset("");  
   }
 }
 
