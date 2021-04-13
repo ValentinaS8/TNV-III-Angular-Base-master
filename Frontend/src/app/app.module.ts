@@ -1,10 +1,10 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { DashboardComponent } from './routes/dashboard/dashboard.component';
+import { GraphicsComponent } from './routes/graphics/graphics.component';
 import { DataService } from './services/data.service';
 import { HttpClientModule } from '@angular/common/http';
 import { AddComponent } from './routes/add/add.component';
@@ -33,6 +33,7 @@ import { LoginComponent } from './routes/login/login.component';
 import { RegisterComponent } from './routes/register/register.component';
 
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -57,6 +58,7 @@ import { RegisterComponent } from './routes/register/register.component';
     DocsComponent,
     LoginComponent,
     RegisterComponent,
+    GraphicsComponent,
   ],
   imports: [
     BrowserModule,

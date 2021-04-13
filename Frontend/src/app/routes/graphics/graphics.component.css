@@ -1,34 +1,106 @@
 *{
     box-sizing: border-box;
 }
-
-.container {
-    width: 90%;
-    margin: auto;
+body {
+    margin: 100;
+    padding: 100;
+    font-family: sans-serif;
+    background:  #284B63;
+    text-align: center;
+    margin-top: 50px;
+    position: relative;
+    opacity: 90%;
 }
-
+#contenitore {width: 90%; height: 100%; margin-left: auto;
+    margin-right: auto;}
+#contenitore .box {
+    width: 50%;
+    float: left;
+    background-color: #D9D9D9;
+  }
+  #contenitorei {width: 50%; height: 100%; align-items: center;  }
+  #contenitore .boxi {
+    width: 50%;
+    align-items: center;
+    background-color: #D9D9D9;
+  }
 .main_wrapper{
     display: flex;
     flex-wrap: row;
     justify-content: center;
     align-items: center;
     height: 300px;
+    color: thistle;
 }
 .canvas_wrapper{
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    width: 100%;
+    width: 90%;
+    color: thistle;
 }
 .canvas{
-    width: 100%;
+    width: 90%;
     height: auto;
+    color: thistle;
 }
 .title{
-    font-size: 2vw;
+    font-size: 24px;
+    text-align: center;
+    align-items: center;
 }
 .title-2{
     font-size: 25pt;
     text-align: center;
+    align-items: center;
+}
+.graphic-overlap{
+  margin-top: -50px;
+}
+p {
+    color: #353535;
+    text-transform: uppercase;
+    font-family: -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        Roboto,
+        Oxygen-Sans,
+        Ubuntu,
+        Cantarell,
+        Helvetica,
+        sans-serif;
+    font-size: 2.5em;
+    text-shadow: 2px 2px 10px rgba(0,0,0,0.2);
+  }
+  .ua-font{
+      font-size: 8pt;
+      align-items: center;
+      text-align: center;
+  }
+  #col-padding-5{
+      padding-top: 3;
+  }
+  .counter {
+  width: 100px;
+  font: 800 40px system-ui;
+  overflow: hidden;
+}
+.numbers {
+  width: auto;
+  display: flex;
+  animation: countNumber 4s infinite;
+  animation-timing-function: steps(10);
+}
+.numbers div {
+  text-align: center;
+  flex: 0 0 100px;
+}
+@keyframes countNumber {
+  0% {
+    margin-left: 0px;
+  }
+  100% {
+    margin-left: -1000px;
+  }
 }

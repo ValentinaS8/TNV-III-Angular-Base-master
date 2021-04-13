@@ -1,51 +1,58 @@
+.navbar-custom {
+  background-color: #353535;
+}
+.navbar-custom .navbar-brand,
+.navbar-custom .navbar-text {
+  color: white;
+}
 .masthead {
-    height: 50vh;
-    min-height: 50%;
-    background-image: url('/assets/img/coronavirus-img.jpg');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-  }
-  
-  .tracker-text{
-    font-style: italic;
-    font-size: 5rem;
-    font-weight: 800;
-  }
-  
-  .covid-text{
-    font-size: 4.4rem;
-    margin-top: 96px;
-    margin-bottom: 0;
-  }
-  
-  ._21-text{
-    font-weight: 600;
-    font-size: 5rem;
-  }
-  
-  .logo-divider{
-    border-bottom: 4px solid rgba(255, 0, 0, 0.89);
-    width: 20rem;
-    margin: 0;
-  }
-  
-  .margin-text-app{
-    margin-top: 80px;
-  }
-  
-  .text-claim{
-    color: #343a40;
-    font-size: 0.8rem;
-    padding: 0px 4px 0px 4px;
-  }
-  
-  .logo-img{
-    padding-top: 4pt;
-    width: 45%;
-  }
-  
-  #claim-div{
-    border-top: 1px solid red;
-    border-bottom: 1px solid red;
-  }
+  height: 50vh;
+  min-height: 50%;
+  background-image: url('/assets/img/coronavirus-img.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+.tracker-text{
+  font-style: italic;
+  font-size: 5rem;
+  font-weight: 800;
+}
+.covid-text{
+  font-size: 4.4rem;
+  margin-top: 96px;
+  margin-bottom: 0;
+}
+._21-text{
+  font-weight: 600;
+  font-size: 5rem;
+}
+.logo-divider{
+  border-bottom: 4px solid rgba(255, 0, 0, 0.89);
+  width: 20rem;
+  margin: 0;
+}
+.margin-text-app{
+  margin-top: 80px;
+}
+.text-claim{
+  color: #343a40;
+  font-size: 0.8rem;
+  padding: 0px 4px 0px 4px;
+}
+.logo-img{
+  padding-top: 4pt;
+  width: 45%;
+}
+#claim-div{
+  border-top: 1px solid red;
+  border-bottom: 1px solid red;
+}
+.btn-success{
+  background-color: #3C6E71;
+  border: 0;
+}
+.btn-success:hover{
+  background-color: #284B63;
+  border: 0;
+}

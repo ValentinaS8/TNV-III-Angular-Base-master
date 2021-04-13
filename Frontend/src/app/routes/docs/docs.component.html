@@ -1,81 +1,60 @@
 <div class="container">
-  <h1>Documentazione ufficiale</h1>
+  <br>
+  <h1>Official Documentation</h1>
 
-  <p>Per la realizzazione del progetto, abbiamo usufruito delle seguenti API:
+  <p>In order to realize this web application, we used the following APIs:
     <br><a href="https://www.troposphere.io/developer">Troposphere.io</a> (API Meteo)
     <br><a href="https://about-corona.net/documentation">About-corona</a> (API Covid)
-    <br>Per la realizzazione dei grafici, abbiamo utilizzato la libreria "ChartJs":
-    <br><a href="https://www.chartjs.org/">ChartJs</a> (Documentazione ufficiale)
-    <br>Il nostro piano di lavoro su Trello presenta tutti gli appunti e i riferimenti utili per ottenere informazioni e
-    documentazioni:
+    <br>To generate charts, we used the library "ChartJs":
+    <br><a href="https://www.chartjs.org/">ChartJs</a> (Official documentation)
+    <br>On our Trello's desk you can find all the notes and links we used:
     <br><a href="https://trello.com/b/aSDtw41t/it-project-workflow">Trello</a> (WorkFlow)
-    <br><br>Per ulteriori riferimenti, consultare il piano di lavoro di Trello.
+    <br><br>For more information, feel free to check out our Trello work plan.
   </p>
 
-  <h2>Indice</h2>
+  <h2>Index</h2>
   <ol>
-    <li>Presentazione del progetto</li>
-    <li>FAQ e risoluzione rapida di problemi</li>
+    <li>Project Presentation</li>
   </ol>
 
   <br>
-  <h3>Presentazione del progetto</h3>
-  <p>Il progetto si divide essenzialmente in due piani: </p>
+  <h3>Project Presentation</h3>
+  <p>Our web application presents two screens: “Dashboard” and “Graphics”.
+    It also has a working login / register system.</p>
   <ol>
-    <li>La Dashboard</li>
-    <li>I Grafici</li>
+    <li>Login/Register</li>
+    <li>Dashboard</li>
+    <li>Charts</li>
   </ol>
   <h5>Login/Register</h5>
-  <p>Il Login e Register sono due funzioni che non prevedono di salvare dati sul DB, in rispetto alle norme sulla privacy. <br> A ogni accesso, è possibile che il sistema controlli se effettivamente siete loggati: Registratevi ogni volta e utilizzate le credenziali che avete inserito in fase di registrazione. </p>
-  <h5>La Dashboard</h5>
-  <p>La Dashboard ci permette di visualizzare in tempo reale l'andamento meteo/covid su una panoramica europea. </p>
-  <div> Selezionando il bottone "Scarica i dati di tutta Europa", verranno selezionati tutti i seguenti paesi:
+  <p>The login/register system doesn't save any data on DB, so, the system will keep track of your registering data only
+    up to the next web application reboot.
+    In order to access the dashboard or the charts, you have to register yourself. When you'll try to reach one of them,
+    the system will ask you for your credentials, and it'll let you access the dashboard or the charts only if your data
+    are correct.</p>
+  <h5>Dashboard</h5>
+  <p>Our Dashboard allows you to be aware of European weather and covid real-time data, according to the last updates
+    from APIs. </p>
+  <div> By clicking the "All Europe" button, you'll have access to the data concerning all the following European
+    countries:
     <div><br>
-      <ul *ngFor="let country of europe">
+      <ul *ngFor="let country of europeTranslate">
         <li>{{country}}</li>
       </ul>
     </div>
   </div>
-  <div>Inoltre, si può visualizzare in dettaglio ognuno di questi stati selezionando lo Stato nella droplist di destra,
-    e premendo "Submit Country".</div>
+  <div>If you prefer to view information about a country (choosen from above list), you can select it in the dropdown
+    list and click “submit”.</div>
   <br>
-  <h5>I Grafici</h5>
-  <div>I Grafici rappresentano l'andamento generale di rapporti statistici come le temperature e l'andamento dei casi di
-    Covid, oltre alla qualità dell'aria, tutto in tempo reale.</div>
+  <h5>Charts</h5>
+  <div>Charts allow you to view the European data in a graph.
+    The screen is splitted into two parts: in the first part you can see, in real-time, covid data and weather
+    information concerning European countries, divided by types.
+    Whereas, in the second part, you can find analysis based on the first part's data, as the ratio between deaths/cases
+    and AQI (Air Quality Index), or the amount of deaths/cases in relation to the wind speed.</div>
   <br>
-  <h5>Accortezze</h5>
-  <div>Tutti i file utilizzati sono stati indentati tramite la funzione "Format Document".</div>
 
-  <br>
-  <h3>FAQ e risoluzione rapida di problemi</h3>
-  <h5>Errore (Generale): CANNOT GET/</h5>
-  <p>In caso si presentasse questo problema, consigliamo di andare su: <br><br>Frontend > src > app > routes > graphics
-    > graphics.component.ts <br><br> e fare una compilazione (solitamente basta una volta) con la shortcut "CTRL +
-    S".<br> Questo errore deriva da un'errata lettura dell'IDE del componente "Chart" (Il generatore dei grafici)
-    nonostante vengano effettivamente stampati.</p>
-  <h5>Errore (Login/Register): Browser indica la pericolosità nell'inserire credenziali</h5>
-  <p>In caso si presentasse questo problema, vi incoraggiamo a non aver timore: Il browser non riconosce il nostro
-    script di autenticazione (che nel rispetto della privacy, non carica nessun dato sul Database) e quindi lo dichiara
-    come malevolo.</p>
-  <h5>Errore(Grafici): Dopo diverse chiamate, il grafico non compare</h5>
-  <p>In caso si presentasse questo problema, visualizzate nella console di Google: </p>
-  <ol>
-    <li>Premi: Command + Option + C (Mac)</li>
-    <li>Oppure, premi: Control + Maiusc + C (Windows, Linux, Chrome OS)</li>
-    <li>Oppure, premi: "F2" e spostati sul Tab "Console" (Generico)</li>
-  </ol>
-  <p>Se la console presenta errori tipo: <br><br><i>Access to XMLHttpRequest at
-      'https://api.troposphere.io/forecast/50.08804,14.42076?token=f19bef232249628a0c50f16cfd349d603200210fcda08eff42'
-      from origin 'http://localhost:4200' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is
-      present on the requested resource.</i> <br> <br>Provare ad attendere qualche minuto e ricaricare la pagina.<br>
-    L'API che utilizziamo offre delle limitazioni per i piani FREE, tra cui la quantità di richieste.</p>
-  <h5>Errore(Dashboard): Le città non sono esattamente allineate con i risultati della tabella sinistra</h5>
-  <p>In caso si presentasse questo problema, abbiamo trovato diverse soluzioni disponibili, ma per questione di tempo (e
-    per questioni tecniche) non abbiamo potuto implementarle. Per ulteriori informazioni, consultare il piano di lavoro
-    <a href="https://trello.com/b/aSDtw41t/it-project-workflow">Trello</a>.</p>
-
-
-  <div class="text-right"><button class="btn btn-success" [routerLink]="['/meteocovid']">Vai alla Dashboard <i
+  <div class="text-right"><button class="btn btn-outline-dark" [routerLink]="['/meteocovid']">Go to Dashboard <i
         class="fa fa-arrow-right" aria-hidden="true"></i></button></div>
   <br>
 

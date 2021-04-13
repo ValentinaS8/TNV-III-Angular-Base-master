@@ -27,10 +27,22 @@ export class MeteoCovidComponent implements OnInit {
   covidCountriesData: ApiCoronaData;
   covidCountriesDataArray: Array<ApiCoronaData> = [];
   countryName: string;
+  
   europeCountries: Array<string> = ["Austria", "Belgio", "Cipro", "Croazia", "Danimarca", "Estonia",
     "Finlandia", "Francia", "Germania", "Grecia", "Irlanda", "Italia", "Lettonia", "Lituania", "Lussemburgo",
     "Malta", "Paesi Bassi", "Polonia", "Portogallo", "Regno Unito", "Repubblica Ceca", "Romania",
     "Slovacchia", "Slovenia", "Spagna", "Svezia", "Svizzera", "Ungheria",];
+
+  arrayRiferimentoStati: string[] = ["Croatia", "Austria", "Slovenia", "Netherlands", "Germany", "Greece",
+    "Malta", "Romania", "Estonia", "UK", "Cyprus", "Denmark", "Slovakia", "Luxembourg", "Lithuania", "Latvia",
+    "Czechia", "Hungary", "France", "Switzerland", "Spain", "Finland", "Ireland", "Italy", "Sweden", "Belgium",
+    "Portugal", "Poland"];
+
+  arrayRiferimentoMeteo: string[] = ["Europe/Zagreb", "Europe/Vienna", "Europe/Ljubljana",
+    "Europe/Amsterdam", "Europe/Berlin", "Europe/Athens", "Europe/Malta", "Europe/Bucharest", "Europe/Tallinn",
+    "Europe/London", "Asia/Nicosia", "Europe/Copenhagen", "Europe/Bratislava", "Europe/Luxembourg", "Europe/Vilnius",
+    "Europe/Riga", "Europe/Prague", "Europe/Budapest", "Europe/Paris", "Europe/Zurich", "Europe/Madrid", "Europe/Helsinki",
+    "Europe/Dublin", "Europe/Rome", "Europe/Stockholm", "Europe/Brussels", "Europe/Lisbon", "Europe/Warsaw"];
 
   dataCity: string;
 
@@ -44,7 +56,7 @@ export class MeteoCovidComponent implements OnInit {
   sortedCovidCountriesDataArray: Array<ApiCoronaData> = [];
   sortedMeteoDataArray: Array<ApiMeteo> = [];
 
-  
+
 
   /********************parte covid************************************/
   //funzione per il recupero dei dati METEO + COVID di tutte le nazioni
@@ -54,6 +66,7 @@ export class MeteoCovidComponent implements OnInit {
       this.meteoCovidArray = [];
     }
 
+    //reset della nazione scelta nel form
     form.form.reset("");
 
     for (let i = 0; i < (this.europeCountries).length; i++) {
@@ -184,22 +197,11 @@ export class MeteoCovidComponent implements OnInit {
 
     let i, j;
 
-    let arrayRiferimentoStati: string[] = ["Croatia", "Austria", "Slovenia", "Netherlands", "Germany", "Greece",
-      "Malta", "Romania", "Estonia", "UK", "Cyprus", "Denmark", "Slovakia", "Luxembourg", "Lithuania", "Latvia",
-      "Czechia", "Hungary", "France", "Switzerland", "Spain", "Finland", "Ireland", "Italy", "Sweden", "Belgium",
-      "Portugal", "Poland"];
-
-    let arrayRiferimentoMeteo: string[] = ["Europe/Zagreb", "Europe/Vienna", "Europe/Ljubljana",
-      "Europe/Amsterdam", "Europe/Berlin", "Europe/Athens", "Europe/Malta", "Europe/Bucharest", "Europe/Tallinn",
-      "Europe/London", "Asia/Nicosia", "Europe/Copenhagen", "Europe/Bratislava", "Europe/Luxembourg", "Europe/Vilnius",
-      "Europe/Riga", "Europe/Prague", "Europe/Budapest", "Europe/Paris", "Europe/Zurich", "Europe/Madrid", "Europe/Helsinki",
-      "Europe/Dublin", "Europe/Rome", "Europe/Stockholm", "Europe/Brussels", "Europe/Lisbon", "Europe/Warsaw"];
-
     //sort array dati covid
-    for (i = 0; i < arrayRiferimentoStati.length; i++) {
+    for (i = 0; i < this.arrayRiferimentoStati.length; i++) {
 
       for (j = 0; j < this.covidCountriesDataArray.length; j++) {
-        if (arrayRiferimentoStati[i] === this.covidCountriesDataArray[j].data.name) {
+        if (this.arrayRiferimentoStati[i] === this.covidCountriesDataArray[j].data.name) {
           this.sortedCovidCountriesDataArray[i] = this.covidCountriesDataArray[j];
         }
       }
@@ -208,10 +210,10 @@ export class MeteoCovidComponent implements OnInit {
     }
 
     //sort array dati meteo
-    for (i = 0; i < arrayRiferimentoMeteo.length; i++) {
+    for (i = 0; i < this.arrayRiferimentoMeteo.length; i++) {
 
       for (j = 0; j < this.meteoDataArray.length; j++) {
-        if (arrayRiferimentoMeteo[i] === this.meteoDataArray[j].data.timezone) {
+        if (this.arrayRiferimentoMeteo[i] === this.meteoDataArray[j].data.timezone) {
           this.sortedMeteoDataArray[i] = this.meteoDataArray[j];
         }
       }
@@ -267,13 +269,14 @@ export class MeteoCovidComponent implements OnInit {
     console.log(this.meteoCovidArray)
   }
 
-  clearAllData(form: NgForm){
+  clearAllData(form: NgForm) {
 
     if ((this.meteoCovidArray.length) > 0) {
       this.meteoCovidArray = [];
     }
 
-    form.form.reset("");  
+    //reset della nazione scelta nel form
+    form.form.reset("");
   }
 }
 
