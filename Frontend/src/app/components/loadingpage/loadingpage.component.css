@@ -16,6 +16,7 @@ p {
   }
   .spinner-border{
     color: #353535;
+    font-size: 20pt;
   }
   .loading{
     text-align: center;

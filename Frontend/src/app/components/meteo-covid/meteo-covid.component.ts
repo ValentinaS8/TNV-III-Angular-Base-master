@@ -24,25 +24,30 @@ export class MeteoCovidComponent implements OnInit {
   }
 
 
+  isFetching: boolean = false;
+
   covidCountriesData: ApiCoronaData;
   covidCountriesDataArray: Array<ApiCoronaData> = [];
   countryName: string;
-  
+
   europeCountries: Array<string> = ["Austria", "Belgio", "Cipro", "Croazia", "Danimarca", "Estonia",
     "Finlandia", "Francia", "Germania", "Grecia", "Irlanda", "Italia", "Lettonia", "Lituania", "Lussemburgo",
     "Malta", "Paesi Bassi", "Polonia", "Portogallo", "Regno Unito", "Repubblica Ceca", "Romania",
     "Slovacchia", "Slovenia", "Spagna", "Svezia", "Svizzera", "Ungheria",];
+ 
 
-  arrayRiferimentoStati: string[] = ["Croatia", "Austria", "Slovenia", "Netherlands", "Germany", "Greece",
-    "Malta", "Romania", "Estonia", "UK", "Cyprus", "Denmark", "Slovakia", "Luxembourg", "Lithuania", "Latvia",
-    "Czechia", "Hungary", "France", "Switzerland", "Spain", "Finland", "Ireland", "Italy", "Sweden", "Belgium",
-    "Portugal", "Poland"];
+  arrayRiferimentoStati: string[] = ["Austria", "Belgium", "Croatia", "Cyprus", "Czechia", "Denmark", "Estonia",
+    "Finland", "France", "Germany", "Greece", "Hungary", "Ireland", "Italy", "Latvia", "Lithuania", "Luxembourg",
+    "Malta", "Netherlands", "Poland", "Portugal", "Romania", "Slovakia", "Slovenia", "Spain", "Sweden", "Switzerland",
+    "UK"];
 
-  arrayRiferimentoMeteo: string[] = ["Europe/Zagreb", "Europe/Vienna", "Europe/Ljubljana",
-    "Europe/Amsterdam", "Europe/Berlin", "Europe/Athens", "Europe/Malta", "Europe/Bucharest", "Europe/Tallinn",
-    "Europe/London", "Asia/Nicosia", "Europe/Copenhagen", "Europe/Bratislava", "Europe/Luxembourg", "Europe/Vilnius",
-    "Europe/Riga", "Europe/Prague", "Europe/Budapest", "Europe/Paris", "Europe/Zurich", "Europe/Madrid", "Europe/Helsinki",
-    "Europe/Dublin", "Europe/Rome", "Europe/Stockholm", "Europe/Brussels", "Europe/Lisbon", "Europe/Warsaw"];
+  arrayRiferimentoMeteo: string[] = ["Europe/Vienna", "Europe/Brussels", "Europe/Zagreb",
+    "Asia/Nicosia", "Europe/Prague", "Europe/Copenhagen", "Europe/Tallinn", "Europe/Helsinki", "Europe/Paris",
+    "Europe/Berlin", "Europe/Athens", "Europe/Budapest", "Europe/Dublin", "Europe/Rome", "Europe/Riga",
+    "Europe/Vilnius", "Europe/Luxembourg", "Europe/Malta", "Europe/Amsterdam", "Europe/Warsaw", "Europe/Lisbon", 
+    "Europe/Bucharest", "Europe/Bratislava", "Europe/Ljubljana", "Europe/Madrid", "Europe/Stockholm", 
+    "Europe/Zurich", "Europe/London"];
+
 
   dataCity: string;
 
@@ -61,6 +66,8 @@ export class MeteoCovidComponent implements OnInit {
   /********************parte covid************************************/
   //funzione per il recupero dei dati METEO + COVID di tutte le nazioni
   getAllData(form: NgForm) {
+
+    this.isFetching = true;
 
     if ((this.meteoCovidArray.length) > 0) {
       this.meteoCovidArray = [];
@@ -123,6 +130,8 @@ export class MeteoCovidComponent implements OnInit {
 
   // chiamata sincronizzata dei dati covid e dei dati meteo per ogni singola nazione
   getCovidMeteoApiData(form: NgForm) {
+
+    this.isFetching = true;
 
     if ((this.meteoCovidArray.length) > 0) {
       this.meteoCovidArray = [];
@@ -241,6 +250,8 @@ export class MeteoCovidComponent implements OnInit {
     console.log("New Data:", newData);
 
     console.log(this.meteoCovidArray)
+
+    this.isFetching = false;
   }
 
   mergeArrays() {
@@ -267,9 +278,13 @@ export class MeteoCovidComponent implements OnInit {
       console.log("New Data:", newData);
     }
     console.log(this.meteoCovidArray)
+
+    this.isFetching = false;
   }
 
   clearAllData(form: NgForm) {
+
+    this.isFetching = false;
 
     if ((this.meteoCovidArray.length) > 0) {
       this.meteoCovidArray = [];
@@ -278,5 +293,7 @@ export class MeteoCovidComponent implements OnInit {
     //reset della nazione scelta nel form
     form.form.reset("");
   }
+
+
 }
 
