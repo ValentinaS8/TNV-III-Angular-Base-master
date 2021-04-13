@@ -19,6 +19,8 @@ table{
     background-color: #353535;
     border-radius: 10px;
     opacity: 90%;
+    align-items: center;
+    text-align: center;
 }
 table td{
     color:#ffffff;
